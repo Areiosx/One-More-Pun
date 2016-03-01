@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
+                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashlogo" translatesAutoresizingMaskIntoConstraints="NO" id="Jbb-hP-jty">
+                                <rect key="frame" x="20" y="377" width="560" height="203"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="203" id="1J0-Kg-ono"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8JU-UY-cYf">
+                                <rect key="frame" x="300" y="300" width="0.0" height="0.0"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="Am5-Cl-vQD"/>
+                                    <constraint firstAttribute="width" id="HHc-Qf-yOr"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="textlogo" translatesAutoresizingMaskIntoConstraints="NO" id="DTa-aC-pAD">
+                                <rect key="frame" x="20" y="28" width="560" height="203"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="203" id="P8C-av-czL"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="8JU-UY-cYf" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="0Hd-cE-o3V"/>
+                            <constraint firstItem="Jbb-hP-jty" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="7jL-pE-2fW"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="8JU-UY-cYf" secondAttribute="bottom" constant="300" id="OH7-iD-r6G"/>
+                            <constraint firstItem="8JU-UY-cYf" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="OTh-f5-emt"/>
+                            <constraint firstItem="8JU-UY-cYf" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" constant="300" id="SlU-Xj-Cwk"/>
+                            <constraint firstItem="Jbb-hP-jty" firstAttribute="centerX" secondItem="8JU-UY-cYf" secondAttribute="centerX" id="WXS-sE-As6"/>
+                            <constraint firstItem="Jbb-hP-jty" firstAttribute="trailing" secondItem="DTa-aC-pAD" secondAttribute="trailing" id="ZuZ-nM-zR7"/>
+                            <constraint firstItem="Jbb-hP-jty" firstAttribute="leading" secondItem="DTa-aC-pAD" secondAttribute="leading" id="i8P-ie-bsB"/>
+                            <constraint firstItem="DTa-aC-pAD" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="8" symbolic="YES" id="uFc-go-Ngh"/>
+                            <constraint firstAttribute="bottom" secondItem="Jbb-hP-jty" secondAttribute="bottom" constant="20" symbolic="YES" id="zym-gQ-Nhi"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="53" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="splashlogo" width="465" height="398"/>
+        <image name="textlogo" width="319" height="207"/>
+    </resources>
+</document>
