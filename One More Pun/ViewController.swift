@@ -38,6 +38,8 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
         if segue.identifier == "infoSegue" {
             let vc = segue.destinationViewController as! InfoViewController
             vc.punString = punLabel.text!
+            vc.transferBGColor = self.view.backgroundColor!
+            
         }
     }
 

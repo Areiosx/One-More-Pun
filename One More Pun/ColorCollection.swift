@@ -44,7 +44,6 @@ struct ColorCollection {
         let unsignedArrayCount = UInt32(colorsArray.count)
         let unsignedRandomNumber = arc4random_uniform(unsignedArrayCount)
         let randomNumber = Int(unsignedRandomNumber)
-        
         return colorsArray[randomNumber]
     }
     

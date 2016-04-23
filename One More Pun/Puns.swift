@@ -16,7 +16,7 @@ struct Puns {
         "Grammar is so much more than Grampar's wife.",
         "Some guy just threw cheese at me. How dairy!",
         "There's a network in Australia called a LAN down under.",
-        "I went to the 50 Cent and Nickleback concert. It was only 45 cents.",
+        "50 Cent and Nickleback in concert? I wouldn't go if it only cost $.45!",
         "I usually take steps to avoid elevators.",
         "Santa's helpers? You mean subordinate Clauses.",
         "\"I'll never sleep on the railroad tracks again!\" Tom said, beside himself.",
@@ -32,6 +32,12 @@ struct Puns {
         "I need to find a new brand of diapers for my kid. These ones are so crappy.",      //submitted by lia g
         "Witches' parking only. All others will be toad.",
         "Have you heard of that new band Cellophane? They mostly wrap.",                    //submitted by lia g
+        "I wasn't originally going to get a brain transplant, but then I changed my mind.",
+        "I wondered why the baseball was getting bigger. Then it hit me.",
+        "Did you hear about the guy whose whole left side was cut off? He's all right now.",
+        "A friend of mine tried to annoy me with bird puns, but I soon realized that toucan play at that game."
+        
+        
     ]
     
     func randomPun() -> String {

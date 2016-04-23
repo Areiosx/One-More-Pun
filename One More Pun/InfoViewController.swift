@@ -13,10 +13,12 @@ import Social
 class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate {
     
     var punString = ""
+    var transferBGColor = UIColor()
     let colorCollection = ColorCollection()
     
     @IBOutlet weak var doneButtonColor: UIBarButtonItem!
     @IBOutlet weak var punLabel: UILabel!
+    @IBOutlet weak var rGBLabel: UILabel!
     @IBOutlet weak var feedbackButtonColor: UIButton!
     @IBOutlet weak var googleButtonColor: UIButton!
     @IBOutlet weak var facebookButtonColor: UIButton!
@@ -24,16 +26,20 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
     @IBOutlet weak var textButtonColor: UIButton!
 
     override func viewDidLoad() {
-        super.viewDidLoad()
-        let randomColor = colorCollection.randomColor()
+        let randomColorValues = CIColor(color: transferBGColor)
         punLabel.text = punString
-        view.backgroundColor = randomColor
-        doneButtonColor.tintColor = randomColor
-        feedbackButtonColor.tintColor = randomColor
-        googleButtonColor.tintColor = randomColor
-        facebookButtonColor.tintColor = randomColor
-        twitterButtonColor.tintColor = randomColor
-        textButtonColor.tintColor = randomColor
+        view.backgroundColor = transferBGColor
+        doneButtonColor.tintColor = transferBGColor
+        setButtonColor(feedbackButtonColor)
+        setButtonColor(googleButtonColor)
+        setButtonColor(facebookButtonColor)
+        setButtonColor(twitterButtonColor)
+        setButtonColor(textButtonColor)
+        rGBLabel.textColor = transferBGColor
+        rGBLabel.layer.cornerRadius = 11
+        rGBLabel.clipsToBounds = true
+        rGBLabel.backgroundColor = UIColor.whiteColor()
+        rGBLabel.text = " This background color's values are:        \nRed: \(Int(randomColorValues.red*255))\nGreen: \(Int(randomColorValues.green*255))\nBlue: \(Int(randomColorValues.blue*255))"
     }
 
     override func didReceiveMemoryWarning() {
@@ -166,4 +172,17 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    @IBAction func doneButtonPressed(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func setButtonColor(button: UIButton) {
+        button.tintColor = transferBGColor
+        button.layer.cornerRadius = 11
+        button.clipsToBounds = true
+        button.backgroundColor = UIColor.whiteColor()
+    }
+    
+    
     }
