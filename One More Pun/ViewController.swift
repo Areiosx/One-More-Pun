@@ -8,11 +8,13 @@
 
 import UIKit
 import MessageUI
+import Firebase
 
 class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
     let puns = Puns()
     let colorCollection = ColorCollection()
+    var user: FIRUser?
     
     @IBOutlet weak var punLabel: UILabel!
     @IBOutlet weak var submitterLabel: UILabel!
@@ -21,6 +23,15 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        FirebaseController.shared.getLoggedInUser { (user) in
+            self.user = user
+            if self.user == nil {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                guard let vc = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginViewController else { return }
+                self.presentViewController(vc, animated: true, completion: nil)
+            }
+        }
         let randomColor = colorCollection.randomColor()
         view.backgroundColor = randomColor
         infoButtonColor.tintColor = randomColor
@@ -32,8 +43,8 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
             rate.trackAppUsage()
         })
     }
-
-
+    
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "infoSegue" {
             let vc = segue.destinationViewController as! InfoViewController
@@ -42,11 +53,11 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
             
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
     @IBAction func nextPunButton(sender: AnyObject) {
         let randomColor = colorCollection.randomColor()
         view.backgroundColor = randomColor
@@ -67,6 +78,6 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
             return ""
         }
     }
-
+    
 }
 

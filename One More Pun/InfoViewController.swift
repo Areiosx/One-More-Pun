@@ -24,7 +24,7 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
     @IBOutlet weak var facebookButtonColor: UIButton!
     @IBOutlet weak var twitterButtonColor: UIButton!
     @IBOutlet weak var textButtonColor: UIButton!
-
+    
     override func viewDidLoad() {
         let randomColorValues = CIColor(color: transferBGColor)
         punLabel.text = punString
@@ -41,7 +41,7 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
         rGBLabel.backgroundColor = UIColor.whiteColor()
         rGBLabel.text = " This background color's values are:        \nRed: \(Int(randomColorValues.red*255))\nGreen: \(Int(randomColorValues.green*255))\nBlue: \(Int(randomColorValues.blue*255))"
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -69,7 +69,7 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
             let textFontAttributes = [
                 NSFontAttributeName: textFont,
                 NSForegroundColorAttributeName: textColor,
-            ]
+                ]
             inImage.drawInRect(CGRectMake(0, 0, inImage.size.width, inImage.size.height))
             let rect: CGRect = CGRectMake(atPoint.x, atPoint.y, inImage.size.width, inImage.size.height)
             drawText.drawInRect(rect, withAttributes: textFontAttributes)
@@ -108,7 +108,7 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
             let textFontAttributes = [
                 NSFontAttributeName: textFont,
                 NSForegroundColorAttributeName: textColor,
-            ]
+                ]
             inImage.drawInRect(CGRectMake(0, 0, inImage.size.width, inImage.size.height))
             let rect: CGRect = CGRectMake(atPoint.x, atPoint.y, inImage.size.width, inImage.size.height)
             drawText.drawInRect(rect, withAttributes: textFontAttributes)
@@ -185,4 +185,4 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
     }
     
     
-    }
+}

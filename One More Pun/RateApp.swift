@@ -135,16 +135,6 @@ class RateMyApp : UIViewController, UIAlertViewDelegate {
         if (alertMessage.characters.count == 0) {
             alertMessage = message
         }
-        if (!hasOSB()) {
-            let alert  = UIAlertView()
-            alert.title = alertTitle
-            alert.message = alertMessage
-            alert.addButtonWithTitle(alertCancelTitle)
-            alert.addButtonWithTitle(alertReminderTitle)
-            alert.addButtonWithTitle(alertOKTitle)
-            alert.delegate = self
-            alert.show()
-        } else {
             let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: alertOKTitle, style: .Destructive, handler: { alertAction in
                 self.okButtonPressed()
@@ -161,18 +151,6 @@ class RateMyApp : UIViewController, UIAlertViewDelegate {
             let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             let controller = appDelegate.window?.rootViewController
             controller?.presentViewController(alert, animated: true, completion: nil)
-        }
-    }
-    
-    internal func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        if (buttonIndex == 0) {
-            cancelButtonPressed()
-        } else if (buttonIndex == 1) {
-            remindLaterButtonPressed()
-        } else if (buttonIndex == 2) {
-            okButtonPressed()
-        }
-        alertView.dismissWithClickedButtonIndex(buttonIndex, animated: true)
     }
     
     private func deviceOSVersion() -> Float {
