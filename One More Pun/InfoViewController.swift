@@ -16,7 +16,7 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
     var transferBGColor = UIColor()
     let colorCollection = ColorCollection()
     
-    @IBOutlet weak var doneButtonColor: UIBarButtonItem!
+    @IBOutlet weak var doneButtonColor: UIButton!
     @IBOutlet weak var punLabel: UILabel!
     @IBOutlet weak var rGBLabel: UILabel!
     @IBOutlet weak var feedbackButtonColor: UIButton!
@@ -30,11 +30,7 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
         punLabel.text = punString
         view.backgroundColor = transferBGColor
         doneButtonColor.tintColor = transferBGColor
-        setButtonColor(feedbackButtonColor)
-        setButtonColor(googleButtonColor)
-        setButtonColor(facebookButtonColor)
-        setButtonColor(twitterButtonColor)
-        setButtonColor(textButtonColor)
+        setButtonAttributes([feedbackButtonColor, googleButtonColor, facebookButtonColor, twitterButtonColor, textButtonColor, doneButtonColor])
         rGBLabel.textColor = transferBGColor
         rGBLabel.layer.cornerRadius = 11
         rGBLabel.clipsToBounds = true
@@ -177,12 +173,12 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func setButtonColor(button: UIButton) {
-        button.tintColor = transferBGColor
-        button.layer.cornerRadius = 11
-        button.clipsToBounds = true
-        button.backgroundColor = UIColor.whiteColor()
+    func setButtonAttributes(buttons: [UIButton]) {
+        for button in buttons {
+            button.tintColor = transferBGColor
+            button.layer.cornerRadius = 11
+            button.clipsToBounds = true
+            button.backgroundColor = UIColor.whiteColor()
+        }
     }
-    
-    
 }

@@ -11,10 +11,55 @@ import UIKit
 class LoginViewController: UIViewController {
     
     let colorCollection = ColorCollection()
+    var backgroundColor: UIColor = .whiteColor()
+    var hasAccount: Bool = true {
+        didSet {
+            userHasAccount()
+        }
+    }
+    
+    @IBOutlet weak var signInLabel: UILabel!
+    @IBOutlet weak var haveAccountButton: UIButton!
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var goButton: UIButton!
+    
+    @IBAction func haveAccountButtonTapped(sender: AnyObject) {
+        hasAccount = !hasAccount
+    }
+    
+    @IBAction func goButtonTapped(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = colorCollection.randomColor()
+        backgroundColor = colorCollection.randomColor()
+        view.backgroundColor = backgroundColor
+        setButtonAttributes([haveAccountButton, goButton])
+        userHasAccount()
+    }
+    
+    func userHasAccount() {
+        if hasAccount {
+            signInLabel.text = "Log in"
+            haveAccountButton.setTitle("Don't have an account?", forState: .Normal)
+            nameTextField.hidden = true
+        } else {
+            signInLabel.text = "Sign up"
+            haveAccountButton.setTitle("Already have an account?", forState: .Normal)
+            nameTextField.hidden = false
+        }
+    }
+    
+    func setButtonAttributes(buttons: [UIButton]) {
+        for button in buttons {
+            button.tintColor = backgroundColor
+            button.layer.cornerRadius = 11
+            button.clipsToBounds = true
+            button.backgroundColor = UIColor.whiteColor()
+        }
     }
 }
