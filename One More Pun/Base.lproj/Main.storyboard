@@ -19,7 +19,6 @@
             <string>CoolveticaRg-Regular</string>
             <string>CoolveticaRg-Regular</string>
             <string>CoolveticaRg-Regular</string>
-            <string>CoolveticaRg-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -189,12 +188,6 @@
                                     <action selector="googleButton:" destination="FJ9-mt-Qcn" eventType="touchUpInside" id="Mdp-PG-MR8"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wxb-t6-X42">
-                                <rect key="frame" x="282" y="488" width="37" height="21"/>
-                                <fontDescription key="fontDescription" name="CoolveticaRg-Regular" family="Coolvetica" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aSz-Ip-lws">
                                 <rect key="frame" x="527" y="20" width="53" height="33"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -234,9 +227,7 @@
                             <constraint firstItem="aSz-Ip-lws" firstAttribute="top" secondItem="MeZ-2R-My2" secondAttribute="bottom" id="jBc-Na-OGW"/>
                             <constraint firstItem="evn-IZ-kPM" firstAttribute="centerX" secondItem="p2S-jz-vZE" secondAttribute="centerX" id="k22-lQ-ynl"/>
                             <constraint firstItem="3XL-1V-7Gi" firstAttribute="top" secondItem="lHH-te-sJr" secondAttribute="bottom" constant="8" id="lCU-aL-X70"/>
-                            <constraint firstItem="Gr2-0r-oQ1" firstAttribute="top" secondItem="Wxb-t6-X42" secondAttribute="bottom" constant="8" id="nSg-II-Dxd"/>
                             <constraint firstAttribute="trailing" secondItem="aSz-Ip-lws" secondAttribute="trailing" constant="20" id="nX8-SS-c4e"/>
-                            <constraint firstItem="Wxb-t6-X42" firstAttribute="centerX" secondItem="p2S-jz-vZE" secondAttribute="centerX" id="o6C-6i-gjd"/>
                             <constraint firstItem="Gr2-0r-oQ1" firstAttribute="centerX" secondItem="p2S-jz-vZE" secondAttribute="centerX" id="qlV-fu-AMQ"/>
                             <constraint firstItem="v6A-yY-7wr" firstAttribute="top" secondItem="aSz-Ip-lws" secondAttribute="bottom" constant="8" id="sS0-8a-O5N"/>
                             <constraint firstItem="lHH-te-sJr" firstAttribute="centerX" secondItem="p2S-jz-vZE" secondAttribute="centerX" id="wa1-9f-mzj"/>
@@ -250,7 +241,6 @@
                         <outlet property="feedbackButtonColor" destination="Fra-Bj-IuU" id="atw-5U-sHK"/>
                         <outlet property="googleButtonColor" destination="Gr2-0r-oQ1" id="HP4-cB-gct"/>
                         <outlet property="punLabel" destination="v6A-yY-7wr" id="sxE-mG-hj8"/>
-                        <outlet property="rGBLabel" destination="Wxb-t6-X42" id="4cD-Zv-wpv"/>
                         <outlet property="textButtonColor" destination="3XL-1V-7Gi" id="FUF-qu-aDV"/>
                         <outlet property="twitterButtonColor" destination="lHH-te-sJr" id="H4Q-ol-Z2d"/>
                     </connections>

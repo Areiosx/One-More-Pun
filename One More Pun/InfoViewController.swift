@@ -18,7 +18,6 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
     
     @IBOutlet weak var doneButtonColor: UIButton!
     @IBOutlet weak var punLabel: UILabel!
-    @IBOutlet weak var rGBLabel: UILabel!
     @IBOutlet weak var feedbackButtonColor: UIButton!
     @IBOutlet weak var googleButtonColor: UIButton!
     @IBOutlet weak var facebookButtonColor: UIButton!
@@ -26,20 +25,12 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
     @IBOutlet weak var textButtonColor: UIButton!
     
     override func viewDidLoad() {
-        let randomColorValues = CIColor(color: transferBGColor)
+        super.viewDidLoad()
+        
         punLabel.text = punString
         view.backgroundColor = transferBGColor
         doneButtonColor.tintColor = transferBGColor
         setButtonAttributes([feedbackButtonColor, googleButtonColor, facebookButtonColor, twitterButtonColor, textButtonColor, doneButtonColor])
-        rGBLabel.textColor = transferBGColor
-        rGBLabel.layer.cornerRadius = 11
-        rGBLabel.clipsToBounds = true
-        rGBLabel.backgroundColor = UIColor.whiteColor()
-        rGBLabel.text = " This background color's values are:        \nRed: \(Int(randomColorValues.red*255))\nGreen: \(Int(randomColorValues.green*255))\nBlue: \(Int(randomColorValues.blue*255))"
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
     
     @IBAction func facebookButton(sender: AnyObject) {
