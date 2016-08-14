@@ -10,6 +10,10 @@
 		03524D4C2D4D0C3F40063C1F /* Pods_One_More_Pun.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38E1755D49DA679101ACF2C8 /* Pods_One_More_Pun.framework */; };
 		6614F5BC1D5F80A100F150B5 /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614F5BB1D5F80A100F150B5 /* FirebaseController.swift */; };
 		6614F5C11D5F85B200F150B5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614F5C01D5F85B200F150B5 /* LoginViewController.swift */; };
+		6614F5C31D60E1EE00F150B5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614F5C21D60E1EE00F150B5 /* User.swift */; };
+		6614F5C61D60E64F00F150B5 /* Pun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614F5C51D60E64F00F150B5 /* Pun.swift */; };
+		6614F5C81D60E7BE00F150B5 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614F5C71D60E7BE00F150B5 /* UserController.swift */; };
+		6614F5CA1D60E7C500F150B5 /* PunController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614F5C91D60E7C500F150B5 /* PunController.swift */; };
 		66A167B51C1F136E0040E877 /* bluish.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 66A167B41C1F136E0040E877 /* bluish.jpg */; };
 		66A6D96A1D5D62FD00C74DB4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66A6D9691D5D62FD00C74DB4 /* GoogleService-Info.plist */; };
 		66D8CE8F1C14BAFE006BB37E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8CE8E1C14BAFE006BB37E /* AppDelegate.swift */; };
@@ -28,6 +32,10 @@
 		38E1755D49DA679101ACF2C8 /* Pods_One_More_Pun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_One_More_Pun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6614F5BB1D5F80A100F150B5 /* FirebaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
 		6614F5C01D5F85B200F150B5 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		6614F5C21D60E1EE00F150B5 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		6614F5C51D60E64F00F150B5 /* Pun.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pun.swift; sourceTree = "<group>"; };
+		6614F5C71D60E7BE00F150B5 /* UserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
+		6614F5C91D60E7C500F150B5 /* PunController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PunController.swift; sourceTree = "<group>"; };
 		66A167B41C1F136E0040E877 /* bluish.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bluish.jpg; sourceTree = "<group>"; };
 		66A6D9691D5D62FD00C74DB4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		66D8CE8B1C14BAFE006BB37E /* One More Pun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "One More Pun.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,8 +90,19 @@
 			isa = PBXGroup;
 			children = (
 				6614F5BB1D5F80A100F150B5 /* FirebaseController.swift */,
+				6614F5C71D60E7BE00F150B5 /* UserController.swift */,
+				6614F5C91D60E7C500F150B5 /* PunController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		6614F5C41D60E64100F150B5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6614F5C21D60E1EE00F150B5 /* User.swift */,
+				6614F5C51D60E64F00F150B5 /* Pun.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		66D8CE821C14BAFE006BB37E = {
@@ -111,6 +130,7 @@
 				6614F5BE1D5F80DE00F150B5 /* ViewController */,
 				6614F5BD1D5F80D400F150B5 /* Tools */,
 				6614F5BF1D5F80EA00F150B5 /* Controller */,
+				6614F5C41D60E64100F150B5 /* Model */,
 				66D8CE921C14BAFE006BB37E /* Main.storyboard */,
 				66D8CE951C14BAFE006BB37E /* Assets.xcassets */,
 				66A167B41C1F136E0040E877 /* bluish.jpg */,
@@ -267,11 +287,15 @@
 				66D8CEA71C14D456006BB37E /* RateApp.swift in Sources */,
 				6614F5BC1D5F80A100F150B5 /* FirebaseController.swift in Sources */,
 				66D8CE911C14BAFE006BB37E /* ViewController.swift in Sources */,
+				6614F5C81D60E7BE00F150B5 /* UserController.swift in Sources */,
 				66D8CEA31C14CB98006BB37E /* ColorCollection.swift in Sources */,
 				6614F5C11D5F85B200F150B5 /* LoginViewController.swift in Sources */,
+				6614F5C31D60E1EE00F150B5 /* User.swift in Sources */,
 				66D8CE8F1C14BAFE006BB37E /* AppDelegate.swift in Sources */,
 				66D8CEAB1C14EC35006BB37E /* InfoViewController.swift in Sources */,
+				6614F5CA1D60E7C500F150B5 /* PunController.swift in Sources */,
 				66D8CEA51C14CBA6006BB37E /* Puns.swift in Sources */,
+				6614F5C61D60E64F00F150B5 /* Pun.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

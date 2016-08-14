@@ -30,7 +30,20 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func goButtonTapped(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+        if !hasAccount {
+            guard let email = emailTextField.text,
+                password = passwordTextField.text,
+                name = nameTextField.text else { return }
+            UserController.shared.createUser(email, password: password, name: name, completion: { (user) in
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+        } else {
+            guard let email = emailTextField.text,
+                password = passwordTextField.text else { return }
+            UserController.shared.signInUser(email, password: password, completion: { (user) in
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+        }
     }
 
     override func viewDidLoad() {
