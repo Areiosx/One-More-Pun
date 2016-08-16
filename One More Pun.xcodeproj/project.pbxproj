@@ -89,9 +89,9 @@
 		6614F5BF1D5F80EA00F150B5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				6614F5BB1D5F80A100F150B5 /* FirebaseController.swift */,
 				6614F5C71D60E7BE00F150B5 /* UserController.swift */,
 				6614F5C91D60E7C500F150B5 /* PunController.swift */,
+				6614F5BB1D5F80A100F150B5 /* FirebaseController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";

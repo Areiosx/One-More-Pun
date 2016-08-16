@@ -7,26 +7,38 @@
 //
 
 import Foundation
+import Firebase
 
-class Pun {
+class Pun: FirebaseType {
     
     let body: String
-    let submitter: String
-    let uuid: NSUUID
-    let reportedCount: Int
-    private let bodyKey = "Body"
-    private let submitterKey = "Submitter"
-    private let uuidKey = "UUID"
-    private let reportedCountKey = "ReportedCount"
+    let submitter: FIRUser?
     
-    init?(json: [String: AnyObject]) {
-        guard let body = json[bodyKey] as? String,
-            submmitter = json[submitterKey] as? String,
-            uuid = json[uuidKey] as? NSUUID,
-            reportedCount = json[reportedCountKey] as? Int else { return nil }
+    private let bodyKey = "body"
+    private let submitterKey = "submitter"
+    
+    var endpoint: String {
+        return "puns"
+    }
+    
+    var identifier: String?
+    
+    var dictionaryCopy: [String : AnyObject] {
+        guard let submitter = submitter else { return [bodyKey: body] }
+        return [bodyKey: body, submitterKey: submitter]
+    }
+    
+    init(body: String, identifier: String = NSUUID().UUIDString) {
         self.body = body
-        self.submitter = submmitter
-        self.uuid = uuid
-        self.reportedCount = reportedCount
+        self.submitter = FIRAuth.auth()?.currentUser ?? nil
+        self.identifier = identifier
+    }
+    
+    required init?(dictionary: [String : AnyObject], identifier: String) {
+        guard let body = dictionary[bodyKey] as? String,
+            submitter = dictionary[submitterKey] as? FIRUser else { return nil }
+        self.body = body
+        self.submitter = submitter
+        self.identifier = identifier
     }
 }

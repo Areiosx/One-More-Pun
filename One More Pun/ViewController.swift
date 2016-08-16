@@ -12,7 +12,7 @@ import Firebase
 
 class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
-    let puns = Puns()
+    var puns = Puns()
     let colorCollection = ColorCollection()
     var user: FIRUser?
     
@@ -24,6 +24,10 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        PunController.observePuns { (puns) in
+            self.puns.punsArray = puns
+        }
+        
         FirebaseController.shared.getLoggedInUser { (user) in
             self.user = user
             if self.user == nil {
@@ -32,11 +36,9 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
                 self.presentViewController(vc, animated: true, completion: nil)
             }
         }
-        let randomColor = colorCollection.randomColor()
-        view.backgroundColor = randomColor
-        infoButtonColor.tintColor = randomColor
-        punLabel.text = puns.randomPun()
-        submitterLabel.text = submitterLabelText()
+        
+        getNewPunAndColor()
+        
         let rate = RateMyApp.sharedInstance
         rate.appID = "1008575898"
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -59,25 +61,25 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     @IBAction func nextPunButton(sender: AnyObject) {
+        getNewPunAndColor()
+    }
+    
+    func getNewPunAndColor() {
+        let pun = puns.randomPun()
         let randomColor = colorCollection.randomColor()
         view.backgroundColor = randomColor
         punButtonColor.tintColor = randomColor
         infoButtonColor.tintColor = randomColor
-        punLabel.text = puns.randomPun()
-        submitterLabel.text = submitterLabelText()
+        punLabel.text = pun.body
+        submitterLabel.text = submitterLabelText(pun)
     }
     
-    func submitterLabelText() -> String {
-        if punLabel.text == puns.punsArray[1] {
-            return "Submitted by Tom P."
-        } else if punLabel.text == puns.punsArray[16] {
-            return "Submitted by Jordan B."
-        } else if punLabel.text == puns.punsArray[19] || punLabel.text == puns.punsArray[21] {
-            return "Submitted by Lia G."
+    func submitterLabelText(pun: Pun) -> String {
+        if pun.submitter != nil {
+            return "Submitted by \(pun.submitter?.displayName)"
         } else {
             return ""
         }
     }
-    
 }
 
