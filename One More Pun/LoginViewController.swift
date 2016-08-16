@@ -77,7 +77,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         case emailTextField:
             passwordTextField.becomeFirstResponder()
         case passwordTextField:
-            retypePasswordTextField.becomeFirstResponder()
+            if hasAccount {
+                passwordTextField.resignFirstResponder()
+            } else {
+                retypePasswordTextField.becomeFirstResponder()
+            }
         case retypePasswordTextField:
             retypePasswordTextField.resignFirstResponder()
         default:

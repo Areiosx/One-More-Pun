@@ -96,9 +96,12 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     // MARK: - AlertController
     
     func presentSubmitPunAlert() {
-        let alert = UIAlertController(title: "Submit a pun?", message: "Enter a pun to submit!", preferredStyle: .Alert)
+        let alert = UIAlertController(title: "Got a pun?", message: "Submitting puns is punderful.", preferredStyle: .Alert)
         alert.addTextFieldWithConfigurationHandler { (punTextField) in
             punTextField.placeholder = "Enter pun here"
+            punTextField.autocorrectionType = .Yes
+            punTextField.autocapitalizationType = .Sentences
+            punTextField.spellCheckingType = .Yes
         }
         let submitAction = UIAlertAction(title: "Submit", style: .Default) { (_) in
             guard let textFields = alert.textFields,
