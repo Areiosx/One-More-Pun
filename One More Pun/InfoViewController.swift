@@ -13,13 +13,13 @@ import Social
 class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate {
     
     // TODO: - Carry pun object over and add reporting
-    var punString = ""
+    var pun = Pun(body: "")
     var transferBGColor = UIColor()
     let colorCollection = ColorCollection()
     
     @IBOutlet weak var doneButtonColor: UIButton!
-    @IBOutlet weak var punLabel: UILabel!
-    @IBOutlet weak var feedbackButtonColor: UIButton!
+    @IBOutlet weak var punLabel: UILabel!    
+    @IBOutlet weak var reportButtonColor: UIButton!
     @IBOutlet weak var googleButtonColor: UIButton!
     @IBOutlet weak var facebookButtonColor: UIButton!
     @IBOutlet weak var twitterButtonColor: UIButton!
@@ -28,10 +28,10 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        punLabel.text = punString
+        punLabel.text = PunController.getPunTextAndSubmitter(pun)
         view.backgroundColor = transferBGColor
         doneButtonColor.tintColor = transferBGColor
-        setButtonAttributes([feedbackButtonColor, googleButtonColor, facebookButtonColor, twitterButtonColor, textButtonColor, doneButtonColor])
+        setButtonAttributes([reportButtonColor, googleButtonColor, facebookButtonColor, twitterButtonColor, textButtonColor, doneButtonColor])
     }
     
     @IBAction func facebookButton(sender: AnyObject) {
@@ -68,7 +68,8 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
         
         let shareToFacebook: SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
         self.presentViewController(shareToFacebook, animated: true, completion: nil)
-        shareToFacebook.addImage(textToImage(punString, inImage: getImageWithColor (randomBGColor, size: imageSize), atPoint: point))
+        let punText = PunController.getPunTextAndSubmitter(pun)
+        shareToFacebook.addImage(textToImage(punText, inImage: getImageWithColor (randomBGColor, size: imageSize), atPoint: point))
         shareToFacebook.setInitialText("Shared via One More Pun!")
         shareToFacebook.addURL(NSURL(string: "http://tinyurl.com/OneMorePun"))
     }
@@ -87,7 +88,7 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
             let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             return image
-        }
+        }        
         
         func textToImage(drawText: NSString, inImage: UIImage, atPoint: CGPoint) -> UIImage {
             let textColor: UIColor = UIColor.whiteColor()
@@ -107,14 +108,14 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
         
         let shareToTwitter: SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
         self.presentViewController(shareToTwitter, animated: true, completion: nil)
-        shareToTwitter.addImage(textToImage(punString, inImage: getImageWithColor (randomBGColor, size: imageSize), atPoint: point))
+        shareToTwitter.addImage(textToImage("\(pun.body)\nSubmitted by \(pun.submitter)", inImage: getImageWithColor (randomBGColor, size: imageSize), atPoint: point))
         shareToTwitter.setInitialText("Shared via One More Pun!")
         shareToTwitter.addURL(NSURL(string: "http://tinyurl.com/OneMorePun"))
     }
     
     @IBAction func textButton(sender: AnyObject) {
         let messageVC = MFMessageComposeViewController()
-        messageVC.body = "\(punString)"
+        messageVC.body = "\(pun)"
         messageVC.recipients = []
         messageVC.messageComposeDelegate = self
         self.presentViewController(messageVC, animated: true, completion: nil)
@@ -137,16 +138,16 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
     }
     
     @IBAction func googleButton(sender: AnyObject) {
-        let replaced = punString.stringByReplacingOccurrencesOfString(" ", withString: "+")
+        let replaced = pun.body.stringByReplacingOccurrencesOfString(" ", withString: "+")
         if let url = NSURL(string: "http://lmgtfy.com/?q=\(replaced)") {
             UIApplication.sharedApplication().openURL(url)
         }
         print(replaced)
     }
     
-    @IBAction func feedbackButton(sender: AnyObject) {
-        let emailTitle = "Feedback"
-        let messageBody = "Submit a pun or bug report?"
+    @IBAction func reportButtonTapped(sender: AnyObject) {
+        let emailTitle = "Report"
+        let messageBody = "Submit a pun or bug report?\n\n\(PunController.getPunTextAndSubmitter(pun))\n\n"
         let toRecipients = ["OneMorePun@gmail.com"]
         let mc: MFMailComposeViewController = MFMailComposeViewController()
         mc.mailComposeDelegate = self

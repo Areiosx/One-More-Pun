@@ -15,6 +15,13 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     var puns = Puns()
     let colorCollection = ColorCollection()
     var user: FIRUser?
+    var pun = Pun(body: "")
+    
+    var retrievingFromNetwork: Bool = false {
+        didSet {
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = retrievingFromNetwork
+        }
+    }
     
     @IBOutlet weak var punLabel: UILabel!
     @IBOutlet weak var submitterLabel: UILabel!
@@ -27,7 +34,12 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
         super.viewDidLoad()
         
         PunController.observePuns { (puns) in
+            self.retrievingFromNetwork = true
             self.puns.punsArray = puns
+            dispatch_async(dispatch_get_main_queue(), { 
+                self.getNewPunAndColor()
+                self.retrievingFromNetwork = false
+            })
         }
         
         FirebaseController.shared.getLoggedInUser { (user) in
@@ -38,8 +50,6 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
                 self.presentViewController(vc, animated: true, completion: nil)
             }
         }
-        
-        getNewPunAndColor()
         
         let rate = RateMyApp.sharedInstance
         rate.appID = "1008575898"
@@ -52,14 +62,10 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "infoSegue" {
             let vc = segue.destinationViewController as! InfoViewController
-            vc.punString = punLabel.text!
+            vc.pun = pun
             vc.transferBGColor = self.view.backgroundColor!
             
         }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
     
     @IBAction func nextPunButton(sender: AnyObject) {
@@ -71,7 +77,7 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     func getNewPunAndColor() {
-        let pun = puns.randomPun()
+        pun = puns.randomPun()
         setUpColor()
         punLabel.text = pun.body
         submitterLabel.text = submitterLabelText(pun)

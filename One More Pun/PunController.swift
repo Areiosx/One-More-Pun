@@ -27,4 +27,12 @@ struct PunController {
             completion(puns: puns)
         })
     }
+    
+    static func getPunTextAndSubmitter(pun: Pun) -> String {
+        if let submitter = pun.submitter {
+            return "\(pun.body)\nSubmitted by \(submitter)"
+        } else {
+            return pun.body
+        }
+    }
 }

@@ -102,7 +102,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.35817592850000002" green="0.96862745100000003" blue="0.93278399690000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ryn-S2-qdx" firstAttribute="top" secondItem="JoX-1V-9ul" secondAttribute="bottom" constant="8" id="1hR-PD-wdA"/>
                             <constraint firstItem="Rvx-0G-hzX" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="1vS-4Z-Hir"/>
@@ -193,9 +193,9 @@
                                     <constraint firstAttribute="width" constant="90" id="na0-YW-dnD"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="CoolveticaRg-Regular" family="Coolvetica" pointSize="12"/>
-                                <state key="normal" title="Leave feedback!"/>
+                                <state key="normal" title="Report"/>
                                 <connections>
-                                    <action selector="feedbackButton:" destination="FJ9-mt-Qcn" eventType="touchUpInside" id="HcN-Lo-iGW"/>
+                                    <action selector="reportButtonTapped:" destination="FJ9-mt-Qcn" eventType="touchUpInside" id="iaC-ZS-iQb"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gr2-0r-oQ1">
@@ -234,7 +234,6 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.99607843139999996" green="0.79215686269999996" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="lHH-te-sJr" firstAttribute="top" secondItem="evn-IZ-kPM" secondAttribute="bottom" constant="8" id="Bgg-tv-l2u"/>
                             <constraint firstItem="evn-IZ-kPM" firstAttribute="top" secondItem="v6A-yY-7wr" secondAttribute="bottom" constant="8" id="H3P-FM-9S8"/>
@@ -261,9 +260,9 @@
                     <connections>
                         <outlet property="doneButtonColor" destination="aSz-Ip-lws" id="7uM-dS-cUM"/>
                         <outlet property="facebookButtonColor" destination="evn-IZ-kPM" id="HXJ-qk-rBM"/>
-                        <outlet property="feedbackButtonColor" destination="Fra-Bj-IuU" id="atw-5U-sHK"/>
                         <outlet property="googleButtonColor" destination="Gr2-0r-oQ1" id="HP4-cB-gct"/>
                         <outlet property="punLabel" destination="v6A-yY-7wr" id="sxE-mG-hj8"/>
+                        <outlet property="reportButtonColor" destination="Fra-Bj-IuU" id="2dM-7A-0Wu"/>
                         <outlet property="textButtonColor" destination="3XL-1V-7Gi" id="FUF-qu-aDV"/>
                         <outlet property="twitterButtonColor" destination="lHH-te-sJr" id="H4Q-ol-Z2d"/>
                     </connections>
@@ -360,7 +359,6 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="BhM-Y5-0Wj" firstAttribute="centerX" secondItem="O2p-gr-VOF" secondAttribute="centerX" id="05k-yP-lLA"/>
