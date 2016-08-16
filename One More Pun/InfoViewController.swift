@@ -174,4 +174,6 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
             button.backgroundColor = UIColor.whiteColor()
         }
     }
+    
+    // MARK: - UIAlertController
 }

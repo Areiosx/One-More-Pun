@@ -13,9 +13,11 @@ class Pun: FirebaseType {
     
     let body: String
     let submitter: String?
+    var reportedCount: Int
     
     private let bodyKey = "body"
     private let submitterKey = "submitter"
+    private let reportedCountKey = "reportedCount"
     
     var endpoint: String {
         return "puns"
@@ -28,16 +30,19 @@ class Pun: FirebaseType {
         return [bodyKey: body, submitterKey: submitter]
     }
     
-    init(body: String, identifier: String = NSUUID().UUIDString) {
+    init(body: String, reportedCount: Int = 0, identifier: String = NSUUID().UUIDString) {
         self.body = body
+        self.reportedCount = reportedCount
         self.submitter = FIRAuth.auth()?.currentUser?.displayName ?? nil
         self.identifier = identifier
     }
     
     required init?(dictionary: [String : AnyObject], identifier: String) {
         guard let body = dictionary[bodyKey] as? String,
+            reportedCount = dictionary[reportedCountKey] as? Int,
             submitter = dictionary[submitterKey] as? String else { return nil }
         self.body = body
+        self.reportedCount = reportedCount
         self.submitter = submitter
         self.identifier = identifier
     }

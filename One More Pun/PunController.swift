@@ -12,6 +12,7 @@ import Firebase
 struct PunController {
     
     static let punsPathString = "puns"
+    static let reportedCountKey = "reportedCount"
     
     static func createPun(body: String) {
         let punIdentifier = FirebaseController.ref.child(PunController.punsPathString).childByAutoId().key
@@ -26,6 +27,13 @@ struct PunController {
             let puns = punsDict.flatMap { Pun(dictionary: $1, identifier: $0) }
             completion(puns: puns)
         })
+    }
+    
+    static func reportPun(pun: Pun, completion: () -> Void) {
+        guard let identifier = pun.identifier else { return }
+        let reports = pun.reportedCount + 1
+        let childUpdates = ["/\(pun.endpoint)/\(identifier)/\(PunController.reportedCountKey)": reports]
+        FirebaseController.ref.updateChildValues(childUpdates)
     }
     
     static func getPunTextAndSubmitter(pun: Pun) -> String {

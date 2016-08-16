@@ -14,7 +14,6 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
     var puns = Puns()
     let colorCollection = ColorCollection()
-    var user: FIRUser?
     var pun = Pun(body: "")
     
     var retrievingFromNetwork: Bool = false {
@@ -43,8 +42,7 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
         }
         
         FirebaseController.shared.getLoggedInUser { (user) in
-            self.user = user
-            if self.user == nil {
+            if user == nil {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 guard let vc = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginViewController else { return }
                 self.presentViewController(vc, animated: true, completion: nil)
