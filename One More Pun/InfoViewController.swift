@@ -12,6 +12,7 @@ import Social
 
 class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate {
     
+    // TODO: - Carry pun object over and add reporting
     var punString = ""
     var transferBGColor = UIColor()
     let colorCollection = ColorCollection()

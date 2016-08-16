@@ -194,6 +194,7 @@
 				TargetAttributes = {
 					66D8CE8A1C14BAFE006BB37E = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = B24U63J96U;
 					};
 				};
 			};
@@ -409,6 +410,7 @@
 			baseConfigurationReference = B4411F59A27C5AA05EB70F21 /* Pods-One More Pun.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "One More Pun/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -422,6 +424,7 @@
 			baseConfigurationReference = EA2FAB4BC792FCBCC886FB31 /* Pods-One More Pun.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "One More Pun/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
