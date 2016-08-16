@@ -1,14 +1,14 @@
 //
-//  LoginViewController.swift
+//  LoginTableViewController.swift
 //  One More Pun
 //
-//  Created by Nicholas Laughter on 8/13/16.
+//  Created by Nicholas Laughter on 8/16/16.
 //  Copyright © 2016 Areios. All rights reserved.
 //
 
 import UIKit
 
-class LoginViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegate {
+class LoginTableViewController: UITableViewController {
     
     let colorCollection = ColorCollection()
     var backgroundColor: UIColor = .whiteColor()
