@@ -9,7 +9,9 @@
 import Foundation
 
 struct Puns {
-    var punsArray = [Pun]()
+    var punsArray: [Pun] = [
+        Pun(body: "No puns right now. Tap the + to submit one!")
+    ]
     
     func randomPun() -> Pun {
         let randomNumber  = Int(arc4random_uniform(UInt32(punsArray.count)))
