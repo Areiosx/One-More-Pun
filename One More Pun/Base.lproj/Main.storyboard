@@ -297,22 +297,39 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="FMx-Cw-JfE">
-                                <rect key="frame" x="20" y="271" width="560" height="106"/>
+                                <rect key="frame" x="20" y="271" width="560" height="144"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First name and last initial (John D.)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="k8K-Hd-dyr">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" spellCheckingType="no" keyboardType="alphabet" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="gI5-Mx-ElZ" id="vxL-Vx-smQ"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gpd-mk-rgO">
                                         <rect key="frame" x="0.0" y="38" width="560" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="gI5-Mx-ElZ" id="qLb-Cf-rAN"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aha-6M-vJ2">
                                         <rect key="frame" x="0.0" y="76" width="560" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" returnKeyType="go" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="gI5-Mx-ElZ" id="a5r-wc-Ijs"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Re-type password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cmx-5G-wEH">
+                                        <rect key="frame" x="0.0" y="114" width="560" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="gI5-Mx-ElZ" id="J2b-jJ-bvR"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                             </stackView>
@@ -330,7 +347,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AO8-Zx-btA">
-                                <rect key="frame" x="219" y="385" width="163" height="30"/>
+                                <rect key="frame" x="219" y="423" width="163" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="163" id="jqk-ho-5fQ"/>
@@ -364,6 +381,7 @@
                         <outlet property="haveAccountButton" destination="AO8-Zx-btA" id="S84-9M-yCa"/>
                         <outlet property="nameTextField" destination="k8K-Hd-dyr" id="coJ-Gt-0Gb"/>
                         <outlet property="passwordTextField" destination="aha-6M-vJ2" id="amY-9Z-iVL"/>
+                        <outlet property="retypePasswordTextField" destination="Cmx-5G-wEH" id="qmj-jU-hgw"/>
                         <outlet property="signInLabel" destination="BcB-Tc-tPm" id="PwG-yT-lP9"/>
                     </connections>
                 </viewController>
