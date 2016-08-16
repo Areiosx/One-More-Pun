@@ -30,9 +30,11 @@ struct PunController {
     }
     
     static func reportPun(pun: Pun, completion: () -> Void) {
-        guard let identifier = pun.identifier else { return }
-        let reports = pun.reportedCount + 1
-        let childUpdates = ["/\(pun.endpoint)/\(identifier)/\(PunController.reportedCountKey)": reports]
+        guard let identifier = pun.identifier,
+            currentUser = FIRAuth.auth()?.currentUser else { return }
+        let reports = "\(pun.reportedCount + 1)"
+        let childUpdates: [NSObject: AnyObject] = ["/\(pun.endpoint)/\(identifier)/\(PunController.reportedCountKey)": reports,
+                            "/\(pun.endpoint)/\(identifier)/\(PunController.reportedCountKey)/\(reports)": currentUser.uid]
         FirebaseController.ref.updateChildValues(childUpdates)
     }
     

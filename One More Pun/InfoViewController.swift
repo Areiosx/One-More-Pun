@@ -9,6 +9,7 @@
 import UIKit
 import MessageUI
 import Social
+import Firebase
 
 class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate {
     
@@ -175,5 +176,36 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
         }
     }
     
+    func checkIfUserHadReportedPun(pun: Pun) {
+        let reporters = Array(pun.reportedDict.values)
+        for reporter in reporters {
+            let currentUser = FIRAuth.auth()?.currentUser
+            if reporter == currentUser?.uid {
+                reportButtonColor.hidden = true
+            }
+        }
+    }
+    
     // MARK: - UIAlertController
+    
+    func presentReportPunAlert() {
+        let alert = UIAlertController(title: "Report pun?", message: "Only use this feature if you want to report this pun as inappropriate.", preferredStyle: .Alert)
+        let reportAction = UIAlertAction(title: "Report", style: .Destructive) { (_) in
+            PunController.reportPun(self.pun, completion: {
+                self.reportButtonColor.hidden = true
+                self.presentPunReportedConfirmation()
+            })
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+        alert.addAction(reportAction)
+        alert.addAction(cancelAction)
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func presentPunReportedConfirmation() {
+        let alert = UIAlertController(title: "Pun Reported", message: "Your complaint has been recorded. Thank you for keeping One More Pun awesome!", preferredStyle: .Alert)
+        let okayAction = UIAlertAction(title: "Okay", style: .Default, handler: nil)
+        alert.addAction(okayAction)
+        presentViewController(alert, animated: true, completion: nil)
+    }
 }

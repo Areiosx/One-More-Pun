@@ -9,13 +9,14 @@
 import Foundation
 
 struct Puns {
-    var punsArray: [Pun] = [
-        Pun(body: "No puns right now. Tap the + to submit one!")
-    ]
+    var punsArray: [Pun] = []
     
     func randomPun() -> Pun {
-        let randomNumber  = Int(arc4random_uniform(UInt32(punsArray.count)))
-        return punsArray[randomNumber]
+        if punsArray.count == 0 {
+            return Pun(body: "No puns right now. Go ahead and submit one!")
+        } else {
+            let randomNumber = Int(arc4random_uniform(UInt32(punsArray.count)))
+            return punsArray[randomNumber]
+        }
     }
-    
 }

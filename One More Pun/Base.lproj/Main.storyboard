@@ -102,7 +102,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="0.92887479029999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="ryn-S2-qdx" firstAttribute="top" secondItem="JoX-1V-9ul" secondAttribute="bottom" constant="8" id="1hR-PD-wdA"/>
                             <constraint firstItem="Rvx-0G-hzX" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="1vS-4Z-Hir"/>
@@ -132,7 +132,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2084" y="315"/>
+            <point key="canvasLocation" x="2138" y="315"/>
         </scene>
         <!--Info View Controller-->
         <scene sceneID="FNe-DJ-86l">
