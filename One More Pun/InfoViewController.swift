@@ -11,7 +11,7 @@ import MessageUI
 import Social
 import Firebase
 
-class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate {
+class InfoViewController: UIViewController, MFMessageComposeViewControllerDelegate {
     
     // TODO: - Carry pun object over and add reporting
     var pun = Pun(body: "")
@@ -109,14 +109,16 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
         
         let shareToTwitter: SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
         self.presentViewController(shareToTwitter, animated: true, completion: nil)
-        shareToTwitter.addImage(textToImage("\(pun.body)\nSubmitted by \(pun.submitter)", inImage: getImageWithColor (randomBGColor, size: imageSize), atPoint: point))
+        let punText = PunController.getPunTextAndSubmitter(pun)
+        shareToTwitter.addImage(textToImage(punText, inImage: getImageWithColor (randomBGColor, size: imageSize), atPoint: point))
         shareToTwitter.setInitialText("Shared via One More Pun!")
         shareToTwitter.addURL(NSURL(string: "http://tinyurl.com/OneMorePun"))
     }
     
     @IBAction func textButton(sender: AnyObject) {
         let messageVC = MFMessageComposeViewController()
-        messageVC.body = "\(pun)"
+        let punText = PunController.getPunTextAndSubmitter(pun)
+        messageVC.body = punText
         messageVC.recipients = []
         messageVC.messageComposeDelegate = self
         self.presentViewController(messageVC, animated: true, completion: nil)
