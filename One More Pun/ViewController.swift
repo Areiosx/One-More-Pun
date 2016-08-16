@@ -67,7 +67,7 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     @IBAction func addPunButtonTapped(sender: AnyObject) {
-        presentSubmitPunAlert()
+        presentSubmitPunAlert(nil)
     }
     
     func getNewPunAndColor() {
@@ -95,10 +95,11 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
     // MARK: - AlertController
     
-    func presentSubmitPunAlert() {
+    func presentSubmitPunAlert(storedPun: String?) {
         let alert = UIAlertController(title: "Got a pun?", message: "Submitting puns is punderful.", preferredStyle: .Alert)
         alert.addTextFieldWithConfigurationHandler { (punTextField) in
             punTextField.placeholder = "Enter pun here"
+            punTextField.text = storedPun
             punTextField.autocorrectionType = .Yes
             punTextField.autocapitalizationType = .Sentences
             punTextField.spellCheckingType = .Yes
@@ -107,11 +108,24 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
             guard let textFields = alert.textFields,
                 punTextField = textFields.first,
                 punText = punTextField.text else { return }
-            PunController.createPun(punText)
+            self.presentSubmitPunConfirmationAlert(punText)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         alert.addAction(submitAction)
         alert.addAction(cancelAction)
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func presentSubmitPunConfirmationAlert(punBody: String) {
+        let alert = UIAlertController(title: "All done?", message: "This is your pun:\n\(punBody)", preferredStyle: .Alert)
+        let submitAction = UIAlertAction(title: "Looks good!", style: .Default) { (_) in
+            PunController.createPun(punBody)
+        }
+        let reEnterAction = UIAlertAction(title: "Re-enter", style: .Cancel) { (_) in
+            self.presentSubmitPunAlert(punBody)
+        }
+        alert.addAction(submitAction)
+        alert.addAction(reEnterAction)
         presentViewController(alert, animated: true, completion: nil)
     }
 }
