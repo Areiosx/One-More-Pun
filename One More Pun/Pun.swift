@@ -12,7 +12,7 @@ import Firebase
 class Pun: FirebaseType {
     
     let body: String
-    let submitter: FIRUser?
+    let submitter: String?
     
     private let bodyKey = "body"
     private let submitterKey = "submitter"
@@ -30,13 +30,13 @@ class Pun: FirebaseType {
     
     init(body: String, identifier: String = NSUUID().UUIDString) {
         self.body = body
-        self.submitter = FIRAuth.auth()?.currentUser ?? nil
+        self.submitter = FIRAuth.auth()?.currentUser?.displayName ?? nil
         self.identifier = identifier
     }
     
     required init?(dictionary: [String : AnyObject], identifier: String) {
         guard let body = dictionary[bodyKey] as? String,
-            submitter = dictionary[submitterKey] as? FIRUser else { return nil }
+            submitter = dictionary[submitterKey] as? String else { return nil }
         self.body = body
         self.submitter = submitter
         self.identifier = identifier

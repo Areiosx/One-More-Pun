@@ -20,6 +20,8 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet weak var submitterLabel: UILabel!
     @IBOutlet weak var punButtonColor: UIButton!
     @IBOutlet weak var infoButtonColor: UIButton!
+    @IBOutlet weak var addPunButtonColor: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,22 +66,50 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
         getNewPunAndColor()
     }
     
+    @IBAction func addPunButtonTapped(sender: AnyObject) {
+        presentSubmitPunAlert()
+    }
+    
     func getNewPunAndColor() {
         let pun = puns.randomPun()
-        let randomColor = colorCollection.randomColor()
-        view.backgroundColor = randomColor
-        punButtonColor.tintColor = randomColor
-        infoButtonColor.tintColor = randomColor
+        setUpColor()
         punLabel.text = pun.body
         submitterLabel.text = submitterLabelText(pun)
     }
     
+    func setUpColor() {
+        let color = colorCollection.randomColor()
+        view.backgroundColor = color
+        punButtonColor.tintColor = color
+        infoButtonColor.tintColor = color
+        addPunButtonColor.tintColor = color
+    }
+    
     func submitterLabelText(pun: Pun) -> String {
-        if pun.submitter != nil {
-            return "Submitted by \(pun.submitter?.displayName)"
+        if let submitter = pun.submitter {
+            return "Submitted by \(submitter)"
         } else {
             return ""
         }
+    }
+    
+    // MARK: - AlertController
+    
+    func presentSubmitPunAlert() {
+        let alert = UIAlertController(title: "Submit a pun?", message: "Enter a pun to submit!", preferredStyle: .Alert)
+        alert.addTextFieldWithConfigurationHandler { (punTextField) in
+            punTextField.placeholder = "Enter pun here"
+        }
+        let submitAction = UIAlertAction(title: "Submit", style: .Default) { (_) in
+            guard let textFields = alert.textFields,
+                punTextField = textFields.first,
+                punText = punTextField.text else { return }
+            PunController.createPun(punText)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        alert.addAction(submitAction)
+        alert.addAction(cancelAction)
+        presentViewController(alert, animated: true, completion: nil)
     }
 }
 

@@ -172,23 +172,4 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
             button.backgroundColor = UIColor.whiteColor()
         }
     }
-    
-    // MARK: - AlertController
-    
-    func presentSubmitPunAlert() {
-        let alert = UIAlertController(title: "Submit a pun?", message: "Enter a pun to submit!", preferredStyle: .Alert)
-        alert.addTextFieldWithConfigurationHandler { (punTextField) in
-            punTextField.placeholder = "Enter pun here"
-        }
-        let submitAction = UIAlertAction(title: "Submit", style: .Default) { (_) in
-            guard let textFields = alert.textFields,
-                punTextField = textFields.first,
-                punText = punTextField.text else { return }
-            PunController.createPun(punText)
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-        alert.addAction(submitAction)
-        alert.addAction(cancelAction)
-        presentViewController(alert, animated: true, completion: nil)
-    }
 }
