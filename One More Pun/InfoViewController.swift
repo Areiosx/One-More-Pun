@@ -147,16 +147,7 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
     }
     
     @IBAction func reportButtonTapped(sender: AnyObject) {
-        let emailTitle = "Report"
-        let messageBody = "Submit a pun or bug report?\n\n\(PunController.getPunTextAndSubmitter(pun))\n\n"
-        let toRecipients = ["OneMorePun@gmail.com"]
-        let mc: MFMailComposeViewController = MFMailComposeViewController()
-        mc.mailComposeDelegate = self
-        mc.setSubject(emailTitle)
-        mc.setMessageBody(messageBody, isHTML: false)
-        mc.setToRecipients(toRecipients)
-        
-        self.presentViewController(mc, animated: true, completion: nil)
+        presentReportPunAlert()
     }
     
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
@@ -173,16 +164,6 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
             button.layer.cornerRadius = 11
             button.clipsToBounds = true
             button.backgroundColor = UIColor.whiteColor()
-        }
-    }
-    
-    func checkIfUserHadReportedPun(pun: Pun) {
-        let reporters = Array(pun.reportedDict.values)
-        for reporter in reporters {
-            let currentUser = FIRAuth.auth()?.currentUser
-            if reporter == currentUser?.uid {
-                reportButtonColor.hidden = true
-            }
         }
     }
     

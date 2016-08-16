@@ -16,7 +16,7 @@ struct PunController {
     
     static func createPun(body: String) {
         let punIdentifier = FirebaseController.ref.child(PunController.punsPathString).childByAutoId().key
-        var pun = Pun(body: body, identifier: punIdentifier)
+        var pun = Pun(body: body, reportedCount: 0, identifier: punIdentifier)
         pun.save()
     }
     

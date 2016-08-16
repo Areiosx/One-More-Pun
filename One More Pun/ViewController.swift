@@ -14,7 +14,7 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
     var puns = Puns()
     let colorCollection = ColorCollection()
-    var pun = Pun(body: "")
+    var pun = Pun(body: "", reportedCount: [:])
     
     var retrievingFromNetwork: Bool = false {
         didSet {
