@@ -172,10 +172,9 @@ class InfoViewController: UIViewController, MFMailComposeViewControllerDelegate,
     func presentReportPunAlert() {
         let alert = UIAlertController(title: "Report pun?", message: "Only use this feature if you want to report this pun as inappropriate.", preferredStyle: .Alert)
         let reportAction = UIAlertAction(title: "Report", style: .Destructive) { (_) in
-            PunController.reportPun(self.pun, completion: {
-                self.reportButtonColor.hidden = true
-                self.presentPunReportedConfirmation()
-            })
+            PunController.reportPun(self.pun)
+            self.reportButtonColor.hidden = true
+            self.presentPunReportedConfirmation()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
         alert.addAction(reportAction)

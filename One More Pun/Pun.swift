@@ -27,7 +27,7 @@ class Pun: FirebaseType {
     
     var dictionaryCopy: [String : AnyObject] {
         guard let submitter = submitter else { return [bodyKey: body] }
-        return [bodyKey: body, submitterKey: submitter]
+        return [bodyKey: body, reportedCountKey: reportedCount, submitterKey: submitter]
     }
     
     init(body: String, reportedCount: Int = 0, identifier: String = NSUUID().UUIDString) {

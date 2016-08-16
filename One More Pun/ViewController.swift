@@ -14,7 +14,7 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
     var puns = Puns()
     let colorCollection = ColorCollection()
-    var pun = Pun(body: "", reportedCount: [:])
+    var pun = Pun(body: "")
     
     var retrievingFromNetwork: Bool = false {
         didSet {
@@ -31,6 +31,9 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        infoButtonColor.hidden = true
+        addPunButtonColor.hidden = true
         
         PunController.observePuns { (puns) in
             self.retrievingFromNetwork = true
@@ -85,7 +88,9 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
         let color = colorCollection.randomColor()
         view.backgroundColor = color
         punButtonColor.tintColor = color
+        infoButtonColor.hidden = false
         infoButtonColor.tintColor = color
+        addPunButtonColor.hidden = false
         addPunButtonColor.tintColor = color
     }
     
