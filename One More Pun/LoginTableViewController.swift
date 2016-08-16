@@ -132,6 +132,7 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         cell.backgroundColor = backgroundColor
+        cell.selectionStyle = .None
     }
     
     // MARK: - AlertController
