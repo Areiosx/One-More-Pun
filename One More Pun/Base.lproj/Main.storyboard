@@ -310,7 +310,7 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gpd-mk-rgO">
                                         <rect key="frame" x="0.0" y="38" width="560" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="gI5-Mx-ElZ" id="qLb-Cf-rAN"/>
                                         </connections>
@@ -361,6 +361,7 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="BhM-Y5-0Wj" firstAttribute="centerX" secondItem="O2p-gr-VOF" secondAttribute="centerX" id="05k-yP-lLA"/>
                             <constraint firstItem="FMx-Cw-JfE" firstAttribute="top" secondItem="BcB-Tc-tPm" secondAttribute="bottom" constant="8" id="3kW-Np-oKD"/>
@@ -374,6 +375,9 @@
                             <constraint firstItem="GbX-Jo-O95" firstAttribute="top" secondItem="eC3-CJ-968" secondAttribute="bottom" constant="20" id="oHu-Ta-8zh"/>
                             <constraint firstItem="BcB-Tc-tPm" firstAttribute="centerX" secondItem="O2p-gr-VOF" secondAttribute="centerX" id="z80-Ui-uN6"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="2m7-oj-EFG" appends="YES" id="HWi-ak-5vQ"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="emailTextField" destination="Gpd-mk-rgO" id="aAQ-Ii-eFg"/>
@@ -386,6 +390,12 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Et-DO-jde" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="2m7-oj-EFG">
+                    <connections>
+                        <action selector="screenTapped:" destination="gI5-Mx-ElZ" id="ZuJ-8U-auS"/>
+                        <outlet property="delegate" destination="gI5-Mx-ElZ" id="IqR-hw-6XO"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1282" y="315"/>
         </scene>

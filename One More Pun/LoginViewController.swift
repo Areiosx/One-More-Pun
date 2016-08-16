@@ -26,25 +26,37 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var retypePasswordTextField: UITextField!
     @IBOutlet weak var goButton: UIButton!
     
+    @IBAction func screenTapped(sender: AnyObject) {
+        resignFirstResponders()
+    }
+    
     @IBAction func haveAccountButtonTapped(sender: AnyObject) {
         hasAccount = !hasAccount
     }
     
     @IBAction func goButtonTapped(sender: AnyObject) {
         if !hasAccount && passwordTextField.text == retypePasswordTextField.text {
-                guard let email = emailTextField.text,
-                    password = passwordTextField.text,
-                    name = nameTextField.text else { return }
-                UserController.shared.createUser(email, password: password, name: name, completion: { (user) in
+            guard let email = emailTextField.text,
+                password = passwordTextField.text,
+                name = nameTextField.text else { return }
+            UserController.shared.createUser(email, password: password, name: name, completion: { (_, error) in
+                if error != nil {
+                    self.showErrorInFormAlert()
+                } else {
                     self.dismissViewControllerAnimated(true, completion: nil)
-                })
+                }
+            })
         } else if !hasAccount {
             showMismatchedPasswordsAlert()
         } else {
             guard let email = emailTextField.text,
                 password = passwordTextField.text else { return }
-            UserController.shared.signInUser(email, password: password, completion: { (user) in
-                self.dismissViewControllerAnimated(true, completion: nil)
+            UserController.shared.signInUser(email, password: password, completion: { (_, error) in
+                if error != nil {
+                    self.showErrorInFormAlert()
+                } else {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
             })
         }
     }
@@ -72,6 +84,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             break
         }
         return true
+    }
+    
+    func resignFirstResponders() {
+        nameTextField.resignFirstResponder()
+        emailTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+        retypePasswordTextField.resignFirstResponder()
     }
     
     func userHasAccount() {
