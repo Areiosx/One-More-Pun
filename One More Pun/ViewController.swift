@@ -47,7 +47,7 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
         FirebaseController.shared.getLoggedInUser { (user) in
             if user == nil {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                guard let vc = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginViewController else { return }
+                guard let vc = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginTableViewController else { return }
                 self.presentViewController(vc, animated: true, completion: nil)
             }
         }

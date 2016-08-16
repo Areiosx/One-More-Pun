@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginTableViewController: UITableViewController {
+class LoginTableViewController: UITableViewController, UITextFieldDelegate {
     
     let colorCollection = ColorCollection()
     var backgroundColor: UIColor = .whiteColor()
@@ -126,6 +126,12 @@ class LoginTableViewController: UITableViewController {
             button.clipsToBounds = true
             button.backgroundColor = UIColor.whiteColor()
         }
+    }
+    
+    // MARK: - UITableViewDelegate
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.backgroundColor = backgroundColor
     }
     
     // MARK: - AlertController
