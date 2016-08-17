@@ -12,7 +12,7 @@ import Firebase
 class Pun: FirebaseType {
     
     let body: String
-    let submitter: String?
+    var submitter: String?
     var reportedCount: Int
     
     private let bodyKey = "body"

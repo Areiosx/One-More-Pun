@@ -9,19 +9,34 @@
 import Foundation
 import Firebase
 
-struct PunController {
+class PunController {
     
-    static let punsPathString = "puns"
-    static let reportedCountKey = "reportedCount"
+    static let shared = PunController()
     
-    static func createPun(body: String) {
-        let punIdentifier = FirebaseController.ref.child(PunController.punsPathString).childByAutoId().key
+    let punsPathString = "puns"
+    let reportedCountKey = "reportedCount"
+    
+    var punsArray: [Pun] = []
+    
+    func randomPun() -> Pun {
+        if punsArray.count == 0 {
+            let noPun = Pun(body: "No puns right now. Go ahead and submit one!")
+            noPun.submitter = nil
+            return noPun
+        } else {
+            let randomNumber = Int(arc4random_uniform(UInt32(punsArray.count)))
+            return punsArray[randomNumber]
+        }
+    }
+    
+    func createPun(body: String) {
+        let punIdentifier = FirebaseController.ref.child(punsPathString).childByAutoId().key
         var pun = Pun(body: body, reportedCount: 0, identifier: punIdentifier)
         pun.save()
     }
     
-    static func observePuns(completion: (puns: [Pun]) -> Void) {
-        let punsRef = FirebaseController.ref.child(PunController.punsPathString)
+    func observePuns(completion: (puns: [Pun]) -> Void) {
+        let punsRef = FirebaseController.ref.child(punsPathString)
         punsRef.observeEventType(.Value, withBlock: { (data) in
             guard let punsDict = data.value as? [String: [String: AnyObject]] else { completion(puns: []); return }
             let puns = punsDict.flatMap { Pun(dictionary: $1, identifier: $0) }
@@ -29,10 +44,10 @@ struct PunController {
         })
     }
     
-    static func reportPun(pun: Pun) {
+    func reportPun(pun: Pun) {
         guard let identifier = pun.identifier else { return }
         let reports = "\(pun.reportedCount + 1)"
-        let childUpdates: [NSObject: AnyObject] = ["/\(pun.endpoint)/\(identifier)/\(PunController.reportedCountKey)": reports]
+        let childUpdates: [NSObject: AnyObject] = ["/\(pun.endpoint)/\(identifier)/\(reportedCountKey)": reports]
         FirebaseController.ref.updateChildValues(childUpdates)
     }
     

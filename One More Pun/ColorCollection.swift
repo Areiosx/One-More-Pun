@@ -11,7 +11,6 @@ import UIKit
 
 struct ColorCollection {
     
-    let puns = Puns()
         let colorsArray = [
             UIColor(red:85/255.0, green: 145/255.0, blue: 170/255.0, alpha: 1.0),   // teal
             UIColor(red:222/255.0, green: 171/255.0, blue: 66/255.0, alpha: 1.0),   // yellow

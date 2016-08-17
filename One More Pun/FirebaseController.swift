@@ -14,15 +14,6 @@ class FirebaseController {
     static let shared = FirebaseController()
     static let ref = FIRDatabase.database().reference()
     
-    func getLoggedInUser(completion: (user: FIRUser?) -> Void) {
-        FIRAuth.auth()?.addAuthStateDidChangeListener { (auth, user) in
-            if let user = user {
-                completion(user: user)
-            } else {
-                completion(user: nil)
-            }
-        }
-    }
 }
 
 protocol FirebaseType {

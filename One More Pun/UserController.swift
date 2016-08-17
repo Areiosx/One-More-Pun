@@ -31,6 +31,16 @@ struct UserController {
         })
     }
     
+    func getLoggedInUser(completion: (user: FIRUser?) -> Void) {
+        FIRAuth.auth()?.addAuthStateDidChangeListener { (auth, user) in
+            if let user = user {
+                completion(user: user)
+            } else {
+                completion(user: nil)
+            }
+        }
+    }
+    
     func signInUser(email: String, password: String, completion: (user: FIRUser?, error: NSError?) -> Void) {
         FIRAuth.auth()?.signInWithEmail(email, password: password, completion: { (user, error) in
             completion(user: user, error: error)

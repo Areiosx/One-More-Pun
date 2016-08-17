@@ -85,7 +85,7 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
         case retypePasswordTextField:
             retypePasswordTextField.resignFirstResponder()
         default:
-            break
+            resignFirstResponders()
         }
         return true
     }

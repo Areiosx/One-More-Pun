@@ -12,7 +12,6 @@ import Firebase
 
 class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
-    var puns = Puns()
     let colorCollection = ColorCollection()
     var pun = Pun(body: "")
     
@@ -32,19 +31,21 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        FIRAuth.auth()?.currentUser?.deleteWithCompletion(nil)
+        
         infoButtonColor.hidden = true
         addPunButtonColor.hidden = true
         
-        PunController.observePuns { (puns) in
+        PunController.shared.observePuns { (puns) in
             self.retrievingFromNetwork = true
-            self.puns.punsArray = puns
+            PunController.shared.punsArray = puns
             dispatch_async(dispatch_get_main_queue(), { 
                 self.getNewPunAndColor()
                 self.retrievingFromNetwork = false
             })
         }
         
-        FirebaseController.shared.getLoggedInUser { (user) in
+        UserController.shared.getLoggedInUser { (user) in
             if user == nil {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 guard let vc = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginTableViewController else { return }
@@ -78,7 +79,7 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     func getNewPunAndColor() {
-        pun = puns.randomPun()
+        pun = PunController.shared.randomPun()
         setUpColor()
         punLabel.text = pun.body
         submitterLabel.text = submitterLabelText(pun)
@@ -128,7 +129,7 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     func presentSubmitPunConfirmationAlert(punBody: String) {
         let alert = UIAlertController(title: "All done?", message: "This is your pun:\n\(punBody)", preferredStyle: .Alert)
         let submitAction = UIAlertAction(title: "Looks good!", style: .Default) { (_) in
-            PunController.createPun(punBody)
+            PunController.shared.createPun(punBody)
         }
         let reEnterAction = UIAlertAction(title: "Re-enter", style: .Cancel) { (_) in
             self.presentSubmitPunAlert(punBody)
