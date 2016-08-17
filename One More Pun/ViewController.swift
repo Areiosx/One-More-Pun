@@ -43,21 +43,22 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
             })
         }
         
-        UserController.shared.checkUserAgainstDatabase { (success) -> Void in
-            if !success {
-                self.showLoginSignUpView()
-            }
-        }
-        
-//        UserController.shared.getLoggedInUser { (user) in
-//            if user == nil {
-//                self.showLoginSignUpView()
-//            }
-//        }
-        
         let rate = RateMyApp.sharedInstance
         rate.appID = "1008575898"
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            
+            UserController.shared.checkUserAgainstDatabase { (success) -> Void in
+                if !success {
+                    self.showLoginSignUpView()
+                }
+            }
+            
+            UserController.shared.getLoggedInUser { (user) in
+                if user == nil {
+                    self.showLoginSignUpView()
+                }
+            }
+            
             rate.trackAppUsage()
         })
     }
