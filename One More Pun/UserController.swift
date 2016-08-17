@@ -35,20 +35,28 @@ struct UserController {
             } else {
                 completion(user: nil, error: error)
             }
-            
         })
     }
     
-    func checkUserAgainstDatabase(completion: (success: Bool) -> Void) {
+    func checkUserAgainstDatabase(completion: (success: Bool, error: NSError?) -> Void) {
         guard let currentUser = FIRAuth.auth()?.currentUser else { return }
-        FirebaseController.ref.child(usersPathString).observeSingleEventOfType(.Value, withBlock: { (data) in
-            let uid = data.childSnapshotForPath(currentUser.uid)
-            if uid.exists() {
-                completion(success: true)
+        currentUser.getTokenForcingRefresh(true) { (idToken, error) in
+            if let error = error {
+                completion(success: false, error: error)
+                print(error.localizedDescription)
             } else {
-                completion(success: false)
+                completion(success: true, error: nil)
             }
-        })
+        }
+//        FirebaseController.ref.child(usersPathString).observeSingleEventOfType(.Value, withBlock: { (data) in
+//            let uid = data.childSnapshotForPath(currentUser.uid)
+//            if uid.exists() {
+//                completion(success: true)
+//            } else {
+//                completion(success: false)
+//                currentUser.deleteWithCompletion(nil)
+//            }
+//        })
     }
     
     func getLoggedInUser(completion: (user: FIRUser?) -> Void) {

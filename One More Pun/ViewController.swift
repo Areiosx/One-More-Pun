@@ -31,6 +31,21 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UserController.shared.checkUserAgainstDatabase { (success, error) -> Void in
+            if !success {
+                guard let error = error else { return }
+                self.presentErrorAlert(error.localizedDescription, completion: {
+                    self.showLoginSignUpView()
+                })
+            }
+        }
+        
+        UserController.shared.getLoggedInUser { (user) in
+            if user == nil {
+                self.showLoginSignUpView()
+            }
+        }
+        
         infoButtonColor.hidden = true
         addPunButtonColor.hidden = true
         
@@ -46,19 +61,6 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
         let rate = RateMyApp.sharedInstance
         rate.appID = "1008575898"
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            
-            UserController.shared.checkUserAgainstDatabase { (success) -> Void in
-                if !success {
-                    self.showLoginSignUpView()
-                }
-            }
-            
-            UserController.shared.getLoggedInUser { (user) in
-                if user == nil {
-                    self.showLoginSignUpView()
-                }
-            }
-            
             rate.trackAppUsage()
         })
     }
@@ -145,6 +147,17 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
         }
         alert.addAction(submitAction)
         alert.addAction(reEnterAction)
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func presentErrorAlert(error: String, completion: (() -> Void)?) {
+        let alert = UIAlertController(title: "Error!", message: error, preferredStyle: .Alert)
+        let okayAction = UIAlertAction(title: "Okay", style: .Default) { (_) in
+            if let completion = completion {
+                completion()
+            }
+        }
+        alert.addAction(okayAction)
         presentViewController(alert, animated: true, completion: nil)
     }
 }
