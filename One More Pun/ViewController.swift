@@ -43,11 +43,15 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
             })
         }
         
+        UserController.shared.checkUserAgainstDatabase { (success) -> Void in
+            if !success {
+                self.showLoginSignUpView()
+            }
+        }
+        
         UserController.shared.getLoggedInUser { (user) in
             if user == nil {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                guard let vc = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginTableViewController else { return }
-                self.presentViewController(vc, animated: true, completion: nil)
+                self.showLoginSignUpView()
             }
         }
         
@@ -56,6 +60,12 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             rate.trackAppUsage()
         })
+    }
+    
+    func showLoginSignUpView() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let vc = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginTableViewController else { return }
+        self.presentViewController(vc, animated: true, completion: nil)
     }
     
     

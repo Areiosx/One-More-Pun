@@ -13,6 +13,8 @@ struct UserController {
     
     static let shared = UserController()
     
+    private let usersPathString = "users"
+    
     func createUser(email: String, password: String, name: String, completion: (user: FIRUser?, error: NSError?) -> Void) {
         FIRAuth.auth()?.createUserWithEmail(email, password: password, completion: { (user, error) in
             if let user = user {
@@ -23,11 +25,28 @@ struct UserController {
                         print(error.localizedDescription)
                     }
                     completion(user: user, error: error)
+                    if let email = user.email,
+                        username = user.displayName {
+                        let userIdentifier = FirebaseController.ref.child(self.usersPathString).childByAutoId().key
+                        var dbUser = User(email: email, username: username, identifier: userIdentifier)
+                        dbUser.save()
+                    }
                 })
             } else {
                 completion(user: nil, error: error)
             }
             
+        })
+    }
+    
+    func checkUserAgainstDatabase(completion: (success: Bool) -> Void) {
+        guard let currentUser = FIRAuth.auth()?.currentUser else { return }
+        FirebaseController.ref.child(usersPathString).observeSingleEventOfType(.Value, withBlock: { (data) in
+            if !data.hasChild(currentUser.uid) {
+                completion(success: false)
+            } else {
+                completion(success: true)
+            }
         })
     }
     

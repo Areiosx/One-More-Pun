@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		03524D4C2D4D0C3F40063C1F /* Pods_One_More_Pun.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38E1755D49DA679101ACF2C8 /* Pods_One_More_Pun.framework */; };
+		661060DF1D64021C000E779E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661060DE1D64021C000E779E /* User.swift */; };
 		6614F5BC1D5F80A100F150B5 /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614F5BB1D5F80A100F150B5 /* FirebaseController.swift */; };
 		6614F5C61D60E64F00F150B5 /* Pun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614F5C51D60E64F00F150B5 /* Pun.swift */; };
 		6614F5C81D60E7BE00F150B5 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614F5C71D60E7BE00F150B5 /* UserController.swift */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		38E1755D49DA679101ACF2C8 /* Pods_One_More_Pun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_One_More_Pun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		661060DE1D64021C000E779E /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		6614F5BB1D5F80A100F150B5 /* FirebaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
 		6614F5C51D60E64F00F150B5 /* Pun.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pun.swift; sourceTree = "<group>"; };
 		6614F5C71D60E7BE00F150B5 /* UserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 		6614F5C41D60E64100F150B5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				661060DE1D64021C000E779E /* User.swift */,
 				6614F5C51D60E64F00F150B5 /* Pun.swift */,
 			);
 			name = Model;
@@ -289,6 +292,7 @@
 				66D8CEAB1C14EC35006BB37E /* InfoViewController.swift in Sources */,
 				6614F5CA1D60E7C500F150B5 /* PunController.swift in Sources */,
 				6614F5C61D60E64F00F150B5 /* Pun.swift in Sources */,
+				661060DF1D64021C000E779E /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
