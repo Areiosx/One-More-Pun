@@ -12,8 +12,7 @@ import Social
 import Firebase
 
 class InfoViewController: UIViewController, MFMessageComposeViewControllerDelegate {
-    
-    // TODO: - Carry pun object over and add reporting
+
     var pun = Pun(body: "")
     var transferBGColor = UIColor()
     let colorCollection = ColorCollection()

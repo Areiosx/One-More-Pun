@@ -31,8 +31,6 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        FIRAuth.auth()?.currentUser?.deleteWithCompletion(nil)
-        
         infoButtonColor.hidden = true
         addPunButtonColor.hidden = true
         
