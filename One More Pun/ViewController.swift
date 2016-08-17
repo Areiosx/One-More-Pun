@@ -49,11 +49,11 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
             }
         }
         
-        UserController.shared.getLoggedInUser { (user) in
-            if user == nil {
-                self.showLoginSignUpView()
-            }
-        }
+//        UserController.shared.getLoggedInUser { (user) in
+//            if user == nil {
+//                self.showLoginSignUpView()
+//            }
+//        }
         
         let rate = RateMyApp.sharedInstance
         rate.appID = "1008575898"

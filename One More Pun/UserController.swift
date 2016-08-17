@@ -27,7 +27,7 @@ struct UserController {
                     completion(user: user, error: error)
                     if let email = user.email,
                         username = user.displayName {
-                        let userIdentifier = FirebaseController.ref.child(self.usersPathString).childByAutoId().key
+                        let userIdentifier = FirebaseController.ref.child(self.usersPathString).child(user.uid).key
                         var dbUser = User(email: email, username: username, identifier: userIdentifier)
                         dbUser.save()
                     }
@@ -42,10 +42,11 @@ struct UserController {
     func checkUserAgainstDatabase(completion: (success: Bool) -> Void) {
         guard let currentUser = FIRAuth.auth()?.currentUser else { return }
         FirebaseController.ref.child(usersPathString).observeSingleEventOfType(.Value, withBlock: { (data) in
-            if !data.hasChild(currentUser.uid) {
-                completion(success: false)
-            } else {
+            let uid = data.childSnapshotForPath(currentUser.uid)
+            if uid.exists() {
                 completion(success: true)
+            } else {
+                completion(success: false)
             }
         })
     }
