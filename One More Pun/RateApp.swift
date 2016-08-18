@@ -18,8 +18,7 @@ class RateMyApp : UIViewController, UIAlertViewDelegate {
     private let kDeclinedToRate = "kRateMyApp_DeclinedToRate"
     private let kRemindLater = "kRateMyApp_RemindLater"
     private let kRemindLaterPressedDate = "kRateHyApp_RemindLaterPressedDate"
-    private var reviewURL = "https://itunes.apple.com/us/aPP/appName/id10085758987mt=8"
-    private var reviewURLiOS7 = "https://itunes.apple.com/us[app/appName/id1008575898?mt=8"
+    private var reviewURL = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=1008575898&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software"
     
     let promptAfterDays: Double = 5
     let promptAfterUses = 3
@@ -136,7 +135,7 @@ class RateMyApp : UIViewController, UIAlertViewDelegate {
             alertMessage = message
         }
             let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: alertOKTitle, style: .Destructive, handler: { alertAction in
+            alert.addAction(UIAlertAction(title: alertOKTitle, style: .Default, handler: { alertAction in
                 self.okButtonPressed()
                 alert.dismissViewControllerAnimated(true, completion: nil)
             }))
@@ -169,8 +168,9 @@ class RateMyApp : UIViewController, UIAlertViewDelegate {
     
     private func okButtonPressed() {
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: kDidRateVersion)
-        let appStoreURL = NSURL(string: reviewURLiOS7+appID)
-        UIApplication.sharedApplication().openURL(appStoreURL!)
+        let appStoreURL = NSURL(string: reviewURL)
+        guard let url = appStoreURL else { return }
+        UIApplication.sharedApplication().openURL(url)
     }
     
     private func cancelButtonPressed() {
