@@ -154,7 +154,7 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
         let submitAction = UIAlertAction(title: "Submit", style: .Default) { (_) in
             guard let textFields = alert.textFields,
                 punTextField = textFields.first,
-                punText = punTextField.text else { return }
+                punText = punTextField.text where !punText.isEmpty else { return }
             self.presentSubmitPunConfirmationAlert(punText)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
@@ -171,8 +171,10 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
         let reEnterAction = UIAlertAction(title: "Re-enter", style: .Cancel) { (_) in
             self.presentSubmitPunAlert(punBody)
         }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         alert.addAction(submitAction)
         alert.addAction(reEnterAction)
+        alert.addAction(cancelAction)
         presentViewController(alert, animated: true, completion: nil)
     }
     
