@@ -113,6 +113,7 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
     @IBAction func nextPunButton(sender: AnyObject) {
         getNewPunAndColor()
+        punsReadCount += 1
     }
     
     @IBAction func addPunButtonTapped(sender: AnyObject) {
