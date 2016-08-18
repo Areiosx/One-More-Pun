@@ -11,13 +11,6 @@
             <string>CoolveticaRg-Regular</string>
             <string>CoolveticaRg-Regular</string>
             <string>CoolveticaRg-Regular</string>
-            <string>CoolveticaRg-Regular</string>
-            <string>CoolveticaRg-Regular</string>
-            <string>CoolveticaRg-Regular</string>
-            <string>CoolveticaRg-Regular</string>
-            <string>CoolveticaRg-Regular</string>
-            <string>CoolveticaRg-Regular</string>
-            <string>CoolveticaRg-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -58,7 +51,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="FJ9-mt-Qcn" kind="presentation" identifier="infoSegue" id="jVa-9J-QF3"/>
+                                    <action selector="infoButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wpW-PO-aNr"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hQO-Va-nst">
@@ -305,143 +298,6 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1405" y="315"/>
-        </scene>
-        <!--Info View Controller-->
-        <scene sceneID="FNe-DJ-86l">
-            <objects>
-                <viewController id="FJ9-mt-Qcn" customClass="InfoViewController" customModule="One_More_Pun" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="MeZ-2R-My2"/>
-                        <viewControllerLayoutGuide type="bottom" id="wJk-bJ-Zb8"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="p2S-jz-vZE">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="evn-IZ-kPM">
-                                <rect key="frame" x="237" y="264" width="127" height="30"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="1NJ-z2-g1E"/>
-                                    <constraint firstAttribute="width" constant="127" id="woQ-bq-DFg"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="CoolveticaRg-Regular" family="Coolvetica" pointSize="15"/>
-                                <state key="normal" title="Share to Facebook"/>
-                                <connections>
-                                    <action selector="facebookButton:" destination="FJ9-mt-Qcn" eventType="touchUpInside" id="JwD-Fw-ruB"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lHH-te-sJr">
-                                <rect key="frame" x="237" y="302" width="127" height="30"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="127" id="ZRv-gB-aGo"/>
-                                    <constraint firstAttribute="height" constant="30" id="pJj-Hu-hYg"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="CoolveticaRg-Regular" family="Coolvetica" pointSize="15"/>
-                                <state key="normal" title="Share to Twitter"/>
-                                <connections>
-                                    <action selector="twitterButton:" destination="FJ9-mt-Qcn" eventType="touchUpInside" id="N6q-Ip-lgD"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3XL-1V-7Gi">
-                                <rect key="frame" x="237" y="340" width="127" height="30"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="dz7-9E-CEZ"/>
-                                    <constraint firstAttribute="width" constant="127" id="pWb-go-Ca0"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="CoolveticaRg-Regular" family="Coolvetica" pointSize="15"/>
-                                <state key="normal" title="Share by Text"/>
-                                <connections>
-                                    <action selector="textButton:" destination="FJ9-mt-Qcn" eventType="touchUpInside" id="tGD-wV-JRb"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fra-Bj-IuU">
-                                <rect key="frame" x="255" y="553" width="90" height="27"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="27" id="VHW-d4-H4E"/>
-                                    <constraint firstAttribute="width" constant="90" id="na0-YW-dnD"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="CoolveticaRg-Regular" family="Coolvetica" pointSize="12"/>
-                                <state key="normal" title="Report"/>
-                                <connections>
-                                    <action selector="reportButtonTapped:" destination="FJ9-mt-Qcn" eventType="touchUpInside" id="iaC-ZS-iQb"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gr2-0r-oQ1">
-                                <rect key="frame" x="255" y="517" width="90" height="28"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="28" id="XUT-Iq-byR"/>
-                                    <constraint firstAttribute="width" constant="90" id="nKL-ZC-A8U"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="CoolveticaRg-Regular" family="Coolvetica" pointSize="13"/>
-                                <state key="normal" title="Don't get it?"/>
-                                <connections>
-                                    <action selector="googleButton:" destination="FJ9-mt-Qcn" eventType="touchUpInside" id="Mdp-PG-MR8"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aSz-Ip-lws">
-                                <rect key="frame" x="527" y="20" width="53" height="33"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="53" id="QKF-1T-GlG"/>
-                                    <constraint firstAttribute="height" constant="33" id="n2N-aK-8sq"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="CoolveticaRg-Regular" family="Coolvetica" pointSize="17"/>
-                                <state key="normal" title="Done"/>
-                                <connections>
-                                    <action selector="doneButtonPressed:" destination="FJ9-mt-Qcn" eventType="touchUpInside" id="hpX-uk-Cfc"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v6A-yY-7wr">
-                                <rect key="frame" x="20" y="61" width="560" height="195"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="195" id="X9a-dy-8nc"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="CoolveticaRg-Regular" family="Coolvetica" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="lHH-te-sJr" firstAttribute="top" secondItem="evn-IZ-kPM" secondAttribute="bottom" constant="8" id="Bgg-tv-l2u"/>
-                            <constraint firstItem="evn-IZ-kPM" firstAttribute="top" secondItem="v6A-yY-7wr" secondAttribute="bottom" constant="8" id="H3P-FM-9S8"/>
-                            <constraint firstItem="v6A-yY-7wr" firstAttribute="trailing" secondItem="p2S-jz-vZE" secondAttribute="trailingMargin" id="JSq-RD-6JG"/>
-                            <constraint firstItem="v6A-yY-7wr" firstAttribute="trailing" secondItem="p2S-jz-vZE" secondAttribute="trailingMargin" id="QgD-xi-0p4"/>
-                            <constraint firstItem="v6A-yY-7wr" firstAttribute="centerX" secondItem="p2S-jz-vZE" secondAttribute="centerX" id="V9N-DX-LyU"/>
-                            <constraint firstItem="v6A-yY-7wr" firstAttribute="leading" secondItem="p2S-jz-vZE" secondAttribute="leadingMargin" id="ZrR-4y-LGS"/>
-                            <constraint firstItem="Fra-Bj-IuU" firstAttribute="top" secondItem="Gr2-0r-oQ1" secondAttribute="bottom" constant="8" id="dyN-wT-XCf"/>
-                            <constraint firstItem="Fra-Bj-IuU" firstAttribute="centerX" secondItem="p2S-jz-vZE" secondAttribute="centerX" id="h0u-tT-xc5"/>
-                            <constraint firstItem="wJk-bJ-Zb8" firstAttribute="top" secondItem="Fra-Bj-IuU" secondAttribute="bottom" constant="20" id="h4b-WR-enw"/>
-                            <constraint firstItem="3XL-1V-7Gi" firstAttribute="centerX" secondItem="p2S-jz-vZE" secondAttribute="centerX" id="hYv-TE-S2d"/>
-                            <constraint firstItem="v6A-yY-7wr" firstAttribute="leading" secondItem="p2S-jz-vZE" secondAttribute="leadingMargin" id="hoQ-Oz-Scq"/>
-                            <constraint firstItem="aSz-Ip-lws" firstAttribute="top" secondItem="MeZ-2R-My2" secondAttribute="bottom" id="jBc-Na-OGW"/>
-                            <constraint firstItem="evn-IZ-kPM" firstAttribute="centerX" secondItem="p2S-jz-vZE" secondAttribute="centerX" id="k22-lQ-ynl"/>
-                            <constraint firstItem="3XL-1V-7Gi" firstAttribute="top" secondItem="lHH-te-sJr" secondAttribute="bottom" constant="8" id="lCU-aL-X70"/>
-                            <constraint firstAttribute="trailing" secondItem="aSz-Ip-lws" secondAttribute="trailing" constant="20" id="nX8-SS-c4e"/>
-                            <constraint firstItem="Gr2-0r-oQ1" firstAttribute="centerX" secondItem="p2S-jz-vZE" secondAttribute="centerX" id="qlV-fu-AMQ"/>
-                            <constraint firstItem="v6A-yY-7wr" firstAttribute="top" secondItem="aSz-Ip-lws" secondAttribute="bottom" constant="8" id="sS0-8a-O5N"/>
-                            <constraint firstItem="lHH-te-sJr" firstAttribute="centerX" secondItem="p2S-jz-vZE" secondAttribute="centerX" id="wa1-9f-mzj"/>
-                            <constraint firstItem="v6A-yY-7wr" firstAttribute="centerX" secondItem="p2S-jz-vZE" secondAttribute="centerX" id="xgi-dt-b4u"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="In2-qw-rxi"/>
-                    <connections>
-                        <outlet property="doneButtonColor" destination="aSz-Ip-lws" id="7uM-dS-cUM"/>
-                        <outlet property="facebookButtonColor" destination="evn-IZ-kPM" id="HXJ-qk-rBM"/>
-                        <outlet property="googleButtonColor" destination="Gr2-0r-oQ1" id="HP4-cB-gct"/>
-                        <outlet property="punLabel" destination="v6A-yY-7wr" id="sxE-mG-hj8"/>
-                        <outlet property="reportButtonColor" destination="Fra-Bj-IuU" id="2dM-7A-0Wu"/>
-                        <outlet property="textButtonColor" destination="3XL-1V-7Gi" id="FUF-qu-aDV"/>
-                        <outlet property="twitterButtonColor" destination="lHH-te-sJr" id="H4Q-ol-Z2d"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Yco-Xd-sbh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2827" y="315"/>
         </scene>
     </scenes>
     <resources>
