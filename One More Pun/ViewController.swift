@@ -232,10 +232,9 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
         let imageSize = CGSize(width: 1024, height: 1024)
         let imageWithColor = getImageWithColor(color, size: imageSize)
         let image = textToImage(PunController.getPunTextAndSubmitter(pun), inImage: imageWithColor, atPoint: point)
-        let comment = "Shared via One More Pun!\n"
-        guard let url = NSURL(string: "http://tinyurl.com/OneMorePun") else { return }
+        let comment = "Shared via One More Pun!\nhttp://tinyurl.com/OneMorePun"
         
-        let activityViewController = UIActivityViewController(activityItems: [image, comment, url], applicationActivities: nil)
+        let activityViewController = UIActivityViewController(activityItems: [image, comment], applicationActivities: nil)
         activityViewController.excludedActivityTypes = [UIActivityTypeCopyToPasteboard, UIActivityTypeAirDrop, UIActivityTypeAddToReadingList, UIActivityTypeAssignToContact, UIActivityTypePostToTencentWeibo, UIActivityTypePostToVimeo, UIActivityTypePrint, UIActivityTypePostToWeibo]
         presentViewController(activityViewController, animated: true, completion: nil)
     }
