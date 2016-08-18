@@ -209,7 +209,7 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     func showPunInfoActionSheet() {
-        let actionSheet = UIAlertController(title: "Options", message: nil, preferredStyle: .ActionSheet)
+        let actionSheet = UIAlertController(title: "", message: "Options", preferredStyle: .ActionSheet)
         let shareAction = UIAlertAction(title: "Share Pun", style: .Default) { (_) in
             self.share()
         }
@@ -228,13 +228,8 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     func share() {
-        let point = CGPointMake(10, 10)
-        let imageSize = CGSize(width: 1024, height: 1024)
-        let imageWithColor = getImageWithColor(color, size: imageSize)
-        let image = textToImage(PunController.getPunTextAndSubmitter(pun), inImage: imageWithColor, atPoint: point)
-        let comment = "Shared via One More Pun!\nhttp://tinyurl.com/OneMorePun"
-        
-        let activityViewController = UIActivityViewController(activityItems: [image, comment], applicationActivities: nil)
+        let items = PunController.shared.getItemsToShare(pun, color: color)
+        let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
         activityViewController.excludedActivityTypes = [UIActivityTypeCopyToPasteboard, UIActivityTypeAirDrop, UIActivityTypeAddToReadingList, UIActivityTypeAssignToContact, UIActivityTypePostToTencentWeibo, UIActivityTypePostToVimeo, UIActivityTypePrint, UIActivityTypePostToWeibo]
         presentViewController(activityViewController, animated: true, completion: nil)
     }
@@ -263,36 +258,5 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
         let okayAction = UIAlertAction(title: "Okay", style: .Default, handler: nil)
         alert.addAction(okayAction)
         presentViewController(alert, animated: true, completion: nil)
-    }
-}
-
-extension ViewController {
-    
-    // MARK: - Image Helper
-    
-    func getImageWithColor(color: UIColor, size: CGSize) -> UIImage {
-        let rect = CGRectMake(0, 0, size.width, size.height)
-        UIGraphicsBeginImageContextWithOptions(size, false, 0)
-        color.setFill()
-        UIRectFill(rect)
-        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image
-    }
-    
-    func textToImage(drawText: NSString, inImage: UIImage, atPoint: CGPoint) -> UIImage {
-        guard let font = UIFont(name: "CoolveticaRg-Regular", size: 100) else { return UIImage() }
-        let textColor: UIColor = UIColor.whiteColor()
-        UIGraphicsBeginImageContext(inImage.size)
-        let textFontAttributes = [
-            NSFontAttributeName: font,
-            NSForegroundColorAttributeName: textColor,
-            ]
-        inImage.drawInRect(CGRectMake(0, 0, inImage.size.width, inImage.size.height))
-        let rect: CGRect = CGRectMake(atPoint.x, atPoint.y, inImage.size.width, inImage.size.height)
-        drawText.drawInRect(rect, withAttributes: textFontAttributes)
-        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage
     }
 }

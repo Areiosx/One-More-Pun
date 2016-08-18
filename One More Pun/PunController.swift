@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import UIKit
 
 class PunController {
     
@@ -61,11 +62,51 @@ class PunController {
         FirebaseController.ref.updateChildValues(childUpdates)
     }
     
-    static func getPunTextAndSubmitter(pun: Pun) -> String {
+    func getPunTextAndSubmitter(pun: Pun) -> String {
         if let submitter = pun.submitter {
             return "\(pun.body)\nSubmitted by \(submitter)"
         } else {
             return pun.body
         }
+    }
+    
+    func getItemsToShare(pun: Pun, color: UIColor) -> [AnyObject] {
+        let point = CGPointMake(10, 10)
+        let imageSize = CGSize(width: 1024, height: 1024)
+        let imageWithColor = getImageWithColor(color, size: imageSize)
+        let image = textToImage(getPunTextAndSubmitter(pun), inImage: imageWithColor, atPoint: point)
+        let comment = "Shared via One More Pun!\nhttp://tinyurl.com/OneMorePun"
+        return [image, comment]
+    }
+}
+
+extension PunController {
+    
+    // MARK: - Image Helper
+    
+    func getImageWithColor(color: UIColor, size: CGSize) -> UIImage {
+        let rect = CGRectMake(0, 0, size.width, size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        color.setFill()
+        UIRectFill(rect)
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+    
+    func textToImage(drawText: NSString, inImage: UIImage, atPoint: CGPoint) -> UIImage {
+        guard let font = UIFont(name: "CoolveticaRg-Regular", size: 100) else { return UIImage() }
+        let textColor: UIColor = UIColor.whiteColor()
+        UIGraphicsBeginImageContext(inImage.size)
+        let textFontAttributes = [
+            NSFontAttributeName: font,
+            NSForegroundColorAttributeName: textColor,
+            ]
+        inImage.drawInRect(CGRectMake(0, 0, inImage.size.width, inImage.size.height))
+        let rect: CGRect = CGRectMake(atPoint.x, atPoint.y, inImage.size.width, inImage.size.height)
+        drawText.drawInRect(rect, withAttributes: textFontAttributes)
+        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
     }
 }
