@@ -25,6 +25,15 @@ class InfoViewController: UIViewController, MFMessageComposeViewControllerDelega
     @IBOutlet weak var twitterButtonColor: UIButton!
     @IBOutlet weak var textButtonColor: UIButton!
     
+    func setButtonAttributes(buttons: [UIButton]) {
+        for button in buttons {
+            button.tintColor = transferBGColor
+            button.layer.cornerRadius = 11
+            button.clipsToBounds = true
+            button.backgroundColor = UIColor.whiteColor()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,84 +43,54 @@ class InfoViewController: UIViewController, MFMessageComposeViewControllerDelega
         setButtonAttributes([reportButtonColor, googleButtonColor, facebookButtonColor, twitterButtonColor, textButtonColor, doneButtonColor])
     }
     
-    @IBAction func facebookButton(sender: AnyObject) {
-        let bluish = UIImage(named: "bluish.jpg")
-        let point = CGPoint.zero
+    // MARK: - Sharing Functions
+    
+    func getImageWithColor(color: UIColor, size: CGSize) -> UIImage {
+        let rect = CGRectMake(0, 0, size.width, size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        color.setFill()
+        UIRectFill(rect)
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+    
+    func textToImage(drawText: NSString, inImage: UIImage, atPoint: CGPoint) -> UIImage {
+        guard let font = UIFont(name: "CoolveticaRg-Regular", size: 100) else { return UIImage() }
+        let textColor: UIColor = UIColor.whiteColor()
+        UIGraphicsBeginImageContext(inImage.size)
+        let textFontAttributes = [
+            NSFontAttributeName: font,
+            NSForegroundColorAttributeName: textColor,
+            ]
+        inImage.drawInRect(CGRectMake(0, 0, inImage.size.width, inImage.size.height))
+        let rect: CGRect = CGRectMake(atPoint.x, atPoint.y, inImage.size.width, inImage.size.height)
+        drawText.drawInRect(rect, withAttributes: textFontAttributes)
+        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
+    func shareToSocialMedia(serviceType: String) {
+        let point = CGPointZero
         let imageSize = CGSize(width: 1024, height: 1024)
-        var randomBGColor = colorCollection.randomColor()
+        let color = transferBGColor
+        let url = NSURL(string: "http://tinyurl.com/OneMorePun")
         
-        func getImageWithColor(color: UIColor, size: CGSize) -> UIImage {
-            let rect = CGRectMake(0, 0, size.width, size.height)
-            UIGraphicsBeginImageContextWithOptions(size, false, 0)
-            color.setFill()
-            UIRectFill(rect)
-            let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            return image
-        }
-        
-        func textToImage(drawText: NSString, inImage: UIImage, atPoint: CGPoint) -> UIImage {
-            let textColor: UIColor = UIColor.whiteColor()
-            let textFont: UIFont = UIFont(name: "coolvetica rg", size: 100)!
-            UIGraphicsBeginImageContext(inImage.size)
-            let textFontAttributes = [
-                NSFontAttributeName: textFont,
-                NSForegroundColorAttributeName: textColor,
-                ]
-            inImage.drawInRect(CGRectMake(0, 0, inImage.size.width, inImage.size.height))
-            let rect: CGRect = CGRectMake(atPoint.x, atPoint.y, inImage.size.width, inImage.size.height)
-            drawText.drawInRect(rect, withAttributes: textFontAttributes)
-            let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            return newImage
-        }
-        
-        let shareToFacebook: SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-        self.presentViewController(shareToFacebook, animated: true, completion: nil)
+        let share = SLComposeViewController(forServiceType: serviceType)
+        presentViewController(share, animated: true, completion: nil)
         let punText = PunController.getPunTextAndSubmitter(pun)
-        shareToFacebook.addImage(textToImage(punText, inImage: getImageWithColor (randomBGColor, size: imageSize), atPoint: point))
-        shareToFacebook.setInitialText("Shared via One More Pun!")
-        shareToFacebook.addURL(NSURL(string: "http://tinyurl.com/OneMorePun"))
+        share.addImage(textToImage(punText, inImage: getImageWithColor(color, size: imageSize), atPoint: point))
+        share.setInitialText("Shared via One More Pun!")
+        share.addURL(url)
+    }
+    
+    @IBAction func facebookButton(sender: AnyObject) {
+        shareToSocialMedia(SLServiceTypeFacebook)
     }
     
     @IBAction func twitterButton(sender: AnyObject) {
-        let bluish = UIImage(named: "bluish.jpg")
-        let point = CGPoint.zero
-        let imageSize = CGSize(width: 1024, height: 1024)
-        var randomBGColor = colorCollection.randomColor()
-        
-        func getImageWithColor(color: UIColor, size: CGSize) -> UIImage {
-            let rect = CGRectMake(0, 0, size.width, size.height)
-            UIGraphicsBeginImageContextWithOptions(size, false, 0)
-            color.setFill()
-            UIRectFill(rect)
-            let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            return image
-        }        
-        
-        func textToImage(drawText: NSString, inImage: UIImage, atPoint: CGPoint) -> UIImage {
-            let textColor: UIColor = UIColor.whiteColor()
-            let textFont: UIFont = UIFont(name: "coolvetica rg", size: 100)!
-            UIGraphicsBeginImageContext(inImage.size)
-            let textFontAttributes = [
-                NSFontAttributeName: textFont,
-                NSForegroundColorAttributeName: textColor,
-                ]
-            inImage.drawInRect(CGRectMake(0, 0, inImage.size.width, inImage.size.height))
-            let rect: CGRect = CGRectMake(atPoint.x, atPoint.y, inImage.size.width, inImage.size.height)
-            drawText.drawInRect(rect, withAttributes: textFontAttributes)
-            let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            return newImage
-        }
-        
-        let shareToTwitter: SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-        self.presentViewController(shareToTwitter, animated: true, completion: nil)
-        let punText = PunController.getPunTextAndSubmitter(pun)
-        shareToTwitter.addImage(textToImage(punText, inImage: getImageWithColor (randomBGColor, size: imageSize), atPoint: point))
-        shareToTwitter.setInitialText("Shared via One More Pun!")
-        shareToTwitter.addURL(NSURL(string: "http://tinyurl.com/OneMorePun"))
+        shareToSocialMedia(SLServiceTypeTwitter)
     }
     
     @IBAction func textButton(sender: AnyObject) {
@@ -159,19 +138,10 @@ class InfoViewController: UIViewController, MFMessageComposeViewControllerDelega
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func setButtonAttributes(buttons: [UIButton]) {
-        for button in buttons {
-            button.tintColor = transferBGColor
-            button.layer.cornerRadius = 11
-            button.clipsToBounds = true
-            button.backgroundColor = UIColor.whiteColor()
-        }
-    }
-    
     // MARK: - UIAlertController
     
     func presentReportPunAlert() {
-        let alert = UIAlertController(title: "Report pun?", message: "Only use this feature if you want to report this pun as inappropriate.", preferredStyle: .Alert)
+        let alert = UIAlertController(title: "Report pun?", message: "Only use this feature if you want to report this pun as inappropriate or not a real pun.", preferredStyle: .Alert)
         let reportAction = UIAlertAction(title: "Report", style: .Destructive) { (_) in
             PunController.shared.reportPun(self.pun)
             self.reportButtonColor.hidden = true

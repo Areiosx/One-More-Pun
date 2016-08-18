@@ -9,7 +9,7 @@
 import Foundation
 import Firebase
 
-class Pun: FirebaseType {
+class Pun: FirebaseType, Equatable {
     
     let body: String
     var submitter: String?
@@ -46,4 +46,8 @@ class Pun: FirebaseType {
         self.submitter = submitter
         self.identifier = identifier
     }
+}
+
+func ==(lhs: Pun, rhs: Pun) -> Bool {
+    return lhs.identifier > rhs.identifier
 }

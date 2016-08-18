@@ -10,6 +10,8 @@ import UIKit
 import MessageUI
 import Firebase
 
+
+
 class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
     let colorCollection = ColorCollection()
@@ -18,6 +20,15 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     var retrievingFromNetwork: Bool = false {
         didSet {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = retrievingFromNetwork
+        }
+    }
+    
+    func printFonts() {
+        for familyName in UIFont.familyNames() {
+            print("\n-- \(familyName) \n")
+            for fontName in UIFont.fontNamesForFamilyName(familyName) {
+                print(fontName)
+            }
         }
     }
     
@@ -30,6 +41,8 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        printFonts()
         
         UserController.shared.getLoggedInUser { (user) in
             if user == nil {

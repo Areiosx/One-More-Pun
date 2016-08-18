@@ -39,14 +39,24 @@ class PunController {
         let punsRef = FirebaseController.ref.child(punsPathString)
         punsRef.observeEventType(.Value, withBlock: { (data) in
             guard let punsDict = data.value as? [String: [String: AnyObject]] else { completion(puns: []); return }
-            let puns = punsDict.flatMap { Pun(dictionary: $1, identifier: $0) }
-            completion(puns: puns)
+            let unfilteredPuns = punsDict.flatMap { Pun(dictionary: $1, identifier: $0) }
+            let filteredPuns = unfilteredPuns.filter { $0.reportedCount < 5 }
+            let punsToDelete = unfilteredPuns.filter { $0.reportedCount >= 5 }
+            for pun in punsToDelete {
+                self.deletePun(pun)
+            }
+            completion(puns: filteredPuns)
         })
+    }
+    
+    func deletePun(pun: Pun) {
+        guard let identifier = pun.identifier else { return }
+        FirebaseController.ref.child(pun.endpoint).child(identifier).removeValue()
     }
     
     func reportPun(pun: Pun) {
         guard let identifier = pun.identifier else { return }
-        let reports = "\(pun.reportedCount + 1)"
+        let reports = (pun.reportedCount + 1)
         let childUpdates: [NSObject: AnyObject] = ["/\(pun.endpoint)/\(identifier)/\(reportedCountKey)": reports]
         FirebaseController.ref.updateChildValues(childUpdates)
     }

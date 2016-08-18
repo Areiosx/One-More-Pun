@@ -13,14 +13,13 @@
 		6614F5C61D60E64F00F150B5 /* Pun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614F5C51D60E64F00F150B5 /* Pun.swift */; };
 		6614F5C81D60E7BE00F150B5 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614F5C71D60E7BE00F150B5 /* UserController.swift */; };
 		6614F5CA1D60E7C500F150B5 /* PunController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614F5C91D60E7C500F150B5 /* PunController.swift */; };
-		66A167B51C1F136E0040E877 /* bluish.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 66A167B41C1F136E0040E877 /* bluish.jpg */; };
+		66301FDB1D654893001E4106 /* coolvetica rg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66301FDA1D654893001E4106 /* coolvetica rg.ttf */; };
 		66A6D96A1D5D62FD00C74DB4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66A6D9691D5D62FD00C74DB4 /* GoogleService-Info.plist */; };
 		66D8CE8F1C14BAFE006BB37E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8CE8E1C14BAFE006BB37E /* AppDelegate.swift */; };
 		66D8CE911C14BAFE006BB37E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8CE901C14BAFE006BB37E /* ViewController.swift */; };
 		66D8CE941C14BAFE006BB37E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66D8CE921C14BAFE006BB37E /* Main.storyboard */; };
 		66D8CE961C14BAFE006BB37E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66D8CE951C14BAFE006BB37E /* Assets.xcassets */; };
 		66D8CE991C14BAFE006BB37E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66D8CE971C14BAFE006BB37E /* LaunchScreen.storyboard */; };
-		66D8CEA11C14C768006BB37E /* coolvetica rg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66D8CEA01C14C768006BB37E /* coolvetica rg.ttf */; };
 		66D8CEA31C14CB98006BB37E /* ColorCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8CEA21C14CB98006BB37E /* ColorCollection.swift */; };
 		66D8CEA71C14D456006BB37E /* RateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8CEA61C14D456006BB37E /* RateApp.swift */; };
 		66D8CEAB1C14EC35006BB37E /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8CEAA1C14EC35006BB37E /* InfoViewController.swift */; };
@@ -34,7 +33,7 @@
 		6614F5C51D60E64F00F150B5 /* Pun.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pun.swift; sourceTree = "<group>"; };
 		6614F5C71D60E7BE00F150B5 /* UserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
 		6614F5C91D60E7C500F150B5 /* PunController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PunController.swift; sourceTree = "<group>"; };
-		66A167B41C1F136E0040E877 /* bluish.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bluish.jpg; sourceTree = "<group>"; };
+		66301FDA1D654893001E4106 /* coolvetica rg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "coolvetica rg.ttf"; sourceTree = "<group>"; };
 		66A6D9691D5D62FD00C74DB4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		66D8CE8B1C14BAFE006BB37E /* One More Pun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "One More Pun.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		66D8CE8E1C14BAFE006BB37E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -43,7 +42,6 @@
 		66D8CE951C14BAFE006BB37E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66D8CE981C14BAFE006BB37E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		66D8CE9A1C14BAFE006BB37E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		66D8CEA01C14C768006BB37E /* coolvetica rg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "coolvetica rg.ttf"; sourceTree = "<group>"; };
 		66D8CEA21C14CB98006BB37E /* ColorCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCollection.swift; sourceTree = "<group>"; };
 		66D8CEA61C14D456006BB37E /* RateApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateApp.swift; sourceTree = "<group>"; };
 		66D8CEAA1C14EC35006BB37E /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
@@ -130,8 +128,7 @@
 				6614F5C41D60E64100F150B5 /* Model */,
 				66D8CE921C14BAFE006BB37E /* Main.storyboard */,
 				66D8CE951C14BAFE006BB37E /* Assets.xcassets */,
-				66A167B41C1F136E0040E877 /* bluish.jpg */,
-				66D8CEA01C14C768006BB37E /* coolvetica rg.ttf */,
+				66301FDA1D654893001E4106 /* coolvetica rg.ttf */,
 				66D8CE971C14BAFE006BB37E /* LaunchScreen.storyboard */,
 				66D8CE9A1C14BAFE006BB37E /* Info.plist */,
 				66A6D9691D5D62FD00C74DB4 /* GoogleService-Info.plist */,
@@ -219,10 +216,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				66D8CE991C14BAFE006BB37E /* LaunchScreen.storyboard in Resources */,
+				66301FDB1D654893001E4106 /* coolvetica rg.ttf in Resources */,
 				66D8CE961C14BAFE006BB37E /* Assets.xcassets in Resources */,
 				66D8CE941C14BAFE006BB37E /* Main.storyboard in Resources */,
-				66A167B51C1F136E0040E877 /* bluish.jpg in Resources */,
-				66D8CEA11C14C768006BB37E /* coolvetica rg.ttf in Resources */,
 				66A6D96A1D5D62FD00C74DB4 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
