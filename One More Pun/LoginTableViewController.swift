@@ -43,7 +43,9 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
                 if error != nil {
                     self.showErrorInFormAlert()
                 } else {
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.checkPuns({
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    })
                 }
             })
         } else if !hasAccount {
@@ -55,9 +57,18 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
                 if error != nil {
                     self.showErrorInFormAlert()
                 } else {
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.checkPuns({
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    })
                 }
             })
+        }
+    }
+    
+    func checkPuns(completion: () -> Void) {
+        PunController.shared.observePuns { (puns) in
+            PunController.shared.punsArray = puns
+            completion()
         }
     }
     
@@ -135,6 +146,10 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
         cell.selectionStyle = .None
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        guard let destinationVC = segue.destinationViewController as? ViewController else { return }
+        destinationVC.checkUserAndReloadData()
+    }
     
     
     // MARK: - AlertController

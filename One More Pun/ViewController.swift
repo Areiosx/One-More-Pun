@@ -31,38 +31,51 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        UserController.shared.checkUserAgainstDatabase { (success, error) -> Void in
-            if !success {
-                guard let error = error else { return }
-                self.presentErrorAlert(error.localizedDescription, completion: {
-                    self.showLoginSignUpView()
-                })
-            }
-        }
-        
         UserController.shared.getLoggedInUser { (user) in
             if user == nil {
                 self.showLoginSignUpView()
             }
         }
         
+        checkUserAndReloadData()
+        
         infoButtonColor.hidden = true
         addPunButtonColor.hidden = true
-        
-        PunController.shared.observePuns { (puns) in
-            self.retrievingFromNetwork = true
-            PunController.shared.punsArray = puns
-            dispatch_async(dispatch_get_main_queue(), { 
-                self.getNewPunAndColor()
-                self.retrievingFromNetwork = false
-            })
-        }
         
         let rate = RateMyApp.sharedInstance
         rate.appID = "1008575898"
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             rate.trackAppUsage()
         })
+        
+        getNewPunAndColor()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        getNewPunAndColor()
+    }
+    
+    func checkUserAndReloadData() {
+        UserController.shared.checkUserAgainstDatabase { (success, error) -> Void in
+            if success {
+                self.punLabel.text = "Fetching puns..."
+                PunController.shared.observePuns { (puns) in
+                    self.retrievingFromNetwork = true
+                    PunController.shared.punsArray = puns
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.retrievingFromNetwork = false
+                        self.getNewPunAndColor()
+                    })
+                }
+            } else {
+                guard let error = error else { return }
+                self.presentErrorAlert(error.localizedDescription, completion: {
+                    self.showLoginSignUpView()
+                })
+            }
+        }
     }
     
     func showLoginSignUpView() {
