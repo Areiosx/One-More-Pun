@@ -173,7 +173,7 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
         let submitAction = UIAlertAction(title: "Looks good!", style: .Default) { (_) in
             PunController.shared.createPun(punBody)
         }
-        let reEnterAction = UIAlertAction(title: "Re-enter", style: .Cancel) { (_) in
+        let reEnterAction = UIAlertAction(title: "Re-enter", style: .Destructive) { (_) in
             self.presentSubmitPunAlert(punBody)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
