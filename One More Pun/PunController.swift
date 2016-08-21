@@ -37,10 +37,10 @@ class PunController {
     }
     
     func getRandomPun() -> Pun {
-        let newPun = punsArray[Int(arc4random_uniform(UInt32(punsArray.count)))]
+        var newPun = punsArray[Int(arc4random_uniform(UInt32(punsArray.count)))]
         guard let id = newPun.identifier else { return newPun }
         if recentPuns.contains(id) {
-            getRandomPun()
+            newPun = getRandomPun()
         }
         return newPun
     }
