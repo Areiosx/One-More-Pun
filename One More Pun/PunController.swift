@@ -16,18 +16,26 @@ class PunController {
     
     let punsPathString = "puns"
     let reportedCountKey = "reportedCount"
+    var recentPuns = [String]()
     
     var punsArray: [Pun] = []
     
-    func randomPun() -> Pun {
+    func randomPun(oldPun: Pun) -> Pun {
         if punsArray.count == 0 {
             let noPun = Pun(body: "No puns right now. Go ahead and submit one!")
             noPun.submitter = nil
             return noPun
         } else {
-            let randomNumber = Int(arc4random_uniform(UInt32(punsArray.count)))
-            return punsArray[randomNumber]
+            var newPun = punsArray[getRandomNumberForPunsArray()]
+            guard let id = newPun.identifier else { return newPun }
+            recentPuns.append(id)
+            recentPuns.removeFirst()
+            return newPun
         }
+    }    
+    
+    func getRandomNumberForPunsArray() -> Int {
+        return Int(arc4random_uniform(UInt32(punsArray.count)))
     }
     
     func createPun(body: String) {

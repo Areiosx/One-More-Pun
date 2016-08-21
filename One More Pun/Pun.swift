@@ -49,5 +49,5 @@ class Pun: FirebaseType, Equatable {
 }
 
 func ==(lhs: Pun, rhs: Pun) -> Bool {
-    return lhs.identifier > rhs.identifier
+    return lhs.identifier == rhs.identifier
 }
