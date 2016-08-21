@@ -20,22 +20,27 @@ class PunController {
     
     var punsArray: [Pun] = []
     
-    func randomPun(oldPun: Pun) -> Pun {
+    func randomPun() -> Pun {
         if punsArray.count == 0 {
             let noPun = Pun(body: "No puns right now. Go ahead and submit one!")
             noPun.submitter = nil
             return noPun
         } else {
-            var newPun = punsArray[getRandomNumberForPunsArray()]
+            let newPun = getRandomPun()
             guard let id = newPun.identifier else { return newPun }
             recentPuns.append(id)
             recentPuns.removeFirst()
             return newPun
         }
-    }    
+    }
     
-    func getRandomNumberForPunsArray() -> Int {
-        return Int(arc4random_uniform(UInt32(punsArray.count)))
+    func getRandomPun() -> Pun {
+        let newPun = punsArray[Int(arc4random_uniform(UInt32(punsArray.count)))]
+        guard let id = newPun.identifier else { return newPun }
+        if recentPuns.contains(id) {
+            getRandomPun()
+        }
+        return newPun
     }
     
     func createPun(body: String) {
