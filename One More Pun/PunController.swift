@@ -29,7 +29,9 @@ class PunController {
             let newPun = getRandomPun()
             guard let id = newPun.identifier else { return newPun }
             recentPuns.append(id)
-            recentPuns.removeFirst()
+            if recentPuns.count > 5 {
+                recentPuns.removeFirst()
+            }
             return newPun
         }
     }
