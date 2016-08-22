@@ -85,7 +85,7 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     func checkUserAndReloadData() {
-        if FIRAuth.auth()?.currentUser != nil {
+        checkIfCurrentUserIsNil({ 
             UserController.shared.checkUserAgainstDatabase { (success, error) -> Void in
                 if success {
                     self.observePuns()
@@ -96,8 +96,8 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
                     })
                 }
             }
-        } else {
-            observePuns()
+        }) {
+            self.observePuns()
         }
     }
     
@@ -125,7 +125,11 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     @IBAction func addPunButtonTapped(sender: AnyObject) {
-        presentSubmitPunAlert(nil)
+        checkIfCurrentUserIsNil({ 
+            self.presentSubmitPunAlert(nil)
+            }) { 
+                self.presentNoAccountAlert()
+        }
     }
     
     func getNewPunAndColor() {
@@ -150,6 +154,14 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
             return "Submitted by \(submitter)"
         } else {
             return ""
+        }
+    }
+    
+    func checkIfCurrentUserIsNil(ifNotNil: () -> Void, ifNil: () -> Void) {
+        if FIRAuth.auth()?.currentUser != nil {
+            ifNotNil()
+        } else {
+            ifNil()
         }
     }
     
@@ -225,7 +237,11 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
             self.openGoogleForPun()
         }
         let reportAction = UIAlertAction(title: "Report", style: .Default) { (_) in
-            self.presentReportPunAlert()
+            self.checkIfCurrentUserIsNil({
+                self.presentReportPunAlert()
+                }, ifNil: { 
+                    self.presentNoAccountAlert()
+            })
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         actionSheet.addAction(shareAction)
@@ -265,6 +281,17 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
         let alert = UIAlertController(title: "Pun Reported", message: "Your complaint has been recorded. Thank you for keeping One More Pun awesome!", preferredStyle: .Alert)
         let okayAction = UIAlertAction(title: "Okay", style: .Default, handler: nil)
         alert.addAction(okayAction)
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func presentNoAccountAlert() {
+        let alert = UIAlertController(title: "Oops!", message: "Looks like you don't have an account. Please sign up or log in to use this feature.", preferredStyle: .Alert)
+        let signupLoginAction = UIAlertAction(title: "Sign up or login", style: .Default) { (_) in
+            self.showLoginSignUpView()
+        }
+        let cancelAction = UIAlertAction(title: "Never mind", style: .Cancel, handler: nil)
+        alert.addAction(signupLoginAction)
+        alert.addAction(cancelAction)
         presentViewController(alert, animated: true, completion: nil)
     }
 }
