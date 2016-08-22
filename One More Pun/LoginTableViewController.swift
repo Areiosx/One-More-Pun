@@ -25,6 +25,7 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var retypePasswordTextField: UITextField!
     @IBOutlet weak var goButton: UIButton!
+    @IBOutlet weak var goWithoutSignupLoginButton: UIButton!
     
     @IBAction func screenTapped(sender: AnyObject) {
         resignFirstResponders()
@@ -65,6 +66,10 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
+    @IBAction func goWithoutSignupLoginButtonTapped(sender: AnyObject) {
+        goWithoutSignupLogin()
+    }
+    
     func checkPuns(completion: () -> Void) {
         PunController.shared.observePuns { (puns) in
             PunController.shared.punsArray = puns
@@ -77,7 +82,7 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
         
         backgroundColor = colorCollection.randomColor()
         view.backgroundColor = backgroundColor
-        setButtonAttributes([haveAccountButton, goButton])
+        setButtonAttributes([haveAccountButton, goButton, goWithoutSignupLoginButton])
         userHasAccount()
     }
     
@@ -162,6 +167,17 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
         let alert = UIAlertController(title: "Oops!", message: "Something's not right:\n\(message).", preferredStyle: .Alert)
         let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alert.addAction(okAction)
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func goWithoutSignupLogin() {
+        let alert = UIAlertController(title: "Enter without signing in?", message: "You will be able to use the app to see puns but won't be able to submit or report any. You will have the choice to sign up in the future.", preferredStyle: .Alert)
+        let agreeAction = UIAlertAction(title: "That's fine, let's see some puns!", style: .Default) { (_) in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        alert.addAction(agreeAction)
+        alert.addAction(cancelAction)
         presentViewController(alert, animated: true, completion: nil)
     }
 }
