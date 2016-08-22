@@ -12,6 +12,7 @@
             <string>CoolveticaRg-Regular</string>
             <string>CoolveticaRg-Regular</string>
             <string>CoolveticaRg-Regular</string>
+            <string>CoolveticaRg-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -162,11 +163,11 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="" id="vKA-Q4-Fvm">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="infoCell" rowHeight="251" id="7t2-tN-21g">
-                                        <rect key="frame" x="0.0" y="218" width="600" height="251"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="infoCell" rowHeight="235" id="7t2-tN-21g">
+                                        <rect key="frame" x="0.0" y="218" width="600" height="235"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7t2-tN-21g" id="n0c-Tx-uJ0">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="251"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="235"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign in" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BcB-Tc-tPm">
@@ -248,7 +249,7 @@
                             <tableViewSection headerTitle="" id="Ncl-aK-mwE">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="goButtonCell" rowHeight="50" id="Mb6-w3-iqm">
-                                        <rect key="frame" x="0.0" y="469" width="600" height="50"/>
+                                        <rect key="frame" x="0.0" y="453" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mb6-w3-iqm" id="2Xe-3q-wdI">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
@@ -274,10 +275,34 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Or..." id="vbO-1R-cgO">
+                            <tableViewSection headerTitle="" id="8C2-aT-hNB">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="goButtonCell" rowHeight="33" id="eUT-Vg-QzY">
+                                        <rect key="frame" x="0.0" y="503" width="600" height="33"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eUT-Vg-QzY" id="F9D-jZ-0Pd">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="33"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Or..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vH8-Po-qdK">
+                                                    <rect key="frame" x="287" y="6" width="25" height="21"/>
+                                                    <fontDescription key="fontDescription" name="CoolveticaRg-Regular" family="Coolvetica" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="vH8-Po-qdK" firstAttribute="centerX" secondItem="F9D-jZ-0Pd" secondAttribute="centerX" id="Vbk-kz-za9"/>
+                                                <constraint firstItem="vH8-Po-qdK" firstAttribute="centerY" secondItem="F9D-jZ-0Pd" secondAttribute="centerY" id="gBO-co-fft"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="" id="vbO-1R-cgO">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="goButtonCell" rowHeight="50" id="lnh-Cf-3mf">
-                                        <rect key="frame" x="0.0" y="547" width="600" height="50"/>
+                                        <rect key="frame" x="0.0" y="536" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lnh-Cf-3mf" id="9RV-Bu-U3t">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>

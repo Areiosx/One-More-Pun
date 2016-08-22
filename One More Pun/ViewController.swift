@@ -50,7 +50,7 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        printFonts()
+        //        printFonts()
         
         UserController.shared.getLoggedInUser { (user) in
             if user == nil {
@@ -85,23 +85,31 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     func checkUserAndReloadData() {
-        UserController.shared.checkUserAgainstDatabase { (success, error) -> Void in
-            if success {
-                self.punLabel.text = "Fetching puns..."
-                PunController.shared.observePuns { (puns) in
-                    self.retrievingFromNetwork = true
-                    PunController.shared.punsArray = puns
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.retrievingFromNetwork = false
-                        self.getNewPunAndColor()
+        if FIRAuth.auth()?.currentUser != nil {
+            UserController.shared.checkUserAgainstDatabase { (success, error) -> Void in
+                if success {
+                    self.observePuns()
+                } else {
+                    guard let error = error else { return }
+                    self.presentErrorAlert(error.localizedDescription, completion: {
+                        self.showLoginSignUpView()
                     })
                 }
-            } else {
-                guard let error = error else { return }
-                self.presentErrorAlert(error.localizedDescription, completion: {
-                    self.showLoginSignUpView()
-                })
             }
+        } else {
+            observePuns()
+        }
+    }
+    
+    func observePuns() {
+        self.punLabel.text = "Fetching puns..."
+        PunController.shared.observePuns { (puns) in
+            self.retrievingFromNetwork = true
+            PunController.shared.punsArray = puns
+            dispatch_async(dispatch_get_main_queue(), {
+                self.retrievingFromNetwork = false
+                self.getNewPunAndColor()
+            })
         }
     }
     
