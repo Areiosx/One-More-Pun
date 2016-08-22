@@ -94,12 +94,12 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
             passwordTextField.becomeFirstResponder()
         case passwordTextField:
             if hasAccount {
-                passwordTextField.resignFirstResponder()
+                textField.resignFirstResponder()
             } else {
                 retypePasswordTextField.becomeFirstResponder()
             }
         case retypePasswordTextField:
-            retypePasswordTextField.resignFirstResponder()
+            textField.resignFirstResponder()
         default:
             resignFirstResponders()
         }
@@ -117,15 +117,13 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
         if hasAccount {
             signInLabel.text = "Log in"
             haveAccountButton.setTitle("Don't have an account?", forState: .Normal)
-            nameTextField.hidden = true
-            retypePasswordTextField.hidden = true
         } else {
             signInLabel.text = "Sign up"
             haveAccountButton.setTitle("Already have an account?", forState: .Normal)
-            nameTextField.hidden = false
             passwordTextField.returnKeyType = .Next
-            retypePasswordTextField.hidden = false
         }
+        nameTextField.hidden = hasAccount
+        retypePasswordTextField.hidden = hasAccount
     }
     
     func setButtonAttributes(buttons: [UIButton]) {

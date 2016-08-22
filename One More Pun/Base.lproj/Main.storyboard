@@ -211,7 +211,7 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                                                             <connections>
-                                                                <outlet property="delegate" destination="RYX-xh-sS7" id="jQN-Rf-djX"/>
+                                                                <outlet property="delegate" destination="Fgj-cd-txt" id="N2f-0U-Cib"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
