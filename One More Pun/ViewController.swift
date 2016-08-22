@@ -169,7 +169,7 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     func presentSubmitPunConfirmationAlert(punBody: String) {
-        let alert = UIAlertController(title: "All done?", message: "This is your pun:\n\(punBody)", preferredStyle: .Alert)
+        let alert = UIAlertController(title: "All done?", message: "Be sure to check spelling and grammar! Here's how it looks:\n\(punBody)", preferredStyle: .Alert)
         let submitAction = UIAlertAction(title: "Looks good!", style: .Default) { (_) in
             PunController.shared.createPun(punBody)
         }

@@ -40,8 +40,8 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
                 password = passwordTextField.text,
                 name = nameTextField.text else { return }
             UserController.shared.createUser(email, password: password, name: name, completion: { (_, error) in
-                if error != nil {
-                    self.showErrorInFormAlert()
+                if let error = error {
+                    self.showErrorInFormAlert(error.localizedDescription)
                 } else {
                     self.checkPuns({
                         self.dismissViewControllerAnimated(true, completion: nil)
@@ -54,8 +54,8 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
             guard let email = emailTextField.text,
                 password = passwordTextField.text else { return }
             UserController.shared.signInUser(email, password: password, completion: { (_, error) in
-                if error != nil {
-                    self.showErrorInFormAlert()
+                if let error = error {
+                    self.showErrorInFormAlert(error.localizedDescription)
                 } else {
                     self.checkPuns({
                         self.dismissViewControllerAnimated(true, completion: nil)
@@ -123,13 +123,6 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
-    func clearForm() {
-        nameTextField.text = nil
-        emailTextField.text = nil
-        passwordTextField.text = nil
-        retypePasswordTextField.text = nil
-    }
-    
     func setButtonAttributes(buttons: [UIButton]) {
         for button in buttons {
             button.tintColor = backgroundColor
@@ -165,11 +158,9 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
         presentViewController(alert, animated: true, completion: nil)
     }
     
-    func showErrorInFormAlert() {
-        let alert = UIAlertController(title: "Oops!", message: "Something's not right. Check your information and try again.", preferredStyle: .Alert)
-        let okAction = UIAlertAction(title: "OK", style: .Default) { (_) in
-            self.clearForm()
-        }
+    func showErrorInFormAlert(message: String) {
+        let alert = UIAlertController(title: "Oops!", message: "Something's not right:\n\(message).", preferredStyle: .Alert)
+        let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alert.addAction(okAction)
         presentViewController(alert, animated: true, completion: nil)
     }
