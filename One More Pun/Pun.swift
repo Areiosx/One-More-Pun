@@ -15,9 +15,9 @@ class Pun: FirebaseType, Equatable {
     var submitter: String?
     var reportedCount: Int
     
-    private let bodyKey = "body"
-    private let submitterKey = "submitter"
-    private let reportedCountKey = "reportedCount"
+    fileprivate let bodyKey = "body"
+    fileprivate let submitterKey = "submitter"
+    fileprivate let reportedCountKey = "reportedCount"
     
     var endpoint: String {
         return "puns"
@@ -26,11 +26,11 @@ class Pun: FirebaseType, Equatable {
     var identifier: String?
     
     var dictionaryCopy: [String : AnyObject] {
-        guard let submitter = submitter else { return [bodyKey: body] }
-        return [bodyKey: body, reportedCountKey: reportedCount, submitterKey: submitter]
+        guard let submitter = submitter else { return [bodyKey: body as AnyObject] }
+        return [bodyKey: body as AnyObject, reportedCountKey: reportedCount as AnyObject, submitterKey: submitter as AnyObject]
     }
     
-    init(body: String, reportedCount: Int = 0, identifier: String = NSUUID().UUIDString) {
+    init(body: String, reportedCount: Int = 0, identifier: String = UUID().uuidString) {
         self.body = body
         self.reportedCount = reportedCount
         self.submitter = FIRAuth.auth()?.currentUser?.displayName ?? nil
@@ -39,8 +39,8 @@ class Pun: FirebaseType, Equatable {
     
     required init?(dictionary: [String : AnyObject], identifier: String) {
         guard let body = dictionary[bodyKey] as? String,
-        reportedCount = dictionary[reportedCountKey] as? Int,
-            submitter = dictionary[submitterKey] as? String else { return nil }
+        let reportedCount = dictionary[reportedCountKey] as? Int,
+            let submitter = dictionary[submitterKey] as? String else { return nil }
         self.body = body
         self.reportedCount = reportedCount
         self.submitter = submitter

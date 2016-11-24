@@ -11,7 +11,7 @@ import UIKit
 class LoginTableViewController: UITableViewController, UITextFieldDelegate {
     
     let colorCollection = ColorCollection()
-    var backgroundColor: UIColor = .whiteColor()
+    var backgroundColor: UIColor = .white
     var hasAccount: Bool = true {
         didSet {
             userHasAccount()
@@ -27,25 +27,25 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var goButton: UIButton!
     @IBOutlet weak var goWithoutSignupLoginButton: UIButton!
     
-    @IBAction func screenTapped(sender: AnyObject) {
+    @IBAction func screenTapped(_ sender: AnyObject) {
         resignFirstResponders()
     }
     
-    @IBAction func haveAccountButtonTapped(sender: AnyObject) {
+    @IBAction func haveAccountButtonTapped(_ sender: AnyObject) {
         hasAccount = !hasAccount
     }
     
-    @IBAction func goButtonTapped(sender: AnyObject) {
+    @IBAction func goButtonTapped(_ sender: AnyObject) {
         if !hasAccount && passwordTextField.text == retypePasswordTextField.text {
             guard let email = emailTextField.text,
-                password = passwordTextField.text,
-                name = nameTextField.text else { return }
+                let password = passwordTextField.text,
+                let name = nameTextField.text else { return }
             UserController.shared.createUser(email, password: password, name: name, completion: { (_, error) in
                 if let error = error {
                     self.showErrorInFormAlert(error.localizedDescription)
                 } else {
                     self.checkPuns({
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.dismiss(animated: true, completion: nil)
                     })
                 }
             })
@@ -53,24 +53,24 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
             showMismatchedPasswordsAlert()
         } else {
             guard let email = emailTextField.text,
-                password = passwordTextField.text else { return }
+                let password = passwordTextField.text else { return }
             UserController.shared.signInUser(email, password: password, completion: { (_, error) in
                 if let error = error {
                     self.showErrorInFormAlert(error.localizedDescription)
                 } else {
                     self.checkPuns({
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.dismiss(animated: true, completion: nil)
                     })
                 }
             })
         }
     }
     
-    @IBAction func goWithoutSignupLoginButtonTapped(sender: AnyObject) {
+    @IBAction func goWithoutSignupLoginButtonTapped(_ sender: AnyObject) {
         goWithoutSignupLogin()
     }
     
-    func checkPuns(completion: () -> Void) {
+    func checkPuns(_ completion: @escaping () -> Void) {
         PunController.shared.observePuns { (puns) in
             PunController.shared.punsArray = puns
             completion()
@@ -86,7 +86,7 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
         userHasAccount()
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {
         case nameTextField:
             emailTextField.becomeFirstResponder()
@@ -116,34 +116,34 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
     func userHasAccount() {
         if hasAccount {
             signInLabel.text = "Log in"
-            haveAccountButton.setTitle("Don't have an account?", forState: .Normal)
+            haveAccountButton.setTitle("Don't have an account?", for: UIControlState())
         } else {
             signInLabel.text = "Sign up"
-            haveAccountButton.setTitle("Already have an account?", forState: .Normal)
-            passwordTextField.returnKeyType = .Next
+            haveAccountButton.setTitle("Already have an account?", for: UIControlState())
+            passwordTextField.returnKeyType = .next
         }
-        nameTextField.hidden = hasAccount
-        retypePasswordTextField.hidden = hasAccount
+        nameTextField.isHidden = hasAccount
+        retypePasswordTextField.isHidden = hasAccount
     }
     
-    func setButtonAttributes(buttons: [UIButton]) {
+    func setButtonAttributes(_ buttons: [UIButton]) {
         for button in buttons {
             button.tintColor = backgroundColor
             button.layer.cornerRadius = 11
             button.clipsToBounds = true
-            button.backgroundColor = UIColor.whiteColor()
+            button.backgroundColor = UIColor.white
         }
     }
     
     // MARK: - UITableViewDelegate
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = backgroundColor
-        cell.selectionStyle = .None
+        cell.selectionStyle = .none
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        guard let destinationVC = segue.destinationViewController as? ViewController else { return }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let destinationVC = segue.destination as? ViewController else { return }
         destinationVC.checkUserAndReloadData()
     }
     
@@ -151,31 +151,31 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
     // MARK: - AlertController
     
     func showMismatchedPasswordsAlert() {
-        let alert = UIAlertController(title: "Passwords Don't Match", message: "Please make sure the password is the same in both fields.", preferredStyle: .Alert)
-        let okAction = UIAlertAction(title: "OK", style: .Default) { (_) in
+        let alert = UIAlertController(title: "Passwords Don't Match", message: "Please make sure the password is the same in both fields.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
             self.passwordTextField.text = nil
             self.retypePasswordTextField.text = nil
             self.passwordTextField.becomeFirstResponder()
         }
         alert.addAction(okAction)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
-    func showErrorInFormAlert(message: String) {
-        let alert = UIAlertController(title: "Oops!", message: "Something's not right:\n\(message).", preferredStyle: .Alert)
-        let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+    func showErrorInFormAlert(_ message: String) {
+        let alert = UIAlertController(title: "Oops!", message: "Something's not right:\n\(message).", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(okAction)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     func goWithoutSignupLogin() {
-        let alert = UIAlertController(title: "Enter without signing in?", message: "You will be able to use the app to see puns but won't be able to submit or report any. You will have the choice to sign up in the future.", preferredStyle: .Alert)
-        let agreeAction = UIAlertAction(title: "That's fine, let's see some puns!", style: .Default) { (_) in
-            self.dismissViewControllerAnimated(true, completion: nil)
+        let alert = UIAlertController(title: "Enter without signing in?", message: "You will be able to use the app to see puns but won't be able to submit or report any. You will have the choice to sign up in the future.", preferredStyle: .alert)
+        let agreeAction = UIAlertAction(title: "That's fine, let's see some puns!", style: .default) { (_) in
+            self.dismiss(animated: true, completion: nil)
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(agreeAction)
         alert.addAction(cancelAction)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
 }
