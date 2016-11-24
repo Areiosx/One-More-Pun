@@ -69,7 +69,7 @@ struct UserController {
         }
     }
     
-    func signInUser(_ email: String, password: String, completion: @escaping (_ user: FIRUser?, _ error: NSError?) -> Void) {
+    func signInUser(_ email: String, password: String, completion: @escaping (_ user: FIRUser?, _ error: Error?) -> Void) {
         FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
             completion(user, error)
         })
