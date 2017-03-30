@@ -73,10 +73,7 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
     func checkPuns(_ completion: @escaping () -> Void) {
-        punController.observePuns { (puns) in
-            self.punController.punsArray = puns
-            completion()
-        }
+        
     }
     
     override func viewDidLoad() {

@@ -14,18 +14,18 @@ class PunController {
     
     var recentPuns = [String]()
     
-    var punsArray: [Pun] = []
+    var puns = [Pun]()
     
     func randomPun() -> Pun {
-        if punsArray.count == 0 {
-            let noPun = Pun(body: "No puns right now. Go ahead and submit one!")
+        if puns.count == 0 {
+            let noPun = Pun(body: "Loading...")
             noPun.submitter = nil
             return noPun
         } else {
             let newPun = getRandomPun()
             guard let id = newPun.identifier else { return newPun }
             recentPuns.append(id)
-            if recentPuns.count >= punsArray.count {
+            if recentPuns.count >= puns.count {
                 recentPuns.removeFirst()
             }
             return newPun
@@ -33,7 +33,7 @@ class PunController {
     }
     
     func getRandomPun() -> Pun {
-        var newPun = punsArray[Int(arc4random_uniform(UInt32(punsArray.count)))]
+        var newPun = puns[Int(arc4random_uniform(UInt32(puns.count)))]
         guard let id = newPun.identifier else { return newPun }
         if recentPuns.contains(id) {
             newPun = getRandomPun()
@@ -47,17 +47,24 @@ class PunController {
         pun.save()
     }
     
-    func observePuns(_ completion: @escaping (_ puns: [Pun]) -> Void) {
+    func observePuns(_ completion: @escaping () -> Void = { _ in }) {
+        defer { completion() }
         let punsRef = FirebaseController.ref.child(.punsTypeKey)
         punsRef.observe(.value, with: { (data) in
-            guard let punsDict = data.value as? [String: [String: AnyObject]] else { completion([]); return }
+            guard let punsDict = data.value as? [String: [String: AnyObject]] else { return }
             let unfilteredPuns = punsDict.flatMap { Pun(dictionary: $1, identifier: $0) }
             let sortedPuns = unfilteredPuns.sorted(by: { $0.0.upvoteCount > $0.1.upvoteCount })
             let punsToDelete = unfilteredPuns.filter { $0.downvoteCount >= 5 && $0.downvoteCount >= $0.upvoteCount / 4 || $0.reportedCount >= 5 }
             for pun in punsToDelete {
                 self.deletePun(pun)
             }
-            completion(sortedPuns)
+            for pun in sortedPuns {
+                if !self.puns.contains(pun) {
+                    self.puns.append(pun)
+                    NSLog("Added \(pun.identifier ?? "a pun") to puns")
+                    completion()
+                }
+            }
         })
     }
     
@@ -70,6 +77,8 @@ class PunController {
         defer { completion() }
         guard let punIdentifier = pun.identifier,
             let voterIdentifier = FIRAuth.auth()?.currentUser?.uid else { return }
+        NSLog("Upvote for \(punIdentifier)")
+        pun.upvoteIdentifiersArray.append(voterIdentifier)
         let voteDictionary = [voterIdentifier: 1]
         let childUpdates: [String: Any] = ["/\(pun.endpoint)/\(punIdentifier)/\(String.upvoteIdentifiersDictionaryKey)": voteDictionary]
         if pun.downvoteIdentifiersArray.contains(voterIdentifier) {
@@ -82,6 +91,7 @@ class PunController {
         defer { completion() }
         guard let punIdentifier = pun.identifier,
             let voterIdentifier = FIRAuth.auth()?.currentUser?.uid else { return }
+        pun.upvoteIdentifiersArray.remove(voterIdentifier)
         FirebaseController.ref.child(pun.endpoint).child(punIdentifier).child(.upvoteIdentifiersDictionaryKey).child(voterIdentifier).removeValue()
     }
     
@@ -89,6 +99,8 @@ class PunController {
         defer { completion() }
         guard let punIdentifier = pun.identifier,
             let voterIdentifier = FIRAuth.auth()?.currentUser?.uid else { return }
+        pun.downvoteIdentifiersArray.append(voterIdentifier)
+        NSLog("Downvote for \(punIdentifier)")
         let voteDictionary = [voterIdentifier: 1]
         let childUpdates: [String: Any] = ["/\(pun.endpoint)/\(punIdentifier)/\(String.downvoteIdentifiersDictionary)": voteDictionary]
         if pun.upvoteIdentifiersArray.contains(voterIdentifier) {
@@ -101,6 +113,7 @@ class PunController {
         defer { completion() }
         guard let punIdentifier = pun.identifier,
             let voterIdentifier = FIRAuth.auth()?.currentUser?.uid else { return }
+        pun.downvoteIdentifiersArray.remove(voterIdentifier)
         FirebaseController.ref.child(pun.endpoint).child(punIdentifier).child(.downvoteIdentifiersDictionary).child(voterIdentifier).removeValue()
     }
     

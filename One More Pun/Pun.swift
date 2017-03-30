@@ -50,7 +50,7 @@ class Pun: FirebaseType, Equatable {
             let reportedCount = dictionary[.reportedCountKey] as? Int,
             let submitter = dictionary[.submitterKey] as? String else { return nil }
         let upvoteIdentifiersDictionary = dictionary[.upvoteIdentifiersDictionaryKey] as? [String: Int] ?? [String: Int]()
-        let downvoteIdentifiersDictionary = dictionary[.upvoteIdentifiersDictionaryKey] as? [String: Int] ?? [String: Int]()
+        let downvoteIdentifiersDictionary = dictionary[.downvoteIdentifiersDictionary] as? [String: Int] ?? [String: Int]()
         let upvoteIdentifiersArray = upvoteIdentifiersDictionary.flatMap { $0.key }
         let downvoteIdentifiersArray = downvoteIdentifiersDictionary.flatMap { $0.key }
         self.body = body

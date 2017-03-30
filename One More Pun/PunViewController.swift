@@ -22,13 +22,6 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
         }
     }
     var color = UIColor()
-    var punsReadCount = 0 {
-        didSet {
-            if punsReadCount >= punController.punsArray.count {
-                presentEndOfPunsAlert()
-            }
-        }
-    }
     
     var retrievingFromNetwork: Bool = false {
         didSet {
@@ -59,25 +52,29 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
         super.viewDidLoad()
         
         //        printFonts()
-        
-        setInitialViews()
-        
+        hideButtons()
         userController.getLoggedInUser { (user) in
             if user == nil {
                 self.showLoginSignUpView()
             }
         }
-        
         checkUserAndReloadData()
-        
         getNewPunAndColor()
+        showButtons()
     }
     
-    func setInitialViews() {
-        punLabel.text = "Fetching puns..."
-        upvoteButton.isEnabled = false
-        downvoteButton.isEnabled = false
+    func hideButtons() {
         infoButtonColor.isHidden = true
+        punButtonColor.isHidden = true
+        upvoteButton.isHidden = true
+        downvoteButton.isHidden = true
+    }
+    
+    func showButtons() {
+        infoButtonColor.isHidden = false
+        punButtonColor.isHidden = false
+        upvoteButton.isHidden = false
+        downvoteButton.isHidden = false
     }
     
     func disableVotingButtons() {
@@ -91,20 +88,30 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     @IBAction func upvoteButtonTapped(_ sender: Any) {
-        disableVotingButtons()
-        punController.upvote(pun: pun) { 
-            DispatchQueue.main.async {
-                self.reenableVotingButtons()
+        checkIfCurrentUserIsNil({ 
+            disableVotingButtons()
+            punController.upvote(pun: pun) {
+                DispatchQueue.main.async {
+                    self.reenableVotingButtons()
+                    self.updateVoteCountLabels()
+                }
             }
+        }) { 
+            presentNoAccountAlert()
         }
     }
     
     @IBAction func downvoteButtonTapped(_ sender: Any) {
-        disableVotingButtons()
-        punController.downvote(pun: pun) {
-            DispatchQueue.main.async {
-                self.reenableVotingButtons()
+        checkIfCurrentUserIsNil({ 
+            disableVotingButtons()
+            punController.downvote(pun: pun) {
+                DispatchQueue.main.async {
+                    self.reenableVotingButtons()
+                    self.updateVoteCountLabels()
+                }
             }
+        }) { 
+            presentNoAccountAlert()
         }
     }
     
@@ -112,13 +119,6 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
     @IBAction func infoButtonTapped(_ sender: AnyObject) {
         showPunInfoActionSheet()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        self.punLabel.text = "Fetching puns..."
-        getNewPunAndColor()
     }
     
     func checkUserAndReloadData() {
@@ -139,14 +139,18 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     func observePuns() {
-        punController.observePuns { (puns) in
+        punController.observePuns {
             self.retrievingFromNetwork = true
-            self.punController.punsArray = puns
             DispatchQueue.main.async {
                 self.retrievingFromNetwork = false
                 self.getNewPunAndColor()
             }
         }
+    }
+    
+    func updateVoteCountLabels() {
+        upvoteLabel.text = "\(pun.upvoteCount)"
+        downvoteLabel.text = "\(pun.downvoteCount)"
     }
     
     func showLoginSignUpView() {
@@ -157,15 +161,6 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
     @IBAction func nextPunButton(_ sender: AnyObject) {
         getNewPunAndColor()
-        punsReadCount += 1
-    }
-    
-    @IBAction func addPunButtonTapped(_ sender: AnyObject) {
-        checkIfCurrentUserIsNil({
-            self.presentSubmitPunAlert(nil)
-        }) {
-            self.presentNoAccountAlert()
-        }
     }
     
     func getNewPunAndColor() {
@@ -185,11 +180,7 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     func submitterLabelText(_ pun: Pun) -> String {
-        if let submitter = pun.submitter {
-            return "Submitted by \(submitter)"
-        } else {
-            return ""
-        }
+        return pun.submitter != nil ? "Submitted by \(pun.submitter!)" : ""
     }
     
     func checkIfCurrentUserIsNil(_ ifNotNil: () -> Void, ifNil: () -> Void) {
@@ -246,20 +237,6 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
             }
         }
         alert.addAction(okayAction)
-        present(alert, animated: true, completion: nil)
-    }
-    
-    func presentEndOfPunsAlert() {
-        let alert = UIAlertController(title: "You're about to run out of puns!", message: "One More Pun only works if people like you submit puns! Tap the + to add one!", preferredStyle: .alert)
-        let submitAction = UIAlertAction(title: "Let's go!", style: .default) { (_) in
-            self.punsReadCount = 0
-            self.presentSubmitPunAlert(nil)
-        }
-        let cancelAction = UIAlertAction(title: "No thanks", style: .cancel) { (_) in
-            self.punsReadCount = 0
-        }
-        alert.addAction(submitAction)
-        alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
     }
     
