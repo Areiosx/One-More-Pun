@@ -15,6 +15,7 @@ extension String {
      */
     static var bodyKey: String { get { return "body" } }
     static var submitterKey: String { get { return "submitter" } }
+    static var reportedCountKey: String { get { return "reportedCount" } }
     static var upvoteIdentifiersDictionaryKey: String { get { return "upvoteIdentifiersDictionary" } }
     static var downvoteIdentifiersDictionary: String { get { return "downvoteIdentifiersDictionary" } }
     

@@ -12,12 +12,19 @@ import Firebase
 
 class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
+    let userController = UserController()
+    let punController = PunController()
     let colorCollection = ColorCollection()
-    var pun = Pun(body: "")
+    var pun = Pun(body: "") {
+        didSet {
+            upvoteLabel.text = "\(pun.upvoteCount)"
+            downvoteLabel.text = "\(pun.downvoteCount)"
+        }
+    }
     var color = UIColor()
     var punsReadCount = 0 {
         didSet {
-            if punsReadCount >= PunController.shared.punsArray.count {
+            if punsReadCount >= punController.punsArray.count {
                 presentEndOfPunsAlert()
             }
         }
@@ -42,7 +49,10 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet weak var submitterLabel: UILabel!
     @IBOutlet weak var punButtonColor: UIButton!
     @IBOutlet weak var infoButtonColor: UIButton!
-    @IBOutlet weak var addPunButtonColor: UIButton!
+    @IBOutlet weak var upvoteLabel: UILabel!
+    @IBOutlet weak var downvoteLabel: UILabel!
+    @IBOutlet weak var upvoteButton: UIButton!
+    @IBOutlet weak var downvoteButton: UIButton!
     
     
     override func viewDidLoad() {
@@ -50,7 +60,9 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
         
         //        printFonts()
         
-        UserController.shared.getLoggedInUser { (user) in
+        setInitialViews()
+        
+        userController.getLoggedInUser { (user) in
             if user == nil {
                 self.showLoginSignUpView()
             }
@@ -58,10 +70,42 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
         
         checkUserAndReloadData()
         
-        infoButtonColor.isHidden = true
-        addPunButtonColor.isHidden = true
-        
         getNewPunAndColor()
+    }
+    
+    func setInitialViews() {
+        punLabel.text = "Fetching puns..."
+        upvoteButton.isEnabled = false
+        downvoteButton.isEnabled = false
+        infoButtonColor.isHidden = true
+    }
+    
+    func disableVotingButtons() {
+        upvoteButton.isEnabled = false
+        downvoteButton.isEnabled = false
+    }
+    
+    func reenableVotingButtons() {
+        upvoteButton.isEnabled = true
+        downvoteButton.isEnabled = true
+    }
+    
+    @IBAction func upvoteButtonTapped(_ sender: Any) {
+        disableVotingButtons()
+        punController.upvote(pun: pun) { 
+            DispatchQueue.main.async {
+                self.reenableVotingButtons()
+            }
+        }
+    }
+    
+    @IBAction func downvoteButtonTapped(_ sender: Any) {
+        disableVotingButtons()
+        punController.downvote(pun: pun) {
+            DispatchQueue.main.async {
+                self.reenableVotingButtons()
+            }
+        }
     }
     
     // MARK: - Pun Info Options
@@ -73,12 +117,13 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        self.punLabel.text = "Fetching puns..."
         getNewPunAndColor()
     }
     
     func checkUserAndReloadData() {
-        checkIfCurrentUserIsNil({ 
-            UserController.shared.checkUserAgainstDatabase { (success, error) -> Void in
+        checkIfCurrentUserIsNil({
+            userController.checkUserAgainstDatabase { (success, error) -> Void in
                 if success {
                     self.observePuns()
                 } else {
@@ -94,14 +139,13 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     func observePuns() {
-        self.punLabel.text = "Fetching puns..."
-        PunController.shared.observePuns { (puns) in
+        punController.observePuns { (puns) in
             self.retrievingFromNetwork = true
-            PunController.shared.punsArray = puns
-            DispatchQueue.main.async(execute: {
+            self.punController.punsArray = puns
+            DispatchQueue.main.async {
                 self.retrievingFromNetwork = false
                 self.getNewPunAndColor()
-            })
+            }
         }
     }
     
@@ -117,18 +161,19 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     @IBAction func addPunButtonTapped(_ sender: AnyObject) {
-        checkIfCurrentUserIsNil({ 
+        checkIfCurrentUserIsNil({
             self.presentSubmitPunAlert(nil)
-            }) { 
-                self.presentNoAccountAlert()
+        }) {
+            self.presentNoAccountAlert()
         }
     }
     
     func getNewPunAndColor() {
-        pun = PunController.shared.randomPun()
+        pun = punController.randomPun()
         setUpColor()
         punLabel.text = pun.body
         submitterLabel.text = submitterLabelText(pun)
+        reenableVotingButtons()
     }
     
     func setUpColor() {
@@ -137,8 +182,6 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
         punButtonColor.tintColor = color
         infoButtonColor.isHidden = false
         infoButtonColor.tintColor = color
-        addPunButtonColor.isHidden = false
-        addPunButtonColor.tintColor = color
     }
     
     func submitterLabelText(_ pun: Pun) -> String {
@@ -183,7 +226,7 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
     func presentSubmitPunConfirmationAlert(_ punBody: String) {
         let alert = UIAlertController(title: "All done?", message: "Be sure to check spelling and grammar! Here's how it looks:\n\(punBody)", preferredStyle: .alert)
         let submitAction = UIAlertAction(title: "Looks good!", style: .default) { (_) in
-            PunController.shared.createPun(punBody)
+            self.punController.createPun(punBody)
         }
         let reEnterAction = UIAlertAction(title: "Re-enter", style: .destructive) { (_) in
             self.presentSubmitPunAlert(punBody)
@@ -222,20 +265,24 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
     func showPunInfoActionSheet() {
         let actionSheet = UIAlertController(title: "", message: "Options", preferredStyle: .actionSheet)
+        let submitPunAction = UIAlertAction(title: "Submit A Pun", style: .default) { (_) in
+            self.presentSubmitPunAlert(nil)
+        }
         let shareAction = UIAlertAction(title: "Share Pun", style: .default) { (_) in
             self.share()
         }
         let googleAction = UIAlertAction(title: "Don't get it?", style: .default) { (_) in
             self.openGoogleForPun()
         }
-        let reportAction = UIAlertAction(title: "Report", style: .default) { (_) in
+        let reportAction = UIAlertAction(title: "Report", style: .destructive) { (_) in
             self.checkIfCurrentUserIsNil({
                 self.presentReportPunAlert()
-                }, ifNil: { 
-                    self.presentNoAccountAlert()
+            }, ifNil: {
+                self.presentNoAccountAlert()
             })
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        actionSheet.addAction(submitPunAction)
         actionSheet.addAction(shareAction)
         actionSheet.addAction(googleAction)
         actionSheet.addAction(reportAction)
@@ -244,7 +291,7 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     func share() {
-        let items = PunController.shared.getItemsToShare(pun, color: color)
+        let items = punController.getItemsToShare(pun, color: color)
         let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
         activityViewController.excludedActivityTypes = [UIActivityType.copyToPasteboard, UIActivityType.airDrop, UIActivityType.addToReadingList, UIActivityType.assignToContact, UIActivityType.postToTencentWeibo, UIActivityType.postToVimeo, UIActivityType.print, UIActivityType.postToWeibo]
         present(activityViewController, animated: true, completion: nil)
@@ -260,7 +307,7 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
     func presentReportPunAlert() {
         let alert = UIAlertController(title: "Report pun?", message: "Only use this feature if you want to report this pun as inappropriate or not a real pun.", preferredStyle: .alert)
         let reportAction = UIAlertAction(title: "Report", style: .destructive) { (_) in
-//            PunController.shared.reportPun(self.pun)
+            self.punController.report(pun: self.pun)
             self.presentPunReportedConfirmation()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)

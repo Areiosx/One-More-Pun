@@ -12,8 +12,6 @@ import UIKit
 
 class PunController {
     
-    static let shared = PunController()
-    
     var recentPuns = [String]()
     
     var punsArray: [Pun] = []
@@ -55,7 +53,7 @@ class PunController {
             guard let punsDict = data.value as? [String: [String: AnyObject]] else { completion([]); return }
             let unfilteredPuns = punsDict.flatMap { Pun(dictionary: $1, identifier: $0) }
             let sortedPuns = unfilteredPuns.sorted(by: { $0.0.upvoteCount > $0.1.upvoteCount })
-            let punsToDelete = unfilteredPuns.filter { $0.downvoteCount >= 15 && $0.downvoteCount >= $0.upvoteCount / 4 }
+            let punsToDelete = unfilteredPuns.filter { $0.downvoteCount >= 5 && $0.downvoteCount >= $0.upvoteCount / 4 || $0.reportedCount >= 5 }
             for pun in punsToDelete {
                 self.deletePun(pun)
             }
@@ -104,6 +102,13 @@ class PunController {
         guard let punIdentifier = pun.identifier,
             let voterIdentifier = FIRAuth.auth()?.currentUser?.uid else { return }
         FirebaseController.ref.child(pun.endpoint).child(punIdentifier).child(.downvoteIdentifiersDictionary).child(voterIdentifier).removeValue()
+    }
+    
+    func report(pun: Pun) {
+        guard let identifier = pun.identifier else { return }
+        let reports = (pun.reportedCount + 1)
+        let childUpdates: [AnyHashable: Any] = ["/\(pun.endpoint)/\(identifier)/\(String.reportedCountKey)": reports]
+        FirebaseController.ref.updateChildValues(childUpdates)
     }
     
     func getPunTextAndSubmitter(_ pun: Pun) -> String {

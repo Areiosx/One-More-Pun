@@ -11,8 +11,6 @@ import Firebase
 
 struct UserController {
     
-    static let shared = UserController()
-    
     fileprivate let usersPathString = "users"
     
     func createUser(_ email: String, password: String, name: String, completion: @escaping (_ user: FIRUser?, _ error: NSError?) -> Void) {
