@@ -51,6 +51,9 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="infoButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kF9-Ut-ywF"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pUV-3x-Hzh">
                                 <rect key="frame" x="16" y="156" width="343" height="323"/>
@@ -125,19 +128,25 @@
                                     <constraint firstAttribute="height" constant="50" id="yIH-nG-ePU"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CjK-Hv-vrN">
-                                <rect key="frame" x="45" y="527" width="44" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="yNf-vA-0ti"/>
-                                    <constraint firstAttribute="width" constant="44" id="zLl-ix-C6D"/>
-                                </constraints>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xsw-w3-wPT">
                                 <rect key="frame" x="285" y="527" width="44" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="2sp-EC-sZN"/>
                                     <constraint firstAttribute="width" constant="44" id="Wc9-3K-naS"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="upvoteButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5bw-DA-FRf"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CjK-Hv-vrN">
+                                <rect key="frame" x="45" y="527" width="44" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="yNf-vA-0ti"/>
+                                    <constraint firstAttribute="width" constant="44" id="zLl-ix-C6D"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="downvoteButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qiv-8t-NiS"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.92887479029999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -172,9 +181,14 @@
                     </view>
                     <navigationItem key="navigationItem" id="jwp-Cf-JmA"/>
                     <connections>
+                        <outlet property="downvoteButton" destination="CjK-Hv-vrN" id="8vo-uH-FOn"/>
+                        <outlet property="downvoteLabel" destination="DOQ-2B-Drf" id="eas-G2-Vmx"/>
+                        <outlet property="infoButtonColor" destination="hQO-Va-nst" id="SIb-NN-2gu"/>
                         <outlet property="punButtonColor" destination="JoX-1V-9ul" id="oLp-Jw-GPp"/>
                         <outlet property="punLabel" destination="pUV-3x-Hzh" id="e0R-hH-2vy"/>
                         <outlet property="submitterLabel" destination="ryn-S2-qdx" id="mTz-Jh-jUu"/>
+                        <outlet property="upvoteButton" destination="Xsw-w3-wPT" id="CMw-aw-nM0"/>
+                        <outlet property="upvoteLabel" destination="l8Z-GM-6BO" id="hRj-WN-K8d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -338,7 +352,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Or..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vH8-Po-qdK">
-                                                    <rect key="frame" x="175" y="6" width="25" height="21"/>
+                                                    <rect key="frame" x="175.5" y="6.5" width="25" height="20"/>
                                                     <fontDescription key="fontDescription" name="CoolveticaRg-Regular" family="Coolvetica" pointSize="17"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
