@@ -13,15 +13,17 @@
 		6614F5C61D60E64F00F150B5 /* Pun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614F5C51D60E64F00F150B5 /* Pun.swift */; };
 		6614F5C81D60E7BE00F150B5 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614F5C71D60E7BE00F150B5 /* UserController.swift */; };
 		6614F5CA1D60E7C500F150B5 /* PunController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614F5C91D60E7C500F150B5 /* PunController.swift */; };
+		6623060B1E8D687200BED72E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6623060A1E8D687200BED72E /* Constants.swift */; };
+		6623060D1E8D693700BED72E /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6623060C1E8D693700BED72E /* String.swift */; };
+		662306101E8D742A00BED72E /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6623060F1E8D742A00BED72E /* UIImage.swift */; };
 		66301FDB1D654893001E4106 /* coolvetica rg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66301FDA1D654893001E4106 /* coolvetica rg.ttf */; };
 		66A6D96A1D5D62FD00C74DB4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66A6D9691D5D62FD00C74DB4 /* GoogleService-Info.plist */; };
 		66D8CE8F1C14BAFE006BB37E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8CE8E1C14BAFE006BB37E /* AppDelegate.swift */; };
-		66D8CE911C14BAFE006BB37E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8CE901C14BAFE006BB37E /* ViewController.swift */; };
+		66D8CE911C14BAFE006BB37E /* PunViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8CE901C14BAFE006BB37E /* PunViewController.swift */; };
 		66D8CE941C14BAFE006BB37E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66D8CE921C14BAFE006BB37E /* Main.storyboard */; };
 		66D8CE961C14BAFE006BB37E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66D8CE951C14BAFE006BB37E /* Assets.xcassets */; };
 		66D8CE991C14BAFE006BB37E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66D8CE971C14BAFE006BB37E /* LaunchScreen.storyboard */; };
 		66D8CEA31C14CB98006BB37E /* ColorCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8CEA21C14CB98006BB37E /* ColorCollection.swift */; };
-		66D8CEA71C14D456006BB37E /* RateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8CEA61C14D456006BB37E /* RateApp.swift */; };
 		66F08E231D63A156003D5054 /* LoginTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F08E221D63A156003D5054 /* LoginTableViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,17 +34,19 @@
 		6614F5C51D60E64F00F150B5 /* Pun.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pun.swift; sourceTree = "<group>"; };
 		6614F5C71D60E7BE00F150B5 /* UserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
 		6614F5C91D60E7C500F150B5 /* PunController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PunController.swift; sourceTree = "<group>"; };
+		6623060A1E8D687200BED72E /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		6623060C1E8D693700BED72E /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		6623060F1E8D742A00BED72E /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		66301FDA1D654893001E4106 /* coolvetica rg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "coolvetica rg.ttf"; sourceTree = "<group>"; };
 		66A6D9691D5D62FD00C74DB4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		66D8CE8B1C14BAFE006BB37E /* One More Pun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "One More Pun.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		66D8CE8E1C14BAFE006BB37E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		66D8CE901C14BAFE006BB37E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		66D8CE901C14BAFE006BB37E /* PunViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunViewController.swift; sourceTree = "<group>"; };
 		66D8CE931C14BAFE006BB37E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		66D8CE951C14BAFE006BB37E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66D8CE981C14BAFE006BB37E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		66D8CE9A1C14BAFE006BB37E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		66D8CEA21C14CB98006BB37E /* ColorCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCollection.swift; sourceTree = "<group>"; };
-		66D8CEA61C14D456006BB37E /* RateApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateApp.swift; sourceTree = "<group>"; };
 		66F08E221D63A156003D5054 /* LoginTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTableViewController.swift; sourceTree = "<group>"; };
 		B4411F59A27C5AA05EB70F21 /* Pods-One More Pun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-One More Pun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-One More Pun/Pods-One More Pun.debug.xcconfig"; sourceTree = "<group>"; };
 		EA2FAB4BC792FCBCC886FB31 /* Pods-One More Pun.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-One More Pun.release.xcconfig"; path = "Pods/Target Support Files/Pods-One More Pun/Pods-One More Pun.release.xcconfig"; sourceTree = "<group>"; };
@@ -60,13 +64,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6614F5BD1D5F80D400F150B5 /* Tools */ = {
+		6614F5BD1D5F80D400F150B5 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
 				66D8CEA21C14CB98006BB37E /* ColorCollection.swift */,
-				66D8CEA61C14D456006BB37E /* RateApp.swift */,
+				6623060A1E8D687200BED72E /* Constants.swift */,
+				6623060E1E8D693B00BED72E /* Extension */,
 			);
-			name = Tools;
+			name = Helper;
 			sourceTree = "<group>";
 		};
 		6614F5BE1D5F80DE00F150B5 /* ViewController */ = {
@@ -74,7 +79,7 @@
 			children = (
 				66D8CE921C14BAFE006BB37E /* Main.storyboard */,
 				66F08E221D63A156003D5054 /* LoginTableViewController.swift */,
-				66D8CE901C14BAFE006BB37E /* ViewController.swift */,
+				66D8CE901C14BAFE006BB37E /* PunViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -96,6 +101,15 @@
 				6614F5C51D60E64F00F150B5 /* Pun.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		6623060E1E8D693B00BED72E /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				6623060C1E8D693700BED72E /* String.swift */,
+				6623060F1E8D742A00BED72E /* UIImage.swift */,
+			);
+			name = Extension;
 			sourceTree = "<group>";
 		};
 		66D8CE821C14BAFE006BB37E = {
@@ -120,10 +134,10 @@
 			isa = PBXGroup;
 			children = (
 				66D8CE8E1C14BAFE006BB37E /* AppDelegate.swift */,
-				6614F5BE1D5F80DE00F150B5 /* ViewController */,
-				6614F5BD1D5F80D400F150B5 /* Tools */,
-				6614F5BF1D5F80EA00F150B5 /* Controller */,
 				6614F5C41D60E64100F150B5 /* Model */,
+				6614F5BF1D5F80EA00F150B5 /* Controller */,
+				6614F5BE1D5F80DE00F150B5 /* ViewController */,
+				6614F5BD1D5F80D400F150B5 /* Helper */,
 				66D8CE951C14BAFE006BB37E /* Assets.xcassets */,
 				66301FDA1D654893001E4106 /* coolvetica rg.ttf */,
 				66D8CE971C14BAFE006BB37E /* LaunchScreen.storyboard */,
@@ -276,14 +290,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66D8CEA71C14D456006BB37E /* RateApp.swift in Sources */,
+				6623060B1E8D687200BED72E /* Constants.swift in Sources */,
+				6623060D1E8D693700BED72E /* String.swift in Sources */,
 				6614F5BC1D5F80A100F150B5 /* FirebaseController.swift in Sources */,
-				66D8CE911C14BAFE006BB37E /* ViewController.swift in Sources */,
+				66D8CE911C14BAFE006BB37E /* PunViewController.swift in Sources */,
 				6614F5C81D60E7BE00F150B5 /* UserController.swift in Sources */,
 				66D8CEA31C14CB98006BB37E /* ColorCollection.swift in Sources */,
 				66F08E231D63A156003D5054 /* LoginTableViewController.swift in Sources */,
 				66D8CE8F1C14BAFE006BB37E /* AppDelegate.swift in Sources */,
 				6614F5CA1D60E7C500F150B5 /* PunController.swift in Sources */,
+				662306101E8D742A00BED72E /* UIImage.swift in Sources */,
 				6614F5C61D60E64F00F150B5 /* Pun.swift in Sources */,
 				661060DF1D64021C000E779E /* User.swift in Sources */,
 			);

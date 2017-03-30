@@ -10,9 +10,7 @@ import UIKit
 import MessageUI
 import Firebase
 
-
-
-class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
+class PunViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
     let colorCollection = ColorCollection()
     var pun = Pun(body: "")
@@ -62,12 +60,6 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
         
         infoButtonColor.isHidden = true
         addPunButtonColor.isHidden = true
-        
-        let rate = RateMyApp.sharedInstance
-        rate.appID = "1008575898"
-        DispatchQueue.main.async(execute: { () -> Void in
-            rate.trackAppUsage()
-        })
         
         getNewPunAndColor()
     }
@@ -268,7 +260,7 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
     func presentReportPunAlert() {
         let alert = UIAlertController(title: "Report pun?", message: "Only use this feature if you want to report this pun as inappropriate or not a real pun.", preferredStyle: .alert)
         let reportAction = UIAlertAction(title: "Report", style: .destructive) { (_) in
-            PunController.shared.reportPun(self.pun)
+//            PunController.shared.reportPun(self.pun)
             self.presentPunReportedConfirmation()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)

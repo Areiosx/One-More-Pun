@@ -143,7 +143,7 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let destinationVC = segue.destination as? ViewController else { return }
+        guard let destinationVC = segue.destination as? PunViewController else { return }
         destinationVC.checkUserAndReloadData()
     }
     

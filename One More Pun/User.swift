@@ -14,17 +14,14 @@ class User: FirebaseType {
     let email: String
     let username: String
     
-    fileprivate let emailKey = "email"
-    fileprivate let usernameKey = "username"
-    
     var endpoint: String {
-        return "users"
+        return .usersTypeKey
     }
     
     var identifier: String?
     
     var dictionaryCopy: [String : AnyObject] {
-        return [emailKey: email as AnyObject, usernameKey: username as AnyObject]
+        return [.emailKey: email as AnyObject, .usernameKey: username as AnyObject]
     }
     
     init(email: String, username: String, identifier: String) {
@@ -34,8 +31,8 @@ class User: FirebaseType {
     }
     
     required init?(dictionary: [String : AnyObject], identifier: String) {
-        guard let email = dictionary[emailKey] as? String,
-            let username = dictionary[usernameKey] as? String else { return nil }
+        guard let email = dictionary[.emailKey] as? String,
+            let username = dictionary[.usernameKey] as? String else { return nil }
         self.email = email
         self.username = username
     }

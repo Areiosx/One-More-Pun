@@ -13,36 +13,46 @@ class Pun: FirebaseType, Equatable {
     
     let body: String
     var submitter: String?
-    var reportedCount: Int
+    var upvoteIdentifiersArray: [String]
+    var downvoteIdentifiersArray: [String]
     
-    fileprivate let bodyKey = "body"
-    fileprivate let submitterKey = "submitter"
-    fileprivate let reportedCountKey = "reportedCount"
+    var upvoteCount: Int {
+        return upvoteIdentifiersArray.count
+    }
+    
+    var downvoteCount: Int {
+        return downvoteIdentifiersArray.count
+    }
     
     var endpoint: String {
-        return "puns"
+        return .punsTypeKey
     }
     
     var identifier: String?
     
     var dictionaryCopy: [String : AnyObject] {
-        guard let submitter = submitter else { return [bodyKey: body as AnyObject] }
-        return [bodyKey: body as AnyObject, reportedCountKey: reportedCount as AnyObject, submitterKey: submitter as AnyObject]
+        guard let submitter = submitter else { return [.bodyKey: body as AnyObject] }
+        return [.bodyKey: body as AnyObject, .submitterKey: submitter as AnyObject]
     }
     
-    init(body: String, reportedCount: Int = 0, identifier: String = UUID().uuidString) {
+    init(body: String, upvoteIdentifiersArray: [String] = [], downvoteIdentifiersArray: [String] = [], identifier: String = UUID().uuidString) {
         self.body = body
-        self.reportedCount = reportedCount
+        self.upvoteIdentifiersArray = upvoteIdentifiersArray
+        self.downvoteIdentifiersArray = downvoteIdentifiersArray
         self.submitter = FIRAuth.auth()?.currentUser?.displayName ?? nil
         self.identifier = identifier
     }
     
     required init?(dictionary: [String : AnyObject], identifier: String) {
-        guard let body = dictionary[bodyKey] as? String,
-        let reportedCount = dictionary[reportedCountKey] as? Int,
-            let submitter = dictionary[submitterKey] as? String else { return nil }
+        guard let body = dictionary[.bodyKey] as? String,
+        let upvoteIdentifiersDictionary = dictionary[.upvoteIdentifiersDictionaryKey] as? [String: Int],
+        let downvoteIdentifiersDictionary = dictionary[.upvoteIdentifiersDictionaryKey] as? [String: Int],
+            let submitter = dictionary[.submitterKey] as? String else { return nil }
+        let upvoteIdentifiersArray = upvoteIdentifiersDictionary.flatMap { $0.key }
+        let downvoteIdentifiersArray = downvoteIdentifiersDictionary.flatMap { $0.key }
         self.body = body
-        self.reportedCount = reportedCount
+        self.upvoteIdentifiersArray = upvoteIdentifiersArray
+        self.downvoteIdentifiersArray = downvoteIdentifiersArray
         self.submitter = submitter
         self.identifier = identifier
     }
