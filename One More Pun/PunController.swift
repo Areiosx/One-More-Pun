@@ -12,10 +12,6 @@ import UIKit
 
 class PunController {
     
-    static let shared = PunController()
-    
-    let punsPathString = "puns"
-    let reportedCountKey = "reportedCount"
     var recentPuns = [String]()
     
     var punsArray: [Pun] = []
@@ -46,22 +42,22 @@ class PunController {
     }
     
     func createPun(_ body: String) {
-        let punIdentifier = FirebaseController.ref.child(punsPathString).childByAutoId().key
-        var pun = Pun(body: body, reportedCount: 0, identifier: punIdentifier)
+        let punIdentifier = FirebaseController.ref.child(.punsTypeKey).childByAutoId().key
+        var pun = Pun(body: body, identifier: punIdentifier)
         pun.save()
     }
     
     func observePuns(_ completion: @escaping (_ puns: [Pun]) -> Void) {
-        let punsRef = FirebaseController.ref.child(punsPathString)
+        let punsRef = FirebaseController.ref.child(.punsTypeKey)
         punsRef.observe(.value, with: { (data) in
             guard let punsDict = data.value as? [String: [String: AnyObject]] else { completion([]); return }
             let unfilteredPuns = punsDict.flatMap { Pun(dictionary: $1, identifier: $0) }
-            let filteredPuns = unfilteredPuns.filter { $0.reportedCount < 5 }
-            let punsToDelete = unfilteredPuns.filter { $0.reportedCount >= 5 }
+            let sortedPuns = unfilteredPuns.sorted(by: { $0.0.upvoteCount > $0.1.upvoteCount })
+            let punsToDelete = unfilteredPuns.filter { $0.downvoteCount >= 5 && $0.downvoteCount >= $0.upvoteCount / 4 || $0.reportedCount >= 5 }
             for pun in punsToDelete {
                 self.deletePun(pun)
             }
-            completion(filteredPuns)
+            completion(sortedPuns)
         })
     }
     
@@ -70,10 +66,48 @@ class PunController {
         FirebaseController.ref.child(pun.endpoint).child(identifier).removeValue()
     }
     
-    func reportPun(_ pun: Pun) {
+    func upvote(pun: Pun, completion: @escaping () -> Void = { _ in }) {
+        defer { completion() }
+        guard let punIdentifier = pun.identifier,
+            let voterIdentifier = FIRAuth.auth()?.currentUser?.uid else { return }
+        let voteDictionary = [voterIdentifier: 1]
+        let childUpdates: [String: Any] = ["/\(pun.endpoint)/\(punIdentifier)/\(String.upvoteIdentifiersDictionaryKey)": voteDictionary]
+        if pun.downvoteIdentifiersArray.contains(voterIdentifier) {
+            removeDownvote(forPun: pun)
+        }
+        FirebaseController.ref.updateChildValues(childUpdates)
+    }
+    
+    func removeUpvote(forPun pun: Pun, completion: @escaping () -> Void = { _ in }) {
+        defer { completion() }
+        guard let punIdentifier = pun.identifier,
+            let voterIdentifier = FIRAuth.auth()?.currentUser?.uid else { return }
+        FirebaseController.ref.child(pun.endpoint).child(punIdentifier).child(.upvoteIdentifiersDictionaryKey).child(voterIdentifier).removeValue()
+    }
+    
+    func downvote(pun: Pun, completion: @escaping () -> Void = { _ in } ) {
+        defer { completion() }
+        guard let punIdentifier = pun.identifier,
+            let voterIdentifier = FIRAuth.auth()?.currentUser?.uid else { return }
+        let voteDictionary = [voterIdentifier: 1]
+        let childUpdates: [String: Any] = ["/\(pun.endpoint)/\(punIdentifier)/\(String.downvoteIdentifiersDictionary)": voteDictionary]
+        if pun.upvoteIdentifiersArray.contains(voterIdentifier) {
+            removeUpvote(forPun: pun)
+        }
+        FirebaseController.ref.updateChildValues(childUpdates)
+    }
+    
+    func removeDownvote(forPun pun: Pun, completion: @escaping () -> Void = { _ in }) {
+        defer { completion() }
+        guard let punIdentifier = pun.identifier,
+            let voterIdentifier = FIRAuth.auth()?.currentUser?.uid else { return }
+        FirebaseController.ref.child(pun.endpoint).child(punIdentifier).child(.downvoteIdentifiersDictionary).child(voterIdentifier).removeValue()
+    }
+    
+    func report(pun: Pun) {
         guard let identifier = pun.identifier else { return }
         let reports = (pun.reportedCount + 1)
-        let childUpdates: [AnyHashable: Any] = ["/\(pun.endpoint)/\(identifier)/\(reportedCountKey)": reports]
+        let childUpdates: [AnyHashable: Any] = ["/\(pun.endpoint)/\(identifier)/\(String.reportedCountKey)": reports]
         FirebaseController.ref.updateChildValues(childUpdates)
     }
     
@@ -88,40 +122,9 @@ class PunController {
     func getItemsToShare(_ pun: Pun, color: UIColor) -> [AnyObject] {
         let point = CGPoint(x: 10, y: 10)
         let imageSize = CGSize(width: 1024, height: 1024)
-        let imageWithColor = getImageWithColor(color, size: imageSize)
-        let image = textToImage(getPunTextAndSubmitter(pun) as NSString, inImage: imageWithColor, atPoint: point)
+        let imageWithColor = UIImage.getImageWithColor(color, size: imageSize)
+        let image = UIImage.textToImage(getPunTextAndSubmitter(pun) as NSString, inImage: imageWithColor, atPoint: point)
         let comment = "Shared via One More Pun!\nhttp://tinyurl.com/OneMorePun"
         return [image, comment as AnyObject]
-    }
-}
-
-extension PunController {
-    
-    // MARK: - Image Helper
-    
-    func getImageWithColor(_ color: UIColor, size: CGSize) -> UIImage {
-        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-        UIGraphicsBeginImageContextWithOptions(size, false, 0)
-        color.setFill()
-        UIRectFill(rect)
-        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        return image
-    }
-    
-    func textToImage(_ drawText: NSString, inImage: UIImage, atPoint: CGPoint) -> UIImage {
-        guard let font = UIFont(name: "CoolveticaRg-Regular", size: 100) else { return UIImage() }
-        let textColor: UIColor = UIColor.white
-        UIGraphicsBeginImageContext(inImage.size)
-        let textFontAttributes = [
-            NSFontAttributeName: font,
-            NSForegroundColorAttributeName: textColor,
-            ]
-        inImage.draw(in: CGRect(x: 0, y: 0, width: inImage.size.width, height: inImage.size.height))
-        let rect: CGRect = CGRect(x: atPoint.x, y: atPoint.y, width: inImage.size.width, height: inImage.size.height)
-        drawText.draw(in: rect, withAttributes: textFontAttributes)
-        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        return newImage
     }
 }

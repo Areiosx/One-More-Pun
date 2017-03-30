@@ -10,6 +10,8 @@ import UIKit
 
 class LoginTableViewController: UITableViewController, UITextFieldDelegate {
     
+    let userController = UserController()
+    let punController = PunController()
     let colorCollection = ColorCollection()
     var backgroundColor: UIColor = .white
     var hasAccount: Bool = true {
@@ -40,7 +42,7 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
             guard let email = emailTextField.text,
                 let password = passwordTextField.text,
                 let name = nameTextField.text else { return }
-            UserController.shared.createUser(email, password: password, name: name, completion: { (_, error) in
+            userController.createUser(email, password: password, name: name, completion: { (_, error) in
                 if let error = error {
                     self.showErrorInFormAlert(error.localizedDescription)
                 } else {
@@ -54,7 +56,7 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
         } else {
             guard let email = emailTextField.text,
                 let password = passwordTextField.text else { return }
-            UserController.shared.signInUser(email, password: password, completion: { (_, error) in
+            userController.signInUser(email, password: password, completion: { (_, error) in
                 if let error = error {
                     self.showErrorInFormAlert(error.localizedDescription)
                 } else {
@@ -71,8 +73,8 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
     func checkPuns(_ completion: @escaping () -> Void) {
-        PunController.shared.observePuns { (puns) in
-            PunController.shared.punsArray = puns
+        punController.observePuns { (puns) in
+            self.punController.punsArray = puns
             completion()
         }
     }
@@ -143,7 +145,7 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let destinationVC = segue.destination as? ViewController else { return }
+        guard let destinationVC = segue.destination as? PunViewController else { return }
         destinationVC.checkUserAndReloadData()
     }
     
