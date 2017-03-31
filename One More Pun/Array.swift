@@ -15,3 +15,11 @@ extension Array where Element: Equatable {
         }
     }
 }
+
+extension Array where Element: FirebaseType {
+    mutating func deleteFromFirebase() {
+        for Element in self {
+            Element.delete()
+        }
+    }
+}

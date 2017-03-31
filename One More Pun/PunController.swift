@@ -13,33 +13,27 @@ import UIKit
 class PunController {
     
     var recentPuns = [String]()
+    var delegate: PunControllerDelegate?
+    var puns = [Pun]() {
+        didSet {
+            delegate?.punsUpdated()
+        }
+    }
+    var punIndex = 0
     
-    var puns = [Pun]()
-    
-    func randomPun() -> Pun {
+    func getNextPun() -> Pun {
         if puns.count == 0 {
-            let noPun = Pun(body: "Loading...")
-            noPun.submitter = nil
-            return noPun
+            return Pun(body: "Loading...")
+        } else if punIndex >= puns.count {
+            punIndex = 0
+            return puns[punIndex]
         } else {
-            let newPun = getRandomPun()
-            guard let id = newPun.identifier else { return newPun }
-            recentPuns.append(id)
-            if recentPuns.count >= puns.count {
-                recentPuns.removeFirst()
-            }
-            return newPun
+            let pun = puns[punIndex]
+            punIndex += 1
+            return pun
         }
     }
     
-    func getRandomPun() -> Pun {
-        var newPun = puns[Int(arc4random_uniform(UInt32(puns.count)))]
-        guard let id = newPun.identifier else { return newPun }
-        if recentPuns.contains(id) {
-            newPun = getRandomPun()
-        }
-        return newPun
-    }
     
     func createPun(_ body: String) {
         let punIdentifier = FirebaseController.ref.child(.punsTypeKey).childByAutoId().key
@@ -47,22 +41,29 @@ class PunController {
         pun.save()
     }
     
-    func observePuns(_ completion: @escaping () -> Void = { _ in }) {
+    func fetchPuns(_ completion: @escaping () -> Void = { _ in }) {
         defer { completion() }
         let punsRef = FirebaseController.ref.child(.punsTypeKey)
-        punsRef.observe(.value, with: { (data) in
+        punsRef.observeSingleEvent(of: .value, with: { (data) in
             guard let punsDict = data.value as? [String: [String: AnyObject]] else { return }
             let unfilteredPuns = punsDict.flatMap { Pun(dictionary: $1, identifier: $0) }
             let sortedPuns = unfilteredPuns.sorted(by: { $0.0.upvoteCount > $0.1.upvoteCount })
-            let punsToDelete = unfilteredPuns.filter { $0.downvoteCount >= 5 && $0.downvoteCount >= $0.upvoteCount / 4 || $0.reportedCount >= 5 }
-            for pun in punsToDelete {
-                self.deletePun(pun)
-            }
-            for pun in sortedPuns {
+            var punsToDelete = unfilteredPuns.filter { $0.downvoteCount >= 5 && $0.downvoteCount >= $0.upvoteCount / 4 || $0.reportedCount >= 5 }
+            punsToDelete.deleteFromFirebase()
+            self.puns = sortedPuns
+        })
+    }
+    
+    func observePuns(_ completion: @escaping () -> Void = { _ in }) {
+        defer { completion() }
+        let punsRef = FirebaseController.ref.child(.punsTypeKey)
+        punsRef.observe(.childAdded, with: { (data) in
+            guard let punsDict = data.value as? [String: [String: AnyObject]] else { return }
+            let puns = punsDict.flatMap { Pun(dictionary: $1, identifier: $0) }
+            for pun in puns {
                 if !self.puns.contains(pun) {
                     self.puns.append(pun)
                     NSLog("Added \(pun.identifier ?? "a pun") to puns")
-                    completion()
                 }
             }
         })
@@ -76,7 +77,8 @@ class PunController {
     func upvote(pun: Pun, completion: @escaping () -> Void = { _ in }) {
         defer { completion() }
         guard let punIdentifier = pun.identifier,
-            let voterIdentifier = FIRAuth.auth()?.currentUser?.uid else { return }
+            let voterIdentifier = FIRAuth.auth()?.currentUser?.uid,
+            !pun.upvoteIdentifiersArray.contains(voterIdentifier) else { return }
         NSLog("Upvote for \(punIdentifier)")
         pun.upvoteIdentifiersArray.append(voterIdentifier)
         let voteDictionary = [voterIdentifier: 1]
@@ -98,7 +100,8 @@ class PunController {
     func downvote(pun: Pun, completion: @escaping () -> Void = { _ in } ) {
         defer { completion() }
         guard let punIdentifier = pun.identifier,
-            let voterIdentifier = FIRAuth.auth()?.currentUser?.uid else { return }
+            let voterIdentifier = FIRAuth.auth()?.currentUser?.uid,
+            !pun.downvoteIdentifiersArray.contains(voterIdentifier) else { return }
         pun.downvoteIdentifiersArray.append(voterIdentifier)
         NSLog("Downvote for \(punIdentifier)")
         let voteDictionary = [voterIdentifier: 1]
@@ -140,4 +143,8 @@ class PunController {
         let comment = "Shared via One More Pun!\nhttp://tinyurl.com/OneMorePun"
         return [image, comment as AnyObject]
     }
+}
+
+protocol PunControllerDelegate {
+    func punsUpdated()
 }

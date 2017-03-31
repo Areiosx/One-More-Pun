@@ -41,14 +41,13 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
         if !hasAccount && passwordTextField.text == retypePasswordTextField.text {
             guard let email = emailTextField.text,
                 let password = passwordTextField.text,
-                let name = nameTextField.text else { return }
+                let name = nameTextField.text,
+                !email.isEmpty && !password.isEmpty && !name.isEmpty else { return }
             userController.createUser(email, password: password, name: name, completion: { (_, error) in
                 if let error = error {
                     self.showErrorInFormAlert(error.localizedDescription)
                 } else {
-                    self.checkPuns({
-                        self.dismiss(animated: true, completion: nil)
-                    })
+                    self.dismiss(animated: true, completion: nil)
                 }
             })
         } else if !hasAccount {
@@ -60,9 +59,7 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
                 if let error = error {
                     self.showErrorInFormAlert(error.localizedDescription)
                 } else {
-                    self.checkPuns({
-                        self.dismiss(animated: true, completion: nil)
-                    })
+                    self.dismiss(animated: true, completion: nil)
                 }
             })
         }
@@ -70,10 +67,6 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
     
     @IBAction func goWithoutSignupLoginButtonTapped(_ sender: AnyObject) {
         goWithoutSignupLogin()
-    }
-    
-    func checkPuns(_ completion: @escaping () -> Void) {
-        
     }
     
     override func viewDidLoad() {

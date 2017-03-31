@@ -182,12 +182,14 @@
                     <navigationItem key="navigationItem" id="jwp-Cf-JmA"/>
                     <connections>
                         <outlet property="downvoteButton" destination="CjK-Hv-vrN" id="8vo-uH-FOn"/>
+                        <outlet property="downvoteImage" destination="5mY-t8-Ht1" id="i3Y-BH-sY1"/>
                         <outlet property="downvoteLabel" destination="DOQ-2B-Drf" id="eas-G2-Vmx"/>
                         <outlet property="infoButtonColor" destination="hQO-Va-nst" id="SIb-NN-2gu"/>
                         <outlet property="punButtonColor" destination="JoX-1V-9ul" id="oLp-Jw-GPp"/>
                         <outlet property="punLabel" destination="pUV-3x-Hzh" id="e0R-hH-2vy"/>
                         <outlet property="submitterLabel" destination="ryn-S2-qdx" id="mTz-Jh-jUu"/>
                         <outlet property="upvoteButton" destination="Xsw-w3-wPT" id="CMw-aw-nM0"/>
+                        <outlet property="upvoteImage" destination="BEO-IP-ubV" id="c5y-7J-GKx"/>
                         <outlet property="upvoteLabel" destination="l8Z-GM-6BO" id="hRj-WN-K8d"/>
                     </connections>
                 </viewController>
@@ -352,7 +354,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Or..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vH8-Po-qdK">
-                                                    <rect key="frame" x="175.5" y="6.5" width="25" height="20"/>
+                                                    <rect key="frame" x="175" y="6.5" width="25" height="20"/>
                                                     <fontDescription key="fontDescription" name="CoolveticaRg-Regular" family="Coolvetica" pointSize="17"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>

@@ -46,15 +46,6 @@ struct UserController {
                 completion(true, nil)
             }
         }
-//        FirebaseController.ref.child(usersPathString).observeSingleEventOfType(.Value, withBlock: { (data) in
-//            let uid = data.childSnapshotForPath(currentUser.uid)
-//            if uid.exists() {
-//                completion(success: true)
-//            } else {
-//                completion(success: false)
-//                currentUser.deleteWithCompletion(nil)
-//            }
-//        })
     }
     
     func getLoggedInUser(_ completion: @escaping (_ user: FIRUser?) -> Void) {
