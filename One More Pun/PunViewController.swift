@@ -30,7 +30,7 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate, 
             }
         }
     }
-    
+    var randomMode = false
     var retrievingFromNetwork: Bool = false {
         didSet {
             UIApplication.shared.isNetworkActivityIndicatorVisible = retrievingFromNetwork
@@ -166,17 +166,17 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate, 
                 }
             }
         }) {
-            // User is nil
+            fetchAndObservePuns()
         }
     }
     
     func fetchAndObservePuns() {
         self.retrievingFromNetwork = true
         punController.fetchPuns {
-            self.punController.observePuns {
-                self.retrievingFromNetwork = false
-                self.getNewPunAndColor()
-            }
+            self.getNewPunAndColor()
+        }
+        punController.observePuns {
+            self.retrievingFromNetwork = false
         }
     }
     
@@ -196,9 +196,9 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate, 
     }
     
     func getNewPunAndColor() {
-        pun = punController.getNextPun()
+        pun = !randomMode ? punController.getNextPun() : punController.getRandomPun()
         setUpColor()
-        punLabel.text = pun.body
+        punLabel.text = !randomMode ? pun.body : "RANDOM:\n\(pun.body)"
         submitterLabel.text = submitterLabelText(pun)
         reenableVotingButtons()
     }
@@ -291,6 +291,9 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate, 
                 self.presentNoAccountAlert()
             })
         }
+        let randomModeAction = UIAlertAction(title: !randomMode ? "Turn Random Mode On" : "Turn Random Mode Off", style: .default) { (_) in
+            self.randomMode = !self.randomMode
+        }
         let shareAction = UIAlertAction(title: "Share Pun", style: .default) { (_) in
             self.share()
         }
@@ -306,6 +309,7 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate, 
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         actionSheet.addAction(submitPunAction)
+        actionSheet.addAction(randomModeAction)
         actionSheet.addAction(shareAction)
         actionSheet.addAction(googleAction)
         actionSheet.addAction(reportAction)

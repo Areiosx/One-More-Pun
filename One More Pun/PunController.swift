@@ -16,6 +16,7 @@ class PunController {
     var delegate: PunControllerDelegate?
     var puns = [Pun]() {
         didSet {
+            NSLog("Puns updated")
             delegate?.punsUpdated()
         }
     }
@@ -23,7 +24,9 @@ class PunController {
     
     func getNextPun() -> Pun {
         if puns.count == 0 {
-            return Pun(body: "Loading...")
+            let noPun = Pun(body: "Loading...")
+            noPun.submitter = nil
+            return noPun
         } else if punIndex >= puns.count {
             punIndex = 0
             return puns[punIndex]
@@ -32,6 +35,10 @@ class PunController {
             punIndex += 1
             return pun
         }
+    }
+    
+    func getRandomPun() -> Pun {
+        return puns[Int(arc4random_uniform(UInt32(puns.count)))]
     }
     
     
@@ -81,12 +88,11 @@ class PunController {
             !pun.upvoteIdentifiersArray.contains(voterIdentifier) else { return }
         NSLog("Upvote for \(punIdentifier)")
         pun.upvoteIdentifiersArray.append(voterIdentifier)
-        let voteDictionary = [voterIdentifier: 1]
-        let childUpdates: [String: Any] = ["/\(pun.endpoint)/\(punIdentifier)/\(String.upvoteIdentifiersDictionaryKey)": voteDictionary]
+        let endpoint = "/\(pun.endpoint)/\(punIdentifier)/\(String.upvoteIdentifiersDictionaryKey)"
         if pun.downvoteIdentifiersArray.contains(voterIdentifier) {
             removeDownvote(forPun: pun)
         }
-        FirebaseController.ref.updateChildValues(childUpdates)
+        FirebaseController.ref.child(endpoint).child(voterIdentifier).setValue(1)
     }
     
     func removeUpvote(forPun pun: Pun, completion: @escaping () -> Void = { _ in }) {
@@ -104,12 +110,11 @@ class PunController {
             !pun.downvoteIdentifiersArray.contains(voterIdentifier) else { return }
         pun.downvoteIdentifiersArray.append(voterIdentifier)
         NSLog("Downvote for \(punIdentifier)")
-        let voteDictionary = [voterIdentifier: 1]
-        let childUpdates: [String: Any] = ["/\(pun.endpoint)/\(punIdentifier)/\(String.downvoteIdentifiersDictionary)": voteDictionary]
+        let endpoint = "/\(pun.endpoint)/\(punIdentifier)/\(String.downvoteIdentifiersDictionary)"
         if pun.upvoteIdentifiersArray.contains(voterIdentifier) {
             removeUpvote(forPun: pun)
         }
-        FirebaseController.ref.updateChildValues(childUpdates)
+        FirebaseController.ref.child(endpoint).child(voterIdentifier).setValue(1)
     }
     
     func removeDownvote(forPun pun: Pun, completion: @escaping () -> Void = { _ in }) {
