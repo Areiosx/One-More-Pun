@@ -25,8 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func incrementLaunchCount() {
-        let currentCount = UserDefaults.standard.integer(forKey: "launchCount")
-        UserDefaults.standard.set(currentCount + 1, forKey:"launchCount")
+        let currentCount = UserDefaults.standard.integer(forKey: .launchCountKey)
+        UserDefaults.standard.set(currentCount + 1, forKey: .launchCountKey)
         UserDefaults.standard.synchronize()
     }
 }

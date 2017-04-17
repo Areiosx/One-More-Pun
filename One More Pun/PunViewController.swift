@@ -25,12 +25,12 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate, 
     var color = UIColor()
     var punsSeenCount = 0 {
         didSet {
-            if punsSeenCount == 3 || punsSeenCount == 15 || punsSeenCount == 30 {
+            if punsSeenCount == 5 {
                 requestReview()
             }
         }
     }
-    var randomMode = false
+
     var retrievingFromNetwork: Bool = false {
         didSet {
             UIApplication.shared.isNetworkActivityIndicatorVisible = retrievingFromNetwork
@@ -56,12 +56,16 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate, 
     @IBOutlet weak var downvoteLabel: UILabel!
     @IBOutlet weak var upvoteButton: UIButton!
     @IBOutlet weak var downvoteButton: UIButton!
+    @IBOutlet weak var randomizeSwitch: UISwitch!
+    @IBOutlet weak var randomizeNotificationLabel: UILabel!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         punController.delegate = self
+        randomizeSwitch.isOn = UserDefaults.standard.bool(forKey: .randomOrTopKey)
+        randomizeNotificationLabel.text = .randomModeOnKey
         //        printFonts()
         hideViews()
         userController.getLoggedInUser { (user) in
@@ -69,28 +73,37 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate, 
                 self.showLoginSignUpView()
             }
         }
-        checkUserAndReloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if !UserDefaults.standard.bool(forKey: .sawRandomInfoPopupKey) {
+            presentRandomOrTopAlert()
+        } else {
+            checkUserAndReloadData()
+        }
     }
     
     func requestReview() {
-        if UserDefaults.standard.integer(forKey: "launchCount") >= 3,
+        if UserDefaults.standard.integer(forKey: .launchCountKey) >= 3,
             #available(iOS 10.3, *) {
             SKStoreReviewController.requestReview()
         }
     }
     
     func hideViews() {
-        UIView.animate(withDuration: 0.25) {
-            self.infoButtonColor.isHidden = true
-            self.punButtonColor.isHidden = true
-            self.submitterLabel.isHidden = true
-            self.upvoteButton.isHidden = true
-            self.upvoteImage.isHidden = true
-            self.upvoteLabel.isHidden = true
-            self.downvoteButton.isHidden = true
-            self.downvoteImage.isHidden = true
-            self.downvoteLabel.isHidden = true
-        }
+        infoButtonColor.isHidden = true
+        punButtonColor.isHidden = true
+        submitterLabel.isHidden = true
+        upvoteButton.isHidden = true
+        upvoteImage.isHidden = true
+        upvoteLabel.isHidden = true
+        downvoteButton.isHidden = true
+        downvoteImage.isHidden = true
+        downvoteLabel.isHidden = true
+        randomizeSwitch.isHidden = true
+        randomizeNotificationLabel.isHidden = true
     }
     
     func showViews() {
@@ -104,6 +117,8 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate, 
             self.downvoteButton.isHidden = false
             self.downvoteImage.isHidden = false
             self.downvoteLabel.isHidden = false
+            self.randomizeSwitch.isHidden = false
+            self.randomizeNotificationLabel.isHidden = false
         }
     }
     
@@ -147,6 +162,11 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate, 
         }
     }
     
+    @IBAction func randomizeSwitchToggled(_ sender: UISwitch) {
+        randomizeNotificationLabel.text = sender.isOn ? .randomModeOnKey : .randomModeOffKey
+        UserDefaults.standard.set(sender.isOn, forKey: .randomOrTopKey)
+    }
+    
     // MARK: - Pun Info Options
     
     @IBAction func infoButtonTapped(_ sender: AnyObject) {
@@ -186,19 +206,20 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate, 
     }
     
     func showLoginSignUpView() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let vc = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginTableViewController else { return }
+        let storyboard = UIStoryboard(name: .mainStoryboardNameKey, bundle: nil)
+        guard let vc = storyboard.instantiateViewController(withIdentifier: .loginViewControllerIDKey) as? LoginTableViewController else { return }
         self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction func nextPunButton(_ sender: AnyObject) {
         getNewPunAndColor()
+        punsSeenCount += 1
     }
     
     func getNewPunAndColor() {
-        pun = !randomMode ? punController.getNextPun() : punController.getRandomPun()
+        pun = !UserDefaults.standard.bool(forKey: .randomOrTopKey) ? punController.getNextPun() : punController.getRandomPun()
         setUpColor()
-        punLabel.text = !randomMode ? pun.body : "RANDOM:\n\(pun.body)"
+        punLabel.text = pun.body
         submitterLabel.text = submitterLabelText(pun)
         reenableVotingButtons()
     }
@@ -207,7 +228,8 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate, 
         color = colorCollection.randomColor()
         view.backgroundColor = color
         punButtonColor.tintColor = color
-        infoButtonColor.isHidden = false
+        randomizeSwitch.tintColor = color
+        randomizeSwitch.onTintColor = color
         infoButtonColor.tintColor = color
     }
     
@@ -291,9 +313,6 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate, 
                 self.presentNoAccountAlert()
             })
         }
-        let randomModeAction = UIAlertAction(title: !randomMode ? "Turn Random Mode On" : "Turn Random Mode Off", style: .default) { (_) in
-            self.randomMode = !self.randomMode
-        }
         let shareAction = UIAlertAction(title: "Share Pun", style: .default) { (_) in
             self.share()
         }
@@ -309,11 +328,11 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate, 
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         actionSheet.addAction(submitPunAction)
-        actionSheet.addAction(randomModeAction)
         actionSheet.addAction(shareAction)
         actionSheet.addAction(googleAction)
         actionSheet.addAction(reportAction)
         actionSheet.addAction(cancelAction)
+        actionSheet.popoverPresentationController?.sourceView = infoButtonColor
         present(actionSheet, animated: true, completion: nil)
     }
     
@@ -359,5 +378,33 @@ class PunViewController: UIViewController, MFMailComposeViewControllerDelegate, 
         alert.addAction(signupLoginAction)
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
+    }
+    
+    func presentRandomOrTopAlert() {
+        let alertController = UIAlertController(title: "How would you like to see puns?", message: nil, preferredStyle: .alert)
+        let randomAction = UIAlertAction(title: "Randomized!", style: .default) { (_) in
+            self.randomizeSwitch.isOn = true
+            UserDefaults.standard.set(true, forKey: .randomOrTopKey)
+            self.presentChangePunsAlert(withSelection: "randomized!")
+        }
+        let topAction = UIAlertAction(title: "Top First!", style: .default) { (_) in
+            self.randomizeSwitch.isOn = false
+            UserDefaults.standard.set(false, forKey: .randomOrTopKey)
+            self.presentChangePunsAlert(withSelection: "top first!")
+        }
+        alertController.addAction(randomAction)
+        alertController.addAction(topAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func presentChangePunsAlert(withSelection selection: String) {
+        let alertController = UIAlertController(title: "Puns set to \(selection)", message: "You can change this later with the switch in the bottom-right corner.", preferredStyle: .alert)
+        let dismissAction = UIAlertAction(title: "Okay!", style: .default) { (_) in
+            UserDefaults.standard.set(true, forKey: .sawRandomInfoPopupKey)
+            self.checkUserAndReloadData()
+        }
+        alertController.addAction(dismissAction)
+        present(alertController, animated: true, completion: nil)
+        randomizeSwitch.isHidden = false
     }
 }

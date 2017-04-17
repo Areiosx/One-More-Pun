@@ -11,8 +11,6 @@ import Firebase
 
 struct UserController {
     
-    fileprivate let usersPathString = "users"
-    
     func createUser(_ email: String, password: String, name: String, completion: @escaping (_ user: FIRUser?, _ error: NSError?) -> Void) {
         FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
             if let user = user {
@@ -25,7 +23,7 @@ struct UserController {
                     completion(user, error as NSError?)
                     if let email = user.email,
                         let username = user.displayName {
-                        let userIdentifier = FirebaseController.ref.child(self.usersPathString).child(user.uid).key
+                        let userIdentifier = FirebaseController.ref.child(.usersTypeKey).child(user.uid).key
                         var dbUser = User(email: email, username: username, identifier: userIdentifier)
                         dbUser.save()
                     }

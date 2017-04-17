@@ -161,11 +161,11 @@ class LoginTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
     func goWithoutSignupLogin() {
-        let alert = UIAlertController(title: "Enter without signing in?", message: "You will be able to use the app to see puns but won't be able to submit or report any. You will have the choice to sign up in the future.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Wait!", message: "You will be able to use the app to see puns but won't be able to submit, vote, or use other neato features. Are you sure?", preferredStyle: .alert)
         let agreeAction = UIAlertAction(title: "That's fine, let's see some puns!", style: .default) { (_) in
             self.dismiss(animated: true, completion: nil)
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Wait, I like features!", style: .cancel, handler: nil)
         alert.addAction(agreeAction)
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)

@@ -24,13 +24,16 @@ class PunController {
     
     func getNextPun() -> Pun {
         if puns.count == 0 {
+            NSLog("Next pun, puns empty")
             let noPun = Pun(body: "Loading...")
             noPun.submitter = nil
             return noPun
         } else if punIndex >= puns.count {
+            NSLog("Next pun, starting over")
             punIndex = 0
             return puns[punIndex]
         } else {
+            NSLog("Next pun")
             let pun = puns[punIndex]
             punIndex += 1
             return pun
@@ -38,7 +41,15 @@ class PunController {
     }
     
     func getRandomPun() -> Pun {
-        return puns[Int(arc4random_uniform(UInt32(puns.count)))]
+        if puns.count == 0 {
+            NSLog("Random pun, puns empty")
+            let noPun = Pun(body: "Loading...")
+            noPun.submitter = nil
+            return noPun
+        } else {
+            NSLog("Random pun")
+            return puns[Int(arc4random_uniform(UInt32(puns.count)))]
+        }
     }
     
     
@@ -145,7 +156,7 @@ class PunController {
         let imageSize = CGSize(width: 1024, height: 1024)
         let imageWithColor = UIImage.getImageWithColor(color, size: imageSize)
         let image = UIImage.textToImage(getPunTextAndSubmitter(pun) as NSString, inImage: imageWithColor, atPoint: point)
-        let comment = "Shared via One More Pun!\nhttp://tinyurl.com/OneMorePun"
+        let comment: String = .imageCommentKey
         return [image, comment as AnyObject]
     }
 }

@@ -27,4 +27,28 @@ extension String {
      */
     static var punsTypeKey: String { get { return "puns" } }
     static var usersTypeKey: String { get { return "users" } }
+    
+    /*
+     UI Keys
+     */
+    static var randomModeOnKey: String { get { return "Random Mode on" } }
+    static var randomModeOffKey: String { get { return "Random Mode off" } }
+    
+    /*
+     UserDefaults Keys
+     */
+    static var launchCountKey: String { get { return "launchCount" } }
+    static var sawRandomInfoPopupKey: String { get { return "sawRandomInfoPopup" } }
+    static var randomOrTopKey: String { get { return "randomOrTop" } }
+    
+    /*
+     Storyboard Keys
+     */
+    static var mainStoryboardNameKey: String { get { return "Main" } }
+    static var loginViewControllerIDKey: String { get { return "LoginViewController" } }
+    
+    /*
+     Misc
+     */
+    static var imageCommentKey: String { get { return "Shared via One More Pun!\nniclaughter.com/OneMorePun" } }
 }
